@@ -1,6 +1,6 @@
 var couchapp = require('couchapp');
 
-ddoc = { _id:'_design/standards' };
+ddoc = { _id:'_design/grades' };
 
 ddoc.views = {
   
