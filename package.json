@@ -1,0 +1,19 @@
+{
+  "name": "cee-portfolio",
+  "version": "0.0.0",
+  "description": "CouchDB scripts for CEE portfolio.",
+  "main": "app.js",
+  "dependencies": {
+    "couchapp": "~0.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/couchapp/bin.js serve app.js $COUCHDB"
+  },
+  "keywords": [
+    "couchdb"
+  ],
+  "author": "Steve Kinney",
+  "license": "MIT"
+}
