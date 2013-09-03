@@ -21,17 +21,17 @@ ddoc.views = {
       }
     }
   },
-  "economics-count": {
+  "count-economics": {
     map: function (doc) {
-      if (doc.personalFinanceStandards.length > 0) {
-        doc.personalFinanceStandards.forEach(function (standard) {
+      if (doc.economicsStandards.length > 0) {
+        doc.economicsStandards.forEach(function (standard) {
           emit(standard, 1);
         });
       }
     },
     reduce: "_count"
   },
-  "personal-finance-count": {
+  "count-personal-finance": {
     map: function (doc) {
       if (doc.personalFinanceStandards.length > 0) {
         doc.personalFinanceStandards.forEach(function (standard) {
