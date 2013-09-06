@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
 var argv = require('optimist').argv;
+var removeVELessonsFromCouch = require('./lib/remove-ve-lessons');
 
-console.log(argv);
+if (argv['remove-ve']) removeVELessonsFromCouch();
