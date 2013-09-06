@@ -63,6 +63,46 @@ ddoc.views = {
     },
     reduce: "_count"
   },
+  "count-economics-print": {
+    map: function (doc) {
+      if (doc.economicsStandards.length > 0 && doc.format === "print") {
+        doc.economicsStandards.forEach(function (standard) {
+          emit(standard, 1);
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "count-personal-finance-print": {
+    map: function (doc) {
+      if (doc.personalFinanceStandards.length > 0 && doc.format === "print") {
+        doc.personalFinanceStandards.forEach(function (standard) {
+          emit(standard, 1);
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "count-economics-online": {
+    map: function (doc) {
+      if (doc.economicsStandards.length > 0 && doc.format === "online") {
+        doc.economicsStandards.forEach(function (standard) {
+          emit(standard, 1);
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "count-personal-finance-online": {
+    map: function (doc) {
+      if (doc.personalFinanceStandards.length > 0 && doc.format === "online") {
+        doc.personalFinanceStandards.forEach(function (standard) {
+          emit(standard, 1);
+        });
+      }
+    },
+    reduce: "_count"
+  },
   "count-economics-then-grade": {
     map: function (doc) {
       if (doc.economicsStandards.length > 0) {
