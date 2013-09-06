@@ -1,6 +1,11 @@
 var couchapp = require('couchapp');
+var path = require('path');
 
 ddoc = { _id:'_design/grades' };
+
+ddoc.rewrites = [
+  {from: "../", to: "index.html"},
+]
 
 ddoc.views = {
   "all": {
@@ -41,6 +46,30 @@ ddoc.views = {
       }
     },
     reduce: "_count"
+  },
+  "count-grade-then-economics-standard" : {
+    map: function (doc) {
+      if (doc.grades.length > 0 && doc.grades[0] !== "") {
+        doc.grades.forEach(function (grade) {
+          doc.economicsStandards.forEach(function (standard) {
+            emit([grade, standard], 1)
+          });
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "count-grade-then-personal-finance-standard" : {
+    map: function (doc) {
+      if (doc.grades.length > 0 && doc.grades[0] !== "") {
+        doc.grades.forEach(function (grade) {
+          doc.personalFinanceStandards.forEach(function (standard) {
+            emit([grade, standard], 1)
+          });
+        });
+      }
+    },
+    reduce: "_count"
   }
 };
 
@@ -51,3 +80,5 @@ ddoc.validate_doc_update = function (newDoc, oldDoc, userCtx) {
 }
 
 module.exports = ddoc;
+
+couchapp.loadAttachments(ddoc, path.join(__dirname, '_grades'));

@@ -1,5 +1,5 @@
 #!/bin/bash
-FILES=../design-documents/app*.js
+FILES=./ddoc-*.js
 
 for f in $FILES
 do

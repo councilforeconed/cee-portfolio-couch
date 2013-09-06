@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>Hello World</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  </head>
+  <body>
+    
+    <script>
+      $.getJSON('./_view/count?group_level=1', function (data) {
+        console.log(data.rows);
+      });
+    </script>
+  </body>
+</html>
