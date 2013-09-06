@@ -40,6 +40,13 @@ ddoc.views = {
       }
     },
     reduce: "_count"
+  },
+  "no-economics-standards-for-print": {
+    map: function (doc) {
+      if (!doc.economicsStandards && doc.format === "print") {
+        emit(doc._id, doc);
+      }
+    }
   }
 };
 
