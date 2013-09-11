@@ -41,7 +41,7 @@ ddoc.views = {
     map: function (doc) {
       if (doc.grades.length > 0 && doc.grades[0] !== "") {
         doc.grades.forEach(function (grade) {
-          emit(grade, 1);
+          if (grade !== "College") emit(grade, 1);
         });
       }
     },
@@ -66,6 +66,16 @@ ddoc.views = {
           doc.personalFinanceStandards.forEach(function (standard) {
             emit([grade, standard], 1)
           });
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "count-grade-then-format" : {
+    map: function (doc) {
+      if (doc.grades.length > 0 && doc.grades[0] !== "") {
+        doc.grades.forEach(function (grade) {
+          if (grade !== "College") emit([doc.format, grade], 1)
         });
       }
     },

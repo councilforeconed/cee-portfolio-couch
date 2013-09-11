@@ -10,6 +10,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
+        <link rel="stylesheet" type="" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/normalize.min.css">
         <link rel="stylesheet" href="css/main.css">
 
@@ -19,29 +20,93 @@
 
         <div class="header-container">
             <header class="wrapper clearfix">
-                <h1 class="title">Council for Economic Education Portfolio</h1>
-                <nav>
-                    <ul>
-                    </ul>
-                </nav>
+                <h1 class="title">Program Portfolio Draft</h1>
             </header>
         </div>
 
         <div class="main-container">
             <div class="main wrapper clearfix" id="main">
-            
-              <canvas id="grade-distribution" width="400" height="400"></canvas>
-              <canvas id="economics-standard-distribution" width="400" height="400"></canvas>
-              <canvas id="personal-finance-standard-distribution" width="400" height="400"></canvas>
+              
+              <div class="row">
+                <h2>Distribution of Content Across Grades and Formats</h2>
+                <div class="col-md-4">
+                  <h3>Grades</h3>
+                  <canvas id="grade-distribution" width="322" height="400"></canvas>
+                </div>
+                <div class="col-md-4">
+                  <h3><span class="print">Print Materials</span> vs. <span class="online">EconEdLink</span></h3>
+                  <canvas id="format-distribution" width="322" height="400"></canvas>
+                </div>
+                <div class="col-md-4">
+                  <p>Both our print and online materials are heavily weighted towards a high school audience.</p>
+                  <p>There are just under 500 more lessons available in Virtual Economics than on EconEdLink.</p>
+                  <p>A lot of our content addresses more than one standard, but <em>Standard 1: Scarcity</em> is better represented than the other Economics standards.</p>
+                  <p>As of right now, these metrics do not include publications we've put out since <em>Virtual Economics 4</em>.</p>
+                </div>
+              </div>
+              
+              <div class="row">
+                <h2>Distribution of Content Across the Standards in Print</h2>
+                <div class="col-md-6">
+                  <h3>Economics</h3>
+                  <canvas id="economics-standard-distribution-print" width="498" height="400px" class="standards-distribution"></canvas>
+                </div>
+                <div class="col-md-6">
+                  <h3>Personal Finance</h3>
+                  <canvas id="personal-finance-standard-distribution-print" width="498" height="400px" class="standards-distribution"></canvas>
+                </div>
+              </div>
+              
+              <div class="row">
+                <h2>Distribution of Content Across the Standards on EconEdLink</h2>
+                <div class="col-md-6">
+                  <h3>Economics</h3>
+                  <canvas id="economics-standard-distribution-online" width="498" height="400px" class="standards-distribution"></canvas>
+                </div>
+                <div class="col-md-6">
+                  <h3>Personal Finance</h3>
+                  <canvas id="personal-finance-standard-distribution-online" width="498" height="400px" class="standards-distribution"></canvas>
+                </div>
+              </div>
+              
+              <div class="row">
+                <h2>Distribution of Content Across the Standards Combined</h2>
+                <div class="col-md-6">
+                  <h3>Economics</h3>
+                  <canvas id="economics-standard-distribution-combined" width="498" height="400px" class="standards-distribution" class="standards-distribution"></canvas>
+                </div>
+                <div class="col-md-6">
+                  <h3>Personal Finance</h3>
+                  <canvas id="personal-finance-standard-distribution-combined" width="498" height="400px" class="standards-distribution"></canvas>
+                </div>
+              </div>
+              
+              <div class="row">
+                <h2>Distribution of Personal Finance Standards Across Grades</h2>
+                <div class="col-md-6">
+                  <h3>Online (EconEdLink)</h3>
+                  <div id="table-personal-finance-online" class="distribution-table"></div>
+                </div>
+                <div class="col-md-6">
+                  <h3>Print</h3>
+                  <div id="table-personal-finance-print" class="distribution-table"></div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <h2>Distribution of Economics Standards Across Grades</h2>
+                <div class="col-md-6">
+                  <h3>Online (EconEdLink)</h3>
+                  <div id="table-economics-online" class="distribution-table"></div>
+                </div>
+                <div class="col-md-6">
+                  <h3>Print</h3>
+                  <div id="table-economics-print" class="distribution-table"></div>
+                </div>
+              </div>
 
             </div> <!-- #main -->
         </div> <!-- #main-container -->
-
-        <!-- <div class="footer-container">
-            <footer class="wrapper">
-                <h3>footer</h3>
-            </footer>
-        </div> -->
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
@@ -51,7 +116,6 @@
         
         <script src="js/vendor/chart.js"></script>
         
-        <script src="js/api.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>

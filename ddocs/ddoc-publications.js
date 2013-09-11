@@ -40,7 +40,13 @@ ddoc.views = {
       });
     },
     reduce: "_count"
-  }
+  },
+  "count-format": {
+    map: function (doc) {
+      emit(doc.format, 1)
+    },
+    reduce: "_count"
+  },
 };
 
 ddoc.validate_doc_update = function (newDoc, oldDoc, userCtx) {   

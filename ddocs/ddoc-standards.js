@@ -43,6 +43,54 @@ ddoc.views = {
       }
     }
   },
+  "by-standard-economics-then-grade-print": {
+    map: function (doc) {
+      if (doc.economicsStandards.length > 0 && doc.format === "print") {
+        doc.economicsStandards.forEach(function (standard) {
+          doc.grades.forEach(function (grade) {
+            if (grade) emit([standard, grade], 1)
+          });
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "by-standard-personal-finance-then-grade-print": {
+    map: function (doc) {
+      if (doc.personalFinanceStandards.length > 0 && doc.format === "print") {
+        doc.personalFinanceStandards.forEach(function (standard) {
+          doc.grades.forEach(function (grade) {
+            if (grade) emit([standard, grade], 1)
+          });
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "by-standard-economics-then-grade-online": {
+    map: function (doc) {
+      if (doc.economicsStandards.length > 0 && doc.format === "online") {
+        doc.economicsStandards.forEach(function (standard) {
+          doc.grades.forEach(function (grade) {
+            if (grade) emit([standard, grade], 1)
+          });
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "by-standard-personal-finance-then-grade-online": {
+    map: function (doc) {
+      if (doc.personalFinanceStandards.length > 0 && doc.format === "online") {
+        doc.personalFinanceStandards.forEach(function (standard) {
+          doc.grades.forEach(function (grade) {
+            if (grade) emit([standard, grade], 1)
+          });
+        });
+      }
+    },
+    reduce: "_count"
+  },
   "count-economics": {
     map: function (doc) {
       if (doc.economicsStandards.length > 0) {
@@ -189,6 +237,30 @@ ddoc.views = {
         emit(doc._id, doc);
       }
     }
+  },
+  "count-by-economics-standard-then-grade-then-format": {
+    map: function (doc) {
+      if (doc.economicsStandards.length > 0) {
+        doc.economicsStandards.forEach(function (standard) {
+          doc.grades.forEach(function (grade) {
+            if (grade) emit([standard, grade, doc.format], 1);
+          });
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "count-by-personal-finance-standard-then-grade-then-format": {
+    map: function (doc) {
+      if (doc.personalFinanceStandards.length > 0) {
+        doc.personalFinanceStandards.forEach(function (standard) {
+          doc.grades.forEach(function (grade) {
+            if (grade) emit([standard, grade, doc.format], 1);
+          });
+        });
+      }
+    },
+    reduce: "_count"
   }
 };
 
