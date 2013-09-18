@@ -1,4 +1,4 @@
-define(['jquery', 'underscore'], function ($, _) {
+define(['jquery', 'underscore', './standards', 'bootstrap'], function ($, _, standards) {
   $.fn.createGradeStandardDistributionTable = function (subject, format) {
     var $this = this;
     
@@ -15,8 +15,6 @@ define(['jquery', 'underscore'], function ($, _) {
         '</thead>' +
       '</table>');
       
-    var standardHeader = _.template('<th class="standard">Standard <%- standard %></th>')
-      
     $.getJSON('api/_design/standards/_view/by-standard-' + subject + '-then-grade-' + format + '?group_level=2', function (response) {
       var data = _.chain(response.rows)
         .map(function (el) {
@@ -24,8 +22,14 @@ define(['jquery', 'underscore'], function ($, _) {
         })
         .groupBy('standard')
         .each(function (el) {
+          var standard = el[0].standard
           $row = $('<tr></tr>')
-            .append(standardHeader(el[0]));
+            .append(
+              '<th class="standard">' + 
+                '<a data-toggle="modal" href="#modal" data-subject="' + subject +'" data-standard="' + standard + '">' + 
+                  'Standard ' + standard +
+                '</a>' + 
+              '</th>');
         
           while (el.length < 4) el.push({ lessons: 0 }); 
           _.each(el, function (grade) { $row.append('<td>' + grade.lessons + '</td>'); });
@@ -33,7 +37,16 @@ define(['jquery', 'underscore'], function ($, _) {
           $row.appendTo($table);
         })
         .value();
+      
       $this.append($table);
+      
+      $('th.standard a').on('click', function (e) {
+        e.preventDefault();
+        var content = standards($(this).data('subject'), $(this).data('standard'))
+        $('#modal .modal-title').html('Standard ' + content.standard + ': ' + content.topic);
+        $('#modal .standard').html(content.description);
+      });
+      
     });
-  }
+  };
 });
