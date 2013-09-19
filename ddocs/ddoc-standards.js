@@ -48,7 +48,7 @@ ddoc.views = {
       if (doc.economicsStandards.length > 0 && doc.format === "print") {
         doc.economicsStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if (grade) emit([standard, grade], 1)
+            if (grade) emit([standard, grade], doc)
           });
         });
       }
@@ -60,7 +60,7 @@ ddoc.views = {
       if (doc.personalFinanceStandards.length > 0 && doc.format === "print") {
         doc.personalFinanceStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if (grade) emit([standard, grade], 1)
+            if (grade) emit([standard, grade], doc)
           });
         });
       }
@@ -72,7 +72,7 @@ ddoc.views = {
       if (doc.economicsStandards.length > 0 && doc.format === "online") {
         doc.economicsStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if (grade) emit([standard, grade], 1)
+            if (grade) emit([standard, grade], doc)
           });
         });
       }
@@ -84,7 +84,7 @@ ddoc.views = {
       if (doc.personalFinanceStandards.length > 0 && doc.format === "online") {
         doc.personalFinanceStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if (grade) emit([standard, grade], 1)
+            if (grade) emit([standard, grade], doc)
           });
         });
       }
@@ -95,7 +95,7 @@ ddoc.views = {
     map: function (doc) {
       if (doc.economicsStandards.length > 0) {
         doc.economicsStandards.forEach(function (standard) {
-          emit(standard, 1);
+          emit(standard, doc);
         });
       }
     },
@@ -105,7 +105,7 @@ ddoc.views = {
     map: function (doc) {
       if (doc.personalFinanceStandards.length > 0) {
         doc.personalFinanceStandards.forEach(function (standard) {
-          emit(standard, 1);
+          emit(standard, doc);
         });
       }
     },
@@ -115,7 +115,7 @@ ddoc.views = {
     map: function (doc) {
       if (doc.economicsStandards.length > 0 && doc.format === "print") {
         doc.economicsStandards.forEach(function (standard) {
-          emit(standard, 1);
+          emit(standard, doc);
         });
       }
     },
@@ -125,7 +125,7 @@ ddoc.views = {
     map: function (doc) {
       if (doc.personalFinanceStandards.length > 0 && doc.format === "print") {
         doc.personalFinanceStandards.forEach(function (standard) {
-          emit(standard, 1);
+          emit(standard, doc);
         });
       }
     },
@@ -135,7 +135,7 @@ ddoc.views = {
     map: function (doc) {
       if (doc.economicsStandards.length > 0 && doc.format === "online") {
         doc.economicsStandards.forEach(function (standard) {
-          emit(standard, 1);
+          emit(standard, doc);
         });
       }
     },
@@ -145,7 +145,7 @@ ddoc.views = {
     map: function (doc) {
       if (doc.personalFinanceStandards.length > 0 && doc.format === "online") {
         doc.personalFinanceStandards.forEach(function (standard) {
-          emit(standard, 1);
+          emit(standard, doc);
         });
       }
     },
@@ -156,7 +156,7 @@ ddoc.views = {
       if (doc.economicsStandards.length > 0) {
         doc.economicsStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if (grade !== "") emit([standard, grade], 1)
+            if (grade !== "") emit([standard, grade], doc)
           });
         });
       }
@@ -168,7 +168,7 @@ ddoc.views = {
       if (doc.personalFinanceStandards.length > 0) {
         doc.personalFinanceStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if (grade !== "") emit([standard, grade], 1)
+            if (grade !== "") emit([standard, grade], doc)
           });
         });
       }
@@ -243,7 +243,7 @@ ddoc.views = {
       if (doc.economicsStandards.length > 0) {
         doc.economicsStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if (grade) emit([standard, grade, doc.format], 1);
+            if (grade) emit([standard, grade, doc.format], doc);
           });
         });
       }
@@ -255,7 +255,7 @@ ddoc.views = {
       if (doc.personalFinanceStandards.length > 0) {
         doc.personalFinanceStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if (grade) emit([standard, grade, doc.format], 1);
+            if (grade) emit([standard, grade, doc.format], doc);
           });
         });
       }
@@ -264,10 +264,23 @@ ddoc.views = {
   }
 };
 
+ddoc.lists = {
+  "standards-by-grade": function (doc, req) {
+    start({"headers":{"Content-Type" : "text/html; charset=utf-8"}});
+    
+    var row;
+    while (row = getRow()) {
+      var lesson = row.value;
+        send('<p>' + lesson.title + ', <a href="' + lesson.url + '"><em>' + lesson.source + '</em></a></p>');
+    }
+    
+  }
+};
+
 ddoc.validate_doc_update = function (newDoc, oldDoc, userCtx) {   
-  if (newDoc._deleted === true && userCtx.roles.indexOf('_admin') === -1) {
+  if (newDoc._deleted === true && userCtx.roles.indexOf('_admin') === -doc) {
     throw "Only admin can delete documents on this database.";
   }
-}
+};
 
 module.exports = ddoc;

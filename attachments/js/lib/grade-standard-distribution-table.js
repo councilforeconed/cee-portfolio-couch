@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', './standards', 'bootstrap'], function ($, _, standards) {
+define(['jquery', 'underscore', './_util', 'bootstrap'], function ($, _, util) {
   $.fn.createGradeStandardDistributionTable = function (subject, format) {
     var $this = this;
     
@@ -7,10 +7,10 @@ define(['jquery', 'underscore', './standards', 'bootstrap'], function ($, _, sta
         '<thead>' + 
           '<tr>' +
             '<th>Standard</th>' +
+            '<th>K-2</th>' +
             '<th>3-5</th>' +
             '<th>6-8</th>' +
             '<th>9-12</th>' +
-            '<th>K-2</th>' +
           '</tr>' +
         '</thead>' +
       '</table>');
@@ -25,14 +25,32 @@ define(['jquery', 'underscore', './standards', 'bootstrap'], function ($, _, sta
           var standard = el[0].standard
           $row = $('<tr></tr>')
             .append(
-              '<th class="standard">' + 
-                '<a data-toggle="modal" href="#modal" data-subject="' + subject +'" data-standard="' + standard + '">' + 
+              '<td class="standard">' + 
+                '<a data-toggle="modal" data-target="#modal" href="#" data-subject="' + subject +'" data-standard="' + standard + '">' + 
                   'Standard ' + standard +
                 '</a>' + 
-              '</th>');
+              '</td>');
         
           while (el.length < 4) el.push({ lessons: 0 }); 
-          _.each(el, function (grade) { $row.append('<td>' + grade.lessons + '</td>'); });
+          _.each([3,1,2,0], function (grade) {
+            if (el[grade].lessons === 0) {
+              $row.append('<td>0</td>'); 
+            } else {
+              $row.append(
+                '<td>' + 
+                  '<a ' +
+                    'href="' + encodeURI('api/_design/standards/_list/standards-by-grade/by-standard-' + subject + '-then-grade-' + format +'?reduce=false&include_docs=true&start_key=[' + el[grade].standard + ',"' + el[grade].grades + '"]&end_key=[' + el[grade].standard + ',"' + el[grade].grades + '"]') + '"' +
+                    'class="grade-standard-count" ' + 
+                    'data-target="#modal" data-toggle="modal"' +
+                    'data-grade="' + el[grade].grades + '" data-standard="' + el[grade].standard + '" data-format="' + format + '" data-subject="' + subject + '"' +
+                   '>' + 
+                    el[grade].lessons + 
+                  '</a>' + 
+                '</td>'
+                ); 
+            }
+            
+          });
         
           $row.appendTo($table);
         })
@@ -40,12 +58,35 @@ define(['jquery', 'underscore', './standards', 'bootstrap'], function ($, _, sta
       
       $this.append($table);
       
-      $this.find('th.standard a').on('click', function (e) {
+      var $modal = $('#modal');
+      var $modalBody = $('#modal .modal-body');
+      var $modalTitle = $('#modal .modal-title')
+      
+      $this.find('td.standard a').on('click', function (e) {
         e.preventDefault();
-        var content = standards($(this).data('subject'), $(this).data('standard'))
-        $('#modal .modal-title').html('Standard ' + content.standard + ': ' + content.topic);
-        $('#modal .standard').html(content.description);
+        var content = util.parseStandard($(this).data('subject'), $(this).data('standard'));
+        var clickedSubject = util.parseSubject($(this).data('subject'));
+        
+        $modal.on('show.bs.modal', function () {
+          $modalTitle.html(clickedSubject + ', Standard ' + content.standard + ': ' + content.topic);
+          $modalBody.html('<p>' + content.description + '</p>');
+        }).modal();
       });
+      
+      $this.find('a.grade-standard-count').on('click', function (e) {
+        e.preventDefault();
+        
+        var clickedStandard = $(this).data('standard');
+        var clickedGrade = $(this).data('grade');
+        var clickedFormat = $(this).data('format');
+        var clickedSubject = util.parseSubject($(this).data('subject'));
+        
+        $modal.on('show.bs.modal', function () {
+          $modalTitle.html(clickedSubject + ': Grades ' + clickedGrade + ', Standard ' + clickedStandard + ' <span class="label label-info">' + clickedFormat + '</span>');
+          $modalBody.empty();
+          $('<div></div>').load(e.currentTarget.href).appendTo($modalBody);
+        }).modal();
+      })
       
     });
   };

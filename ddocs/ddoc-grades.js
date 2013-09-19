@@ -41,7 +41,7 @@ ddoc.views = {
     map: function (doc) {
       if (doc.grades.length > 0 && doc.grades[0] !== "") {
         doc.grades.forEach(function (grade) {
-          if (grade !== "College") emit(grade, 1);
+          if (grade !== "College") emit(grade, doc);
         });
       }
     },
@@ -52,7 +52,7 @@ ddoc.views = {
       if (doc.grades.length > 0 && doc.grades[0] !== "") {
         doc.grades.forEach(function (grade) {
           doc.economicsStandards.forEach(function (standard) {
-            emit([grade, standard], 1)
+            emit([grade, standard], doc)
           });
         });
       }
@@ -64,7 +64,7 @@ ddoc.views = {
       if (doc.grades.length > 0 && doc.grades[0] !== "") {
         doc.grades.forEach(function (grade) {
           doc.personalFinanceStandards.forEach(function (standard) {
-            emit([grade, standard], 1)
+            emit([grade, standard], doc)
           });
         });
       }
@@ -75,7 +75,7 @@ ddoc.views = {
     map: function (doc) {
       if (doc.grades.length > 0 && doc.grades[0] !== "") {
         doc.grades.forEach(function (grade) {
-          if (grade !== "College") emit([doc.format, grade], 1)
+          if (grade !== "College") emit([doc.format, grade], doc)
         });
       }
     },
@@ -84,7 +84,7 @@ ddoc.views = {
 };
 
 ddoc.validate_doc_update = function (newDoc, oldDoc, userCtx) {   
-  if (newDoc._deleted === true && userCtx.roles.indexOf('_admin') === -1) {
+  if (newDoc._deleted === true && userCtx.roles.indexOf('_admin') === -doc) {
     throw "Only admin can delete documents on this database.";
   } 
 }

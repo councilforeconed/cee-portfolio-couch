@@ -1,4 +1,5 @@
 define(function () {  
+  
   var standards = {
     economics: [
       { standard: 1, topic: "Scarcity", description: "Productive resources are limited. Therefore, people cannot have all the goods and services they want; as a result, they must choose some things and give up others." },
@@ -30,10 +31,47 @@ define(function () {
       { standard: 5, topic: "Risk Management and Insurance", description: "Use appropriate and cost-effective risk management strategies." },
       { standard: 6, topic: "Saving and Investing", description: "Implement a diversified investment strategy that is compatible with personal goals." }
     ]
+  };
+  
+  var subjects = {
+    'economics': 'Economics',
+    'personal-finance': 'Personal Finance'
+  };
+  
+  var colors = {
+    'dark-blue': 'rgb(0,74,128)',
+    'blue': 'rgb(0,113,188)',
+    'light-blue': 'rgb(116,190,233)',
+    'dark-green': 'rgb(88,113,39)',
+    'green': 'rgb(127,181,57)',
+    'light-green': 'rbg(202,219,42)',
   }
   
-  return function (subject, standard) {
-    console.log(subject, standard);
-    return standards[subject][parseInt(standard) - 1];
-  };
+  function applyOpacityToColor(color, opacity) {
+    return 'rgba(' + color.match(/\d+,\d+,\d+/)[0] + ',' + opacity + ')';
+  }
+  
+  return {
+    parseSubject: function (subject) {
+      return subjects[subject];
+    },
+    parseStandard: function(subject, standard) {
+      return standards[subject][standard];
+    },
+    applyColorsToData: function(color, dataset) {
+      dataset.fillColor = applyOpacityToColor(colors[color], 0.5);
+			dataset.strokeColor = applyOpacityToColor(colors[color], 1);
+			dataset.pointColor = applyOpacityToColor(colors[color], 1);
+			pointStrokeColor = "#fff";
+      return dataset;
+    },
+    subjectColor: function (subject) {
+      if (subject === 'personal-finance') return 'dark-blue';
+      if (subject === 'economics') return 'dark-green';
+    },
+    color: function(color) {
+      return colors[color];
+    }
+  }
+  
 });
