@@ -40,7 +40,7 @@ define(['jquery', 'underscore', './standards', 'bootstrap'], function ($, _, sta
       
       $this.append($table);
       
-      $('th.standard a').on('click', function (e) {
+      $this.find('th.standard a').on('click', function (e) {
         e.preventDefault();
         var content = standards($(this).data('subject'), $(this).data('standard'))
         $('#modal .modal-title').html('Standard ' + content.standard + ': ' + content.topic);
