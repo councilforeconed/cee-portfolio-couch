@@ -27,7 +27,11 @@ require(['jquery', 'lib/standard-distribution'], function ($) {
   $("#economics-standard-distribution-online")
     .createStandardDistributionChart('economics', 'online');
   $("#personal-finance-standard-distribution-online")
-    .createStandardDistributionChart('personal-finance');
+    .createStandardDistributionChart('personal-finance', 'online');
+  $("#economics-standard-distribution-interactive")
+    .createStandardDistributionChart('economics', 'interactive');
+  $("#personal-finance-standard-distribution-interactive")
+    .createStandardDistributionChart('personal-finance', 'interactive');
   $("#economics-standard-distribution-combined")
     .createStandardDistributionChart('economics');
   $("#personal-finance-standard-distribution-combined")

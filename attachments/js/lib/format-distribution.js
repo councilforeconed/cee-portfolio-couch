@@ -6,8 +6,6 @@ define(['jquery', 'underscore', 'chart', './_util'], function ($, _, Chart, util
       
       var data = _.map(response.rows, function (row) { return { value: row.value } });
       
-      console.log(data);
-      
       data[0] = { color: util.color('light-blue'), value: data[0].value };
       data[1] = { color: util.color('blue'), value: data[1].value };
   

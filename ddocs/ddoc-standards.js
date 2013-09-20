@@ -91,9 +91,33 @@ ddoc.views = {
     },
     reduce: "_count"
   },
+  "by-standard-economics-then-grade-interactive": {
+    map: function (doc) {
+      if (doc.economicsStandards.length > 0 && doc.format === "online" && document.type === "interactive") {
+        doc.economicsStandards.forEach(function (standard) {
+          doc.grades.forEach(function (grade) {
+            if (grade) emit([standard, grade], doc)
+          });
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "by-standard-personal-finance-then-grade-interactive": {
+    map: function (doc) {
+      if (doc.personalFinanceStandards.length > 0 && doc.format === "online" && document.type === "interactive") {
+        doc.personalFinanceStandards.forEach(function (standard) {
+          doc.grades.forEach(function (grade) {
+            if (grade) emit([standard, grade], doc)
+          });
+        });
+      }
+    },
+    reduce: "_count"
+  },
   "count-economics": {
     map: function (doc) {
-      if (doc.economicsStandards.length > 0) {
+      if (doc.economicsStandards.length > 0 && (!doc.format === "print" || doc.audience === "teacher")) {
         doc.economicsStandards.forEach(function (standard) {
           emit(standard, doc);
         });
@@ -103,7 +127,7 @@ ddoc.views = {
   },
   "count-personal-finance": {
     map: function (doc) {
-      if (doc.personalFinanceStandards.length > 0) {
+      if (doc.personalFinanceStandards.length > 0 && (!doc.format === "print" || doc.audience === "teacher")) {
         doc.personalFinanceStandards.forEach(function (standard) {
           emit(standard, doc);
         });
@@ -113,7 +137,7 @@ ddoc.views = {
   },
   "count-economics-print": {
     map: function (doc) {
-      if (doc.economicsStandards.length > 0 && doc.format === "print") {
+      if (doc.economicsStandards.length > 0 && doc.format === "print" && doc.audience === "teacher") {
         doc.economicsStandards.forEach(function (standard) {
           emit(standard, doc);
         });
@@ -123,7 +147,7 @@ ddoc.views = {
   },
   "count-personal-finance-print": {
     map: function (doc) {
-      if (doc.personalFinanceStandards.length > 0 && doc.format === "print") {
+      if (doc.personalFinanceStandards.length > 0 && doc.format === "print" && doc.audience === "teacher") {
         doc.personalFinanceStandards.forEach(function (standard) {
           emit(standard, doc);
         });
@@ -144,6 +168,26 @@ ddoc.views = {
   "count-personal-finance-online": {
     map: function (doc) {
       if (doc.personalFinanceStandards.length > 0 && doc.format === "online") {
+        doc.personalFinanceStandards.forEach(function (standard) {
+          emit(standard, doc);
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "count-economics-interactive": {
+    map: function (doc) {
+      if (doc.economicsStandards.length > 0 && doc.format === "online" && doc.type === "interactive") {
+        doc.economicsStandards.forEach(function (standard) {
+          emit(standard, doc);
+        });
+      }
+    },
+    reduce: "_count"
+  },
+  "count-personal-finance-interactive": {
+    map: function (doc) {
+      if (doc.personalFinanceStandards.length > 0 && doc.format === "online" && doc.type === "interactive") {
         doc.personalFinanceStandards.forEach(function (standard) {
           emit(standard, doc);
         });
@@ -271,16 +315,16 @@ ddoc.lists = {
     var row;
     while (row = getRow()) {
       var lesson = row.value;
-        send('<p>' + lesson.title + ', <a href="' + lesson.url + '"><em>' + lesson.source + '</em></a></p>');
+        send('<p>' + lesson.title + ', <a href="' + lesson.url + '"><em>' + lesson.source + '</em>' + (lesson.year ? ' (' + lesson.year + ')' : '') +' </a></p>');
     }
     
   }
 };
 
-ddoc.validate_doc_update = function (newDoc, oldDoc, userCtx) {   
-  if (newDoc._deleted === true && userCtx.roles.indexOf('_admin') === -doc) {
-    throw "Only admin can delete documents on this database.";
-  }
-};
+// ddoc.validate_doc_update = function (newDoc, oldDoc, userCtx) {   
+//   if (newDoc._deleted === true && userCtx.roles.indexOf('_admin') === -doc) {
+//     throw "Only admin can delete documents on this database.";
+//   }
+// };
 
 module.exports = ddoc;

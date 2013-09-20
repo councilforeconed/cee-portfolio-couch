@@ -83,11 +83,11 @@ ddoc.views = {
   }
 };
 
-ddoc.validate_doc_update = function (newDoc, oldDoc, userCtx) {   
-  if (newDoc._deleted === true && userCtx.roles.indexOf('_admin') === -doc) {
-    throw "Only admin can delete documents on this database.";
-  } 
-}
+// ddoc.validate_doc_update = function (newDoc, oldDoc, userCtx) {   
+//   if (newDoc._deleted === true && userCtx.roles.indexOf('_admin') === -doc) {
+//     throw "Only admin can delete documents on this database.";
+//   } 
+// }
 
 module.exports = ddoc;
 
