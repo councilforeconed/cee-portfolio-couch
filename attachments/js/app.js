@@ -44,3 +44,5 @@ require(['jquery', 'lib/grade-standard-distribution-table'], function ($) {
   $('#table-economics-online').createGradeStandardDistributionTable('economics', 'online')
   $('#table-economics-print').createGradeStandardDistributionTable('economics', 'print')
 });
+
+require(['lib/publications-list'])
