@@ -14,7 +14,7 @@ define(['jquery', 'underscore', 'chart'], function ($, _, Chart) {
   
       var data = {
     	  labels : labels,
-      	datasets : [ { fillColor : "rgba(26, 117, 183, 0.5)", strokeColor : "rgb(16, 107, 173)", data : values } ]
+      	datasets : [ { fillColor : "rgba(202, 219, 42, 0.5)", strokeColor : "rgb(127, 181, 57)", data : values } ]
       }
   
       var ctx = $this.get(0).getContext("2d");
