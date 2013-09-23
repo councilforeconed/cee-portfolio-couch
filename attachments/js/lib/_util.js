@@ -29,7 +29,7 @@ define(function () {
       { standard: 3, topic: "Planning and Money Management", description: "Organize personal finances and use a budget to manage cash flow." },
       { standard: 4, topic: "Credit and Debt", description: "Maintain creditworthiness, borrow at favorable terms, and manage debt." },
       { standard: 5, topic: "Risk Management and Insurance", description: "Use appropriate and cost-effective risk management strategies." },
-      { standard: 6, topic: "Saving and Investing", description: "Implement a diversified investment strategy that is compatible with personal goals." }
+      { standard: 6, topic: "Saving and Investing", description: "Implement a diversified investment strategy that is compatible with personal goals."}
     ]
   };
   
@@ -56,13 +56,13 @@ define(function () {
       return subjects[subject];
     },
     parseStandard: function(subject, standard) {
-      return standards[subject][standard];
+      return standards[subject][standard - 1];
     },
     applyColorsToData: function(color, dataset) {
       dataset.fillColor = applyOpacityToColor(colors[color], 0.5);
-			dataset.strokeColor = applyOpacityToColor(colors[color], 1);
-			dataset.pointColor = applyOpacityToColor(colors[color], 1);
-			pointStrokeColor = "#fff";
+      dataset.strokeColor = applyOpacityToColor(colors[color], 1);
+      dataset.pointColor = applyOpacityToColor(colors[color], 1);
+      pointStrokeColor = "#fff";
       return dataset;
     },
     subjectColor: function (subject) {
