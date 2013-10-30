@@ -43,6 +43,8 @@ require(['jquery', 'lib/grade-standard-distribution-table'], function ($) {
   $('#table-personal-finance-print').createGradeStandardDistributionTable('personal-finance', 'print')
   $('#table-economics-online').createGradeStandardDistributionTable('economics', 'online')
   $('#table-economics-print').createGradeStandardDistributionTable('economics', 'print')
+  $('#table-personal-finance-interactive').createGradeStandardDistributionTable('personal-finance', 'interactive')
+  $('#table-economics-interactive').createGradeStandardDistributionTable('economics', 'interactive')
 });
 
 require(['lib/publications-list'])

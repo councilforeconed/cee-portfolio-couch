@@ -44,3 +44,9 @@ then
   echo 'Processing standards.js file...'
   $push ./ddocs/ddoc-standards.js $couch
 fi
+
+if [[ $* == *cc* ]]
+then
+  echo 'Processing common-core.js file...'
+  $push ./ddocs/ddoc-common-core.js $couch
+fi
