@@ -1,0 +1,3 @@
+[submodule "standards-data"]
+	path = standards-data
+	url = git@github.com:commoncurriculum/standards-data.git
