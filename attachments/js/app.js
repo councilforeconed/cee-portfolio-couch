@@ -46,5 +46,3 @@ require(['jquery', 'lib/grade-standard-distribution-table'], function ($) {
   $('#table-personal-finance-interactive').createGradeStandardDistributionTable('personal-finance', 'interactive')
   $('#table-economics-interactive').createGradeStandardDistributionTable('economics', 'interactive')
 });
-
-require(['lib/publications-list'])

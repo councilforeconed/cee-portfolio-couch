@@ -1,15 +1,20 @@
 var db = require('../lib/couch-config');
-var ccss = require('../lib/ccss-alignments');
-var finder = require('../lib/common-core');
+var ccss = require('../attachments/common-core-data');
 
-db.view('common-core', 'lessons-with-ccss', function (err, body) {
+// db.view('lessons', 'keys', function (err, body) {
+//   body.rows.forEach(function (doc) {
+//     db.destroy(doc.value._id, doc.value._rev, function (err, body) {
+//       console.log('Success', doc.value._id);
+//     })
+//   })
+// })
+
+db.view('lessons', 'online', function (err, body) {
   body.rows.forEach(function (doc) {
-    var lesson = doc.value;
-    lesson.commonCoreStandardIdentifiers.forEach(function (standard) {
-      console.log(finder(standard));
-    })
-  });
-});
+    doc.value.portfolio = true;
+    updateLesson(doc.value);
+  })
+})
 
 function updateLesson(lesson) {
   db.insert(lesson, lesson._id, function (err, body) {

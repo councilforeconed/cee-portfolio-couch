@@ -60,7 +60,7 @@ ddoc.views = {
       if (doc.personalFinanceStandards.length > 0 && doc.format === "print") {
         doc.personalFinanceStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if ((doc.portfolio || doc.format === "online") && grade) emit([parseInt(standard), grade], doc)
+            if ((doc.portfolio || doc.format === "online") && grade && doc.type === "lesson") emit([parseInt(standard), grade], doc)
           });
         });
       }
@@ -72,7 +72,7 @@ ddoc.views = {
       if (doc.economicsStandards.length > 0 && doc.format === "online") {
         doc.economicsStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if ((doc.portfolio || doc.format === "online") && grade) emit([parseInt(standard), grade], doc)
+            if ((doc.portfolio || doc.format === "online") && grade && doc.type === "lesson") emit([parseInt(standard), grade], doc)
           });
         });
       }

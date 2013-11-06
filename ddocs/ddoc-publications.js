@@ -5,14 +5,14 @@ ddoc = { _id:'_design/publications' };
 ddoc.views = {
   "publications": {
     map: function (doc) {
-      if (!doc.dead && (doc.portfolio || doc.format === "online")) emit(doc.source, doc);
+      if (doc.portfolio) emit(doc.source, doc);
     },
     reduce: "_count"
   },
   "publications-economics-standards": {
     map: function (doc) {
       doc.economicsStandards.forEach(function (standard) {
-        if (!doc.dead && (doc.portfolio || doc.format === "online")) emit([doc.source, standard], doc)
+        if (doc.portfolio) emit([doc.source, standard], doc)
       });
     },
     reduce: "_count"
@@ -20,7 +20,7 @@ ddoc.views = {
   "publications-personal-finance-standards": {
     map: function (doc) {
       doc.personalFinanceStandards.forEach(function (standard) {
-        if (!doc.dead && (doc.portfolio || doc.format === "online")) emit([doc.source, standard], doc)
+        if (doc.portfolio) emit([doc.source, standard], doc)
       });
     },
     reduce: "_count"
@@ -28,7 +28,7 @@ ddoc.views = {
   "economics-standards-publications": {
     map: function (doc) {
       doc.economicsStandards.forEach(function (standard) {
-        if (!doc.dead && (doc.portfolio || doc.format === "online")) emit([standard, doc.source], doc)
+        if (doc.portfolio) emit([standard, doc.source], doc)
       });
     },
     reduce: "_count"
@@ -36,20 +36,20 @@ ddoc.views = {
   "personal-finance-standards-publications": {
     map: function (doc) {
       doc.personalFinanceStandards.forEach(function (standard) {
-        if (!doc.dead && (doc.portfolio || doc.format === "online")) emit([standard, doc.source], doc)
+        if (doc.portfolio) emit([standard, doc.source], doc)
       });
     },
     reduce: "_count"
   },
   "count-format": {
     map: function (doc) {
-      if (!doc.dead && (doc.portfolio || doc.format === "online")) if (!doc.dead) emit(doc.format, doc)
+      if (doc.portfolio) if (!doc.dead) emit(doc.format, doc)
     },
     reduce: "_count"
   },
   "student-targetted-lessons": {
     map: function(doc) {
-      if (doc.audience === 'student' && doc.format === "print" && (doc.portfolio || doc.format === "online")) emit({_id: doc._id, _rev: doc._rev}, null);
+      if (doc.audience === 'student' && doc.format === "print" && doc.portfolio) emit({_id: doc._id, _rev: doc._rev}, null);
     }
   }
 };

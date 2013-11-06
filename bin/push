@@ -50,3 +50,9 @@ then
   echo 'Processing common-core.js file...'
   $push ./ddocs/ddoc-common-core.js $couch
 fi
+
+if [[ $* == *lessons* ]]
+then
+  echo 'Processing lessons.js file...'
+  $push ./ddocs/ddoc-lessons.js $couch
+fi

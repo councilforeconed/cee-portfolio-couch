@@ -3,6 +3,11 @@ var couchapp = require('couchapp');
 ddoc = { _id:'_design/common-core' };
 
 ddoc.views = {
+  "standards": {
+    map: function(doc) {
+      if (doc.standard) emit(doc._id, doc);
+    }
+  },
   "standard-counts": {
     map: function(doc) {
       if (doc.commonCoreStandards) {
