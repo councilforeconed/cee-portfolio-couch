@@ -15,8 +15,8 @@ ddoc.views = {
   },
   "standard-counts-by-id": {
     map: function(doc) {
-      if (doc.commonCoreStandardIDs) {
-        doc.commonCoreStandardIDs.forEach(function (cc) {
+      if (doc.commonCoreStandardIdentifiers) {
+        doc.commonCoreStandardIdentifiers.forEach(function (cc) {
           emit(cc, 1);
         });
       }
@@ -25,7 +25,7 @@ ddoc.views = {
   },
   'lessons-with-ccss': {
     map: function(doc) {
-      if (doc.commonCoreStandardIDs) {
+      if (doc.commonCoreStandardIdentifiers) {
         emit(doc._id, doc);
       }
     }

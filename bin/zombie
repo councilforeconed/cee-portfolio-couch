@@ -1,4 +1,6 @@
-db = require('../lib/couch-config')
+#!/usr/local/bin/node
+
+db = require('../lib/couch-config');
 
 db.view('app', 'dead', function (err, body) {
   body.rows.forEach(function (doc) {
