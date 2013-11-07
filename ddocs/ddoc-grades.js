@@ -12,7 +12,7 @@ ddoc.views = {
     map: function (doc) {
       if (doc.portfolio && doc.grades.length > 0 && doc.grades[0] !== "") {
         doc.grades.forEach(function (grade) {
-          if doc.portfolio emit(grade, doc);
+          if (doc.portfolio) emit(grade, doc);
         });
       }
     }
@@ -52,7 +52,7 @@ ddoc.views = {
       if (doc.portfolio && doc.grades.length > 0 && doc.grades[0] !== "") {
         doc.grades.forEach(function (grade) {
           doc.economicsStandards.forEach(function (standard) {
-            if doc.portfolio emit([grade, standard], doc)
+            if (doc.portfolio) emit([grade, standard], doc)
           });
         });
       }
@@ -64,7 +64,7 @@ ddoc.views = {
       if (doc.portfolio && doc.grades.length > 0 && doc.grades[0] !== "") {
         doc.grades.forEach(function (grade) {
           doc.personalFinanceStandards.forEach(function (standard) {
-            if doc.portfolio emit([grade, standard], doc)
+            if (doc.portfolio) emit([grade, standard], doc)
           });
         });
       }
