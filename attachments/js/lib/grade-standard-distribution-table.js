@@ -84,7 +84,9 @@ define(['jquery', 'underscore', './_util', 'bootstrap'], function ($, _, util) {
         $modal.on('show.bs.modal', function () {
           $modalTitle.html(clickedSubject + ': Grades ' + clickedGrade + ', Standard ' + clickedStandard + ' <span class="label label-info">' + clickedFormat + '</span>');
           $modalBody.empty();
-          $('<div></div>').load(e.currentTarget.href).appendTo($modalBody);
+          $('<div></div>')
+            .load(e.currentTarget.href)
+            .appendTo($modalBody);
         }).modal();
       })
       

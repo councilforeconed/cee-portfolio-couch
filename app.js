@@ -11,5 +11,7 @@ ddoc = {
   ]
 };
 
+ddoc.views = {};
+
 couchapp.loadAttachments(ddoc, path.join(__dirname, 'attachments'));
 module.exports = ddoc;

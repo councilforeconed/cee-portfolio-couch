@@ -3,7 +3,8 @@ require.config({
     'jquery': 'vendor/jquery-1.10.2.min',
     'underscore': 'vendor/underscore-min',
     'bootstrap': 'vendor/bootstrap.min',
-    'chart': 'vendor/chart'
+    'chart': 'vendor/chart',
+    'couch': 'vendor/jquery.couch'
   },
   shim: {
     underscore: { exports: '_' },

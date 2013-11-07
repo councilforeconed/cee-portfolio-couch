@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO: Get this script working.
+
 iriscouch="http://$COUCHDB_USERNAME:$COUCHDB_PASSWORD@stevekinney.iriscouch.com/cee_portfolio"
 
 curl http://localhost:5984/_replicator -H 'Content-Type: application/json' -d "{ \"source\": \"http://$COUCHDB_USERNAME:$COUCHDB_PASSWORD@localhost:5984/cee_portfolio\", \"target\": \"$iriscouch\"}"

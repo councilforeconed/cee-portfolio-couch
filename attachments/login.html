@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>Council for Economic Education Portfolio</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width">
+
+      <link rel="stylesheet" type="" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+      <div id="wrap">
+        <div class="container">
+          
+          <div class="page-header">
+            <h1 class="title">Council for Economic Education</h1>
+            <p class="lead">Account Management</p>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12" id="alert">
+
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12" id="login" style="display: none">
+              <h2>Sign Up or Log In</h2>
+              <form role="form">
+                <div class="form-group">
+                  <label for="name">Email Address</label>
+                  <input type="email" class="form-control" id="name" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+            </div>
+          </div>
+          
+        </div> <!-- .container -->
+      </div>
+        
+      <div id="footer">
+        <div class="container">
+          <p class="text-muted credit">&copy; 2013 Council for Economic Education</p>
+        </div>
+      </div>
+      
+      <script src="js/vendor/jquery-1.10.2.min.js"></script>
+      <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+      <script src="/_utils/script/jquery.couch.js"></script>
+      <script>
+          
+          var $form = $('#login');
+          var $alert = $('#alert');
+          
+          checkSession();
+          
+          $form.find('button[type=submit]').on('click submit', function (e) {
+            e.preventDefault();
+            var name = $form.find('input[type=email]').val();
+            var password = $form.find('input[type=password]').val();
+  
+            if (name.length === 0 || password.length === 0 ) {
+              $alert.displayWithText('You must provide a username and password.'); return;
+            }
+  
+            $.couch.login({
+              name: name,
+              password: password,
+              success: checkSession,
+              error: loginFailure
+            });       
+  
+          });
+          
+            
+          function checkSession() {
+            $.couch.session({
+              success: function (res) {
+                if (res.userCtx.name) {
+                  $alert.slideUp(function () {
+                    $alert.html('<div class="alert alert-info"> You are logged in as <strong>' + res.userCtx.name + '</strong>.</div>');
+                    var $logoutButton = $('<a href="#" class="btn btn-primary" id="logout">Log Out</a>')
+                      .on('click', function (e) {
+                        e.preventDefault();
+                        $.couch.logout({
+                          success: function () {
+                            $alert.clear();
+                            $form.slideDown();
+                          }
+                        })
+                      });
+                    $alert.append($logoutButton);
+                    $alert.slideDown();
+                  })
+                  $form.slideUp();
+                } else {
+                  $form.slideDown();
+                }
+              }
+            });
+          }
+          
+          function loginFailure(resp) {
+            $alert.displayWithText('<strong>Sorry!</strong> There was an error logging you in.', 'danger');
+          }
+          
+          $alert.displayWithText = function (text, type) {
+            if (!type) type = 'info';
+            $alert.slideUp(function () {
+              $alert.html('<div class="alert alert-' + type +'">' + text + '</div>');
+              $alert.slideDown();
+            })
+          };
+          
+          $alert.clear = function () {
+            $alert.slideUp(function () {
+              $alert.html('');
+            })
+          };
+        
+      </script>
+    </body>
+</html>

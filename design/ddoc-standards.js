@@ -60,7 +60,7 @@ ddoc.views = {
       if (doc.personalFinanceStandards.length > 0 && doc.format === "print") {
         doc.personalFinanceStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if (doc.portfolio && grade) emit([parseInt(standard), grade], doc)
+            if (doc.portfolio && grade && doc.type === "lesson") emit([parseInt(standard), grade], doc)
           });
         });
       }
@@ -315,7 +315,15 @@ ddoc.lists = {
     var row;
     while (row = getRow()) {
       var lesson = row.value;
-        send('<p>' + lesson.title + ', <a href="' + lesson.url + '"><em>' + lesson.source + '</em>' + (lesson.year ? ' (' + lesson.year + ')' : '') + (lesson.source === "EconEdLink" ? ' (' + lesson.type + ', ' + lesson.id + ')' : '') +' </a></p>');
+        send('<p data-lesson="' + lesson._id + '" class="standard-item">' + 
+          lesson.title + 
+          ', <a href="' + lesson.url + '"><em>' 
+          + lesson.source + '</em></a>' + 
+          (lesson.year ? ' (' + lesson.year + ')' : '') + 
+          (lesson.source === "EconEdLink" ? ' <span class="label label-primary">' + 
+          lesson.type + 
+          '</span> <span class="label label-warning">' + lesson.id + '</span>' : '') 
+          +'</p>');
     }
     
   }
