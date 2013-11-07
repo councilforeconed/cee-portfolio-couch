@@ -29,25 +29,6 @@ ddoc.views = {
       if (doc.dead) emit(doc._id, doc);
     }
   },
-  "keys": {
-    map: function (doc) {
-      if (doc.key) emit(doc._id, doc);
-    }
-  }
 };
-
-ddoc.modules = {
-  underscore: couchapp.loadFiles('../node_modules/underscore')
-};
-
-ddoc.shows = {
-  lesson: function(doc, req) {
-    var _ = require('modules/underscore/underscore-min');
-    
-    if (doc.portfolio) {
-      return '<h1>' + _.isString('object')  + '</h1>';
-    }
-  }
-}
 
 module.exports = ddoc;

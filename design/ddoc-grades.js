@@ -84,5 +84,3 @@ ddoc.views = {
 };
 
 module.exports = ddoc;
-
-couchapp.loadAttachments(ddoc, path.join(__dirname, '_grades'));
