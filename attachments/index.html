@@ -12,8 +12,6 @@
 
       <link rel="stylesheet" type="" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
       <link rel="stylesheet" href="css/main.css">
-      
-      <script data-main="js/app" src="js/require.js"></script>
     </head>
     <body>
       <div id="wrap">
@@ -22,153 +20,6 @@
           <div class="page-header">
             <h1 class="title">Council for Economic Education</h1>
             <p class="lead">Program Portfolio</p>
-          </div>
-            
-          <div class="row">
-            <h2>Distribution of Content Across Grades and Formats</h2>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <h3>Grades</h3>
-              <canvas id="grade-distribution" width="322" height="400"></canvas>
-            </div>
-            <div class="col-md-4">
-              <h3><span class="print">Print Materials</span> vs. <span class="online">EconEdLink</span></h3>
-              <canvas id="format-distribution" width="322" height="400"></canvas>
-            </div>
-            <div class="col-md-4">
-              <h4>Notes</h4>
-              <ul>
-                <li>These visualizations are still a work in progress and subject to change.</li>
-                <li>The personal finance standards being used are Jump$tart's <em>National Standards in K-12 Personal Finance Education</em>, <strong>not</strong> CEE's <em>National Standards for Financial Literacy</em>.</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Distribution of Content Across the Standards in Print</h2>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h3>Economics</h3>
-              <canvas id="economics-standard-distribution-print" width="498" height="400px" class="standards-distribution"></canvas>
-            </div>
-            <div class="col-md-6">
-              <h3>Personal Finance</h3>
-              <canvas id="personal-finance-standard-distribution-print" width="498" height="400px" class="standards-distribution"></canvas>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Distribution of Content Across the Standards on EconEdLink</h2>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h3>Economics</h3>
-              <canvas id="economics-standard-distribution-online" width="498" height="400px" class="standards-distribution"></canvas>
-            </div>
-            <div class="col-md-6">
-              <h3>Personal Finance</h3>
-              <canvas id="personal-finance-standard-distribution-online" width="498" height="400px" class="standards-distribution"></canvas>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Distribution of Interactive Activities Across the Standards</h2>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h3>Economics</h3>
-              <canvas id="economics-standard-distribution-interactive" width="498" height="400px" class="standards-distribution"></canvas>
-            </div>
-            <div class="col-md-6">
-              <h3>Personal Finance</h3>
-              <canvas id="personal-finance-standard-distribution-interactive" width="498" height="400px" class="standards-distribution"></canvas>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Distribution of Content Across the Standards Combined</h2>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h3>Economics</h3>
-              <canvas id="economics-standard-distribution-combined" width="498" height="400px" class="standards-distribution" class="standards-distribution"></canvas>
-            </div>
-            <div class="col-md-6">
-              <h3>Personal Finance</h3>
-              <canvas id="personal-finance-standard-distribution-combined" width="498" height="400px" class="standards-distribution"></canvas>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Distribution of Personal Finance Lessons Across Standards and Grades</h2>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h3>Online (EconEdLink)</h3>
-              <div id="table-personal-finance-online" class="distribution-table"></div>
-            </div>
-            <div class="col-md-6">
-              <h3>Print</h3>
-              <div id="table-personal-finance-print" class="distribution-table"></div>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Distribution of Economics Lessons Across Standards and Grades</h2>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <h3>Online (EconEdLink)</h3>
-              <div id="table-economics-online" class="distribution-table"></div>
-            </div>
-            <div class="col-md-6">
-              <h3>Print</h3>
-              <div id="table-economics-print" class="distribution-table"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Distribution of Personal Finance Interactive Activities Across Standards and Grades</h2>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <div id="table-personal-finance-interactive" class="distribution-table"></div>
-            </div>
-          </div>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <h2>Distribution of Economics Interactive Activities Across Standards and Grades</h2>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div id="table-economics-interactive" class="distribution-table"></div>
-            </div>
-          </div>
-
-          
-          <div class="row">
-            <div class="col-md-12">
-              <h3>Publications Included</h3>
-              <div id="publications"></div>
-            </div>
           </div>
             
         </div> <!-- .container -->
@@ -180,7 +31,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">Modal title</h4>
+              <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
             </div>
@@ -198,7 +49,10 @@
       </div>
 			
       <script src="js/vendor/jquery-1.10.2.min.js"></script>
-      <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+      <script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script>
       <script src="js/vendor/jquery.couch.js"></script>
+      <script src="js/lib/login.js"></script>
+      <script src="js/vendor/router.js"></script>
+      <script src="js/lib/routes.js"></script>
     </body>
 </html>
