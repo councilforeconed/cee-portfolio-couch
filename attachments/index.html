@@ -14,16 +14,69 @@
       <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
+      
+      <!-- Main Content -->
       <div id="wrap">
         <div class="container">
           
-          <div class="page-header">
+          <section class="page-header">
             <h1 class="title">Council for Economic Education</h1>
             <p class="lead">Program Portfolio</p>
-          </div>
+          </section><!-- /.page-header -->
+          
+          <!-- Navigation -->
+          <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle Navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="#/grades">Grades</a></li>
+                <li><a href="#/formats">Print vs. Online</a></li>
+                <li><a href="#/publications">Publications Included</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Standard Distribution Graphs <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#/graph/economics/print">Economics Lessons in Print</a></li>
+                    <li><a href="#/graph/economics/online">Economics Lessons on EconEdlink</a></li>
+                    <li><a href="#/graph/economics/interactive">Economics Interactive Activities</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#/graph/personal-finance/print">Personal Finance Lessons in Print</a></li>
+                    <li><a href="#/graph/personal-finance/online">Personal Finance Lessons on EconEdlink</a></li>
+                    <li><a href="#/graph/personal-finance/interactive">Personal Finance Interactive Activities</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Standard &amp; Grade Distribution Tables <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#/table/economics/print">Economics Lessons in Print</a></li>
+                    <li><a href="#/table/economics/online">Economics Lessons on EconEdlink</a></li>
+                    <li><a href="#/table/economics/interactive">Economics Interactive Activities</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#/table/personal-finance/print">Personal Finance Lessons in Print</a></li>
+                    <li><a href="#/table/personal-finance/online">Personal Finance Lessons on EconEdlink</a></li>
+                    <li><a href="#/table/personal-finance/interactive">Personal Finance Interactive Activities</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </nav>
+          
+          <!-- Main Content -->
+          <section id="main-content">
+          </section><!-- /#main-content -->
+          <!-- /Main Content -->
             
-        </div> <!-- .container -->
-      </div>
+        </div><!-- /.container -->
+      </div><!-- /#wrap -->
       
       <!-- Modal Template -->
       <div id="modal" class="modal fade">
@@ -41,6 +94,7 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
+      <!-- /Modal Template -->
         
       <div id="footer">
         <div class="container">
@@ -48,11 +102,19 @@
         </div>
       </div>
 			
-      <script src="js/vendor/jquery-1.10.2.min.js"></script>
-      <script src="//code.jquery.com/jquery-migrate-1.2.1.js"></script>
+      <script src="js/vendor/jquery.js"></script>
+      <script>jQuery.migrateMute = true;</script>
+      <script src="js/vendor/jquery.migrate.js"></script>
       <script src="js/vendor/jquery.couch.js"></script>
-      <script src="js/lib/login.js"></script>
-      <script src="js/vendor/router.js"></script>
+      <script src="js/vendor/bootstrap.min.js"></script>
+      <script src="js/vendor/chart.js"></script>
+      <script src="js/vendor/lodash.js"></script>
+      <script src="js/vendor/handlebars.js"></script>
+      <script src="js/vendor/routie.js"></script>
+      <script src="js/vendor/isotope.js"></script>
+      <script src="js/lib/util.js"></script>
+      <script src="js/lib/api.js"></script>
       <script src="js/lib/routes.js"></script>
+      <script src="js/app.js"></script>
     </body>
 </html>
