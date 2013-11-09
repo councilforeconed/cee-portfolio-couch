@@ -1,0 +1,42 @@
+<table class="table" id="publications-list">
+  <thead>
+    <tr>
+      <th>Standard</th>
+      <th>K-2</th>
+      <th>3-5</th>
+      <th>6-8</th>
+      <th>9-12</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each lessons}}
+    <tr>
+      <td>
+        <a href="#/subject/{{subject}}/standard/{{standard}}" class="standard-header" data-subject="{{subject}}" data-standard="{{standard}}">
+          Standard {{standard}}
+        </a>
+      </td>
+      <td>
+        {{#if K-2}}<a href="#/subject/{{subject}}/standard/{{standard}}/grades/K-2/format/{{format}}">{{/if}}
+          {{K-2}}
+        {{#if K-2}}</a>{{/if}}
+      </td>
+      <td>
+        {{#if 3-5}}<a href="#/subject/{{subject}}/standard/{{standard}}/grades/3-5/format/{{format}}">{{/if}}
+          {{3-5}}
+        {{#if 3-5}}</a>{{/if}}
+      </td>
+      <td>
+        {{#if 6-8}}<a href="#/subject/{{subject}}/standard/{{standard}}/grades/6-8/format/{{format}}">{{/if}}
+          {{6-8}}
+        {{#if 6-8}}</a>{{/if}}
+      </td>
+      <td>
+        {{#if 9-12}}<a href="#/subject/{{subject}}/standard/{{standard}}/grades/9-12/format/{{format}}">{{/if}}
+          {{9-12}}
+        {{#if 9-12}}</a>{{/if}}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

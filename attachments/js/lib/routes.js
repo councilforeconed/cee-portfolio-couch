@@ -50,21 +50,10 @@ routie('/formats', function() {
 routie('/publications', function() {
   api.get.publications(function (publications) {
     $content.children().remove();
-    $publicationsTable = $('<table class="table" id="publications-list">' + 
-                        '<thead>' + 
-                          '<tr>' + 
-                            '<th>Publication</th>' + 
-                            '<th>Number of Lessons</th>' + 
-                          '</tr>' + 
-                        '</thead>' + 
-                        '<tbody>' + 
-                        '</tbody>' + 
-                      '</table>');
-    $publications = $publicationsTable.find('tbody');
-    _.each(publications, function (publication) {
-      $('<tr><td>' + publication.key + '</td><td>' + publication.value + '</td></tr>').appendTo($publications);
-    });
-    $content.append($publicationsTable);
+    $.get('templates/publications.hbs', function (template) {
+      var template = Handlebars.compile(template);
+      $content.append(template({publications: publications}));
+    })
   });
 });
 
@@ -95,85 +84,49 @@ routie('/graph/:subject/:format', function(subject, format) {
 routie('/table/:subject/:format', function (subject, format) {
   api.get.standardsByGrade(subject, format, function (standards) {
     $content.children().remove();
-    var $standardsTable = $('<table class="table" id="publications-list">' + 
-                        '<thead>' + 
-                          '<tr>' + 
-                            '<th>Standard</th>' + 
-                            '<th>K-2</th>' + 
-                            '<th>3-5</th>' + 
-                            '<th>6-8</th>' + 
-                            '<th>9-12</th>' + 
-                          '</tr>' + 
-                        '</thead>' + 
-                        '<tbody>' + 
-                        '</tbody>' + 
-                      '</table>');
-    var $standards = $standardsTable.find('tbody');
     
-    var row = Handlebars.compile('<tr>' + 
-                                  '<td>' + 
-                                    '<a href="#/subject/{{subject}}/standard/{{standard}}" class="standard-header" data-subject="{{subject}}" data-standard="{{standard}}">' +
-                                      'Standard {{standard}}' +
-                                    '</a>' + 
-                                  '</td>' +
-                                  '<td>' + 
-                                    '{{#if K-2}}<a href="#/subject/{{subject}}/standard/{{standard}}/grades/K-2/format/{{format}}">{{/if}}' +
-                                      '{{K-2}}' + 
-                                    '{{#if K-2}}</a>{{/if}}' +
-                                  '</td>' +
-                                  '<td>' + 
-                                    '{{#if 3-5}}<a href="#/subject/{{subject}}/standard/{{standard}}/grades/3-5/format/{{format}}">{{/if}}' +
-                                      '{{3-5}}' + 
-                                    '{{#if 3-5}}</a>{{/if}}' +
-                                  '</td>' +
-                                  '<td>' + 
-                                    '{{#if 6-8}}<a href="#/subject/{{subject}}/standard/{{standard}}/grades/6-8/format/{{format}}">{{/if}}' +
-                                      '{{6-8}}' + 
-                                    '{{#if 6-8}}</a>{{/if}}' +
-                                  '</td>' +
-                                  '<td>' + 
-                                    '{{#if 9-12}}<a href="#/subject/{{subject}}/standard/{{standard}}/grades/9-12/format/{{format}}">{{/if}}' +
-                                      '{{9-12}}' + 
-                                    '{{#if 9-12}}</a>{{/if}}' +
-                                  '</td>' +
-                                '</tr>')
-    
-    _.chain(standards)
-      .map(function (el) {
-        return { standard: el.key[0], grades: el.key[1], lessons: el.value };
-      })
-      .groupBy('standard')
-      .each(function (standard) {
-        
-        var result = {
-          standard: 0,
-          "K-2": 0,
-          "3-5": 0,
-          "6-8": 0,
-          "9-12": 0,
-          subject: subject,
-          format: format
-        }
-        
-        result.standard = standard[0].standard;
-        
-        _.each(standard, function (el) {
-          result[el.grades] = el.lessons;
-        });
-        
-        $standardsTable.append(row(result));
-        
-      });
-    
-    $content.append($standardsTable);
-    
-    $('.standard-header').on('click', function (e) {
-      e.preventDefault();
-      var $this = $(this);
-      var standard = $this.data('standard'); 
-      var subject = $this.data('subject');
+    $.get('templates/standards-table.hbs', function (template) {
       
-      console.log(subject, standard);
+      var template = Handlebars.compile(template);
+      var lessons = _.chain(standards)
+        .map(function (el) {
+          return { standard: el.key[0], grades: el.key[1], lessons: el.value };
+        })
+        .groupBy('standard')
+        .map(function (standard) {
+          var result = {
+            standard: standard[0].standard,
+            "K-2": 0,
+            "3-5": 0,
+            "6-8": 0,
+            "9-12": 0,
+            subject: subject,
+            format: format
+          }
+        
+          _.each(standard, function (el) {
+            result[el.grades] = el.lessons;
+          });
+        
+          return result;
+        }).value();
+      
+      $content.append(template({lessons: lessons}));
+      
+      $('.standard-header').on('click', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var standardNumber = $this.data('standard'); 
+        var subject = $this.data('subject');
+        
+        var standard = util.parseStandard(subject, standardNumber);
+      
+        $this.popover({
+          title: util.parseSubject(subject) + " Standard " + standardNumber,
+          content: '<strong>' + standard.topic + '</strong>: ' + standard.description,
+          html: true
+        })
+      });
     });
   });
 });
