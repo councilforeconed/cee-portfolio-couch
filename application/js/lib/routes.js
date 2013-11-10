@@ -85,33 +85,15 @@ routie('/table/:subject/:format', function (subject, format) {
   api.get.standardsByGrade(subject, format, function (standards) {
     $content.children().remove();
     
+    standards.forEach(function (row) {
+      row.subject = subject;
+      row.format = format;
+    });
+    
     $.get('templates/standards-table.hbs', function (template) {
       
-      var template = Handlebars.compile(template);
-      var lessons = _.chain(standards)
-        .map(function (el) {
-          return { standard: el.key[0], grades: el.key[1], lessons: el.value };
-        })
-        .groupBy('standard')
-        .map(function (standard) {
-          var result = {
-            standard: standard[0].standard,
-            "K-2": 0,
-            "3-5": 0,
-            "6-8": 0,
-            "9-12": 0,
-            subject: subject,
-            format: format
-          }
-        
-          _.each(standard, function (el) {
-            result[el.grades] = el.lessons;
-          });
-        
-          return result;
-        }).value();
-      
-      $content.append(template({lessons: lessons}));
+      var template = Handlebars.compile(template)
+      $content.append(template({lessons: standards}));
       
       $('.standard-header').on('click', function (e) {
         e.preventDefault();
