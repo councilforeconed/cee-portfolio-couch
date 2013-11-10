@@ -44,7 +44,6 @@ var api = {
           callback(response.rows);
         });
       }
-      console.log(window.location.origin + '/' + uri);
     },
     
     lessons: function (subject, standard, grades, format, callback) {
@@ -52,7 +51,6 @@ var api = {
       $.getJSON(uri, function (response) {
         callback(response.rows);
       });
-      console.log(window.location.origin + '/' + uri);
     }
   }
 
