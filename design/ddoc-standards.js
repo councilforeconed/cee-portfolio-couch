@@ -2,8 +2,6 @@ var couchapp = require('couchapp');
 
 ddoc = { _id:'_design/standards' };
 
-ddoc.modules = couchapp.loadFiles('./common');
-
 ddoc.views = {
   "by-standard-economics": {
     map: function (doc) {
