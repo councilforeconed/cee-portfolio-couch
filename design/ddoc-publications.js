@@ -54,30 +54,6 @@ ddoc.views = {
   }
 };
 
-ddoc.lists = {
-  "publications": function (doc, req) {
-    start({"headers":{"Content-Type" : "text/html; charset=utf-8"}});
-    
-    send('<table class="table">');
-    send('\t<thead>');
-    send('\t\t<tr>');
-    send('\t\t\t<th>Publication</th>');
-    send('\t\t\t<th>Lessons</th>');
-    send('\t\t</tr>');
-    send('\t</thead>');
-    send('\t<tbody>');
-    
-    var row;
-    while (row = getRow()) {
-      var publication = row.key;
-      var count = row.value;
-      send('\t\t<tr>\n\t\t\t<td>' + publication + '</td>\n\t\t\t<td>' + count + '</td>\n\t\t</tr>');
-    }
-    
-    send('\t<tbody>');
-    send('</table>');
-    
-  }
-};
+ddoc.lists = {};
 
 module.exports = ddoc;

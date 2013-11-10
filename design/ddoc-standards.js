@@ -310,42 +310,6 @@ ddoc.views = {
   }
 };
 
-ddoc.lists = {
-  "standards-by-grade": function (doc, req) {
-    var _ = require('modules/underscore');
-    var Mustache = require('modules/mustache');
-    
-    var template = '<div class="lesson-in-modal" data-lesson={{_id}}>' +
-                      ' <strong>{{title}}</strong>,' +
-                      ' <a href="{{url}}">{{source}}</a>' +
-                      ' {{#year}}<span class="label label-info">{{year}}</span>{{/year}}' +
-                      ' {{#type}}<span class="label label-info">{{type}}</span>{{/type}}' +
-                      ' {{#id}}<span class="label label-warning">{{id}}</span>{{/id}}' +
-                      ' <div class="comment-buttons">' +
-                      ' <a href="#/lesson/{{_id}}/like" class="btn btn-default btn-sm like-{{_id}}"> ' +
-                      '   <span class="glyphicon glyphicon-thumbs-up"></span> Like' +
-                      ' </a>' +
-                      ' <a href="#/lesson/{{_id}}/dislike" class="btn btn-default btn-sm dislike-{{_id}}"> ' +
-                      '   <span class="glyphicon glyphicon-thumbs-down"></span> Dislike' +
-                      ' </a>' +
-                      ' <a href="#/lesson/{{_id}}/miscategorized" class="btn btn-default btn-sm miscategorized-{{_id}}"> ' +
-                      '   <span class="glyphicon glyphicon-question-sign"></span> Miscategorized' +
-                      ' </a>' +
-                      ' <a href="#/lesson/{{_id}}/comment" class="btn btn-default btn-sm comment-{{_id}}"> ' +
-                      '   <span class="glyphicon glyphicon-comment"></span> Comment' +
-                      ' </a>' +
-                      ' </div>' +
-                    '</div>'
-    
-    start({"headers":{"Content-Type" : "text/html; charset=utf-8"}});
-    
-    var row;
-    while (row = getRow()) {
-      var lesson = row.value;
-        send(Mustache.render(template, lesson));
-    }
-    
-  }
-};
+ddoc.lists = {};
 
 module.exports = ddoc;

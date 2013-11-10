@@ -3,9 +3,7 @@ var path = require('path');
 
 ddoc = { _id:'_design/grades' };
 
-ddoc.rewrites = [
-  {from: "../", to: "index.html"},
-]
+ddoc.rewrites = []
 
 ddoc.views = {
   "all": {
