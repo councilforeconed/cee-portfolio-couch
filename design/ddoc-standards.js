@@ -308,6 +308,41 @@ ddoc.views = {
   }
 };
 
-ddoc.lists = {};
+ddoc.lists = {
+  'count-lessons-by-standard-by-grade': function (head, request) {
+    start({"headers":{"Content-Type" : "application/json; charset=utf-8"}});
+    
+    var rows = {};
+    
+    var row;
+    while (row = getRow()) {
+      
+      var standard = row.key[0];
+      var grades = row.key[1];
+      var lessons = row.value;
+      
+      if (!rows[standard]) {
+        rows[standard] = {
+          "K-2": 0,
+          "3-5": 0,
+          "6-8": 0,
+          "9-12": 0
+        };
+      } else {
+        rows[standard][grades] = lessons;
+      }
+    }
+    
+    var response = [];
+    for (standard in rows) {
+      if (rows.hasOwnProperty(standard)) {
+        rows[standard].standard = standard
+        response.push(rows[standard])
+      }
+    }
+    
+    send(JSON.stringify(response));
+  }
+};
 
 module.exports = ddoc;

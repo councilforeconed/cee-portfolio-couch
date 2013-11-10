@@ -34,14 +34,14 @@ var api = {
     
     standardsByGrade: function (subject, format, callback) {
       if (format === 'all') {
-        var uri = encodeURI('api/_design/standards/_view/by-standard-' + subject + '-then-grade?group_level=2');
+        var uri = encodeURI('api/_design/standards/_list/count-lessons-by-standard-by-grade/by-standard-' + subject + '-then-grade?group_level=2');
         $.getJSON(uri, function (response) {
-          callback(response.rows);
+          callback(response);
         });
       } else {
-        var uri = 'api/_design/standards/_view/by-standard-' + subject + '-then-grade-' + format + '?group_level=2'
+        var uri = 'api/_design/standards/_list/count-lessons-by-standard-by-grade/by-standard-' + subject + '-then-grade-' + format + '?group_level=2';
         $.getJSON(uri, function (response) {
-          callback(response.rows);
+          callback(response);
         });
       }
     },
