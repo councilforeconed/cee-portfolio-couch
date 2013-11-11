@@ -2,7 +2,7 @@ var $content = $('#main-content')
 var canvas = Handlebars.compile('<canvas id="{{id}}" width="' + $content.width() + '" height="' + $content.width()/2 +'"></canvas>')
 
 var routes = {
-  '/grades': function() {
+  'grades': function() {
     api.get.grades(function (grades) {
       if ( $('#grade-distribution').length === 0 ) {
         $content.children().remove();
@@ -30,7 +30,7 @@ var routes = {
     });
   },
 
-  '/formats': function() {
+  'formats': function() {
     api.get.formats(function (formats) {
       if ( $('#format-distribution').length === 0 ) {
         $content.children().remove();
@@ -48,7 +48,7 @@ var routes = {
     });
   },
 
-  '/publications': function() {
+  'publications': function() {
     api.get.publications(function (publications) {
       $content.children().remove();
       var template = Handlebars.compile($('#publications-list-template').html());
@@ -56,7 +56,7 @@ var routes = {
     });
   },
 
-  '/graph/:subject/:format': function(subject, format) {
+  'graph/:subject/:format': function(subject, format) {
     api.get.standards(subject, format, function (standards) {
       $content.children().remove();
     
@@ -80,7 +80,7 @@ var routes = {
     });
   },
 
-  '/table/:subject/:format': function (subject, format) {
+  'table/:subject/:format': function (subject, format) {
     api.get.standardsByGrade(subject, format, function (standards) {
       $content.children().remove();
     
@@ -109,74 +109,25 @@ var routes = {
     });
   },
 
-  '/subject/:subject/standard/:standard/grades/:grades/format/:format': function (subject, standard, grades, format) {
+  'subject/:subject/standard/:standard/grades/:grades/format/:format': function (subject, standard, grades, format) {
     api.get.lessons(subject, standard, grades, format, function (lessons) {
       $content.children().remove();
-      
+
       var $lessons = $('<div class="lessons"></div>');
       var template = Handlebars.compile($('#lesson-template').html());
-    
+
       var compiledLessons = _.each(lessons, function (lesson) {
         $lessons.append(template(lesson.value));
       });
-    
-      $lessons
-        .width($content.width())
-        .appendTo($content);
-    
-        $('.rating').on('click', function (e) {
-          e.preventDefault();
-          var $this = $(this);
-          var lesson = $this.data('lesson');
-          var rating = $this.data('rating');
-          
-          var alertTemplate = Handlebars.compile($('#alert-template').html());
-          var commentTemplate = Handlebars.compile($('#comment-template').html());
-          
-          if (rating === 'like' || rating === 'dislike' || rating === 'miscategorized') {
-            $this
-              .addClass('disabled')
-              .on('click', function (e) {
-                e.preventDefault();
-              })
-              .parents('.panel.lesson')
-                .find('.lesson-notifications')
-                .append(alertTemplate({
-                  title: util.capitalize(rating) + ':',
-                  content: lesson,
-                  dismissable: true,
-                  type: 'info'
-                }));
-          } else if (rating === 'comment') {
-            $this
-              .addClass('disabled')
-              .on('click', function (e) {
-                e.preventDefault();
-              })
-              .parents('.panel.lesson')
-                .find('.lesson-notifications')
-                .append(commentTemplate({
-                  lesson: lesson
-                }))
-                .find('button')
-                  .on('click', function (e) {
-                    e.preventDefault();
-                    $(this).parent().parent().slideUp();
-                    $(this)
-                      .parents('.lesson-notifications')
-                      .append(alertTemplate({
-                        title: 'Comment:',
-                        content: lesson,
-                        dismissable: true,
-                        type: 'info'
-                      }));
-                  })
-          }
-          
-        });
+
+      $lessons.width($content.width()).appendTo($content);
     });
   }
 }
 
-var router = Router(routes);
-router.init(window.location.hash);
+var Router = Backbone.Router.extend({
+    routes: routes
+});
+
+router = new Router();
+Backbone.history.start();
