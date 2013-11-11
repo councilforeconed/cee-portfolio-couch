@@ -96,21 +96,31 @@
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="panel-body">
-            <h4>Source</h4>
-            <p>
-              {{#if url}}<a href="{{url}}">{{/if}}{{source}}{{#if url}}</a>{{/if}}
-              {{#if year}}({{year}}){{/if}}
-              {{#if type}}<span class="badge">{{id}}<span>{{/if}}
-            </p>
+            <div class="row">
+              <div class="col-md-6">
+                <h4>ID</h4>
+                <p>
+                {{_id}}
+                </p>
+              </div>
+              <div class="col-md-6">
+                <h4>Source</h4>
+                <p>
+                  {{#if url}}<a href="{{url}}">{{/if}}{{source}}{{#if url}}</a>{{/if}}
+                  {{#if year}}({{year}}){{/if}}
+                  {{#if type}}<span class="badge">{{id}}<span>{{/if}}
+                </p>
+              </div>
+            </div>
             <div class="lesson-notifications">
             </div>
           </div>
           <div class="panel-footer">
             <div class="btn-group">
-              <a href="#/rate/like/{{_id}}" class="btn btn-success like rating" data-rating="like" data-lesson="{{_id}}"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
-              <a href="#/rate/dislike/{{_id}}" class="btn btn-danger dislike rating" data-rating="dislike" data-lesson="{{_id}}"><span class="glyphicon glyphicon-thumbs-down"></span> Dislike</a>
-              <a href="#/rate/miscategorized/{{_id}}" class="btn btn-warning miscategorized rating" data-rating="miscategorized" data-lesson="{{_id}}"><span class="glyphicon glyphicon-question-sign"></span> Miscategorized</a>
-              <a href="#/rate/comment/{{_id}}" class="btn btn-info comment rating" data-rating="comment" data-lesson="{{_id}}"><span class="glyphicon glyphicon-comment"></span> Comment</a>
+              <button class="btn btn-success like rating" data-rating="like" data-lesson="{{_id}}"><span class="glyphicon glyphicon-thumbs-up"></span> Like</button>
+              <button class="btn btn-danger dislike rating" data-rating="dislike" data-lesson="{{_id}}"><span class="glyphicon glyphicon-thumbs-down"></span> Dislike</button>
+              <button class="btn btn-warning miscategorized rating" data-rating="miscategorized" data-lesson="{{_id}}"><span class="glyphicon glyphicon-question-sign"></span> Miscategorized</button>
+              <button class="btn btn-info comment rating" data-rating="comment" data-lesson="{{_id}}"><span class="glyphicon glyphicon-comment"></span> Comment</button>
             </div>
           </div>
         </div>
@@ -150,9 +160,7 @@
             {{#each lessons}}
             <tr>
               <td>
-                <a href="#/subject/{{subject}}/standard/{{standard}}" class="standard-header" data-subject="{{subject}}" data-standard="{{standard}}">
-                  Standard {{standard}}
-                </a>
+                <span class="standard-header" data-subject="{{subject}}" data-standard="{{standard}}">Standard {{standard}}</span>
               </td>
               <td>
                 {{#if K-2}}<a href="#/subject/{{subject}}/standard/{{standard}}/grades/K-2/format/{{format}}">{{/if}}
@@ -199,6 +207,31 @@
         </div>
       </script>
       
+      <script id="login-template" type="text/x-handlebars-template">
+        <div class="panel panel-default login" id="login">
+          <div class="panel-body">
+            <form role="form">
+              <div class="form-group">
+                <label for="username">User Name</label>
+                <input type="email" class="form-control" id="username" placeholder="User Name">
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password">
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+          </div>
+        </div>
+      </script>
+      
+      <script id="logged-in-template" type="text/x-handlebars-template">
+        <div class="alert alert-success alert-dismissable">
+          You are logged in as <strong>{{username}}</strong>. (<a href="#/logout">Log Out</a>)
+          <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+        </div>
+      </script>
+      
       <!-- /Handlebars Templates -->
       
       <script src="js/vendor/jquery.js"></script>
@@ -213,5 +246,6 @@
       <script src="js/lib/util.js"></script>
       <script src="js/lib/api.js"></script>
       <script src="js/lib/routes.js"></script>
+      <script src="js/lib/login.js"></script>
     </body>
 </html>

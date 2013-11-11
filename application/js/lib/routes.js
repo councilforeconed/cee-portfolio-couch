@@ -92,8 +92,7 @@ var routes = {
       var template = Handlebars.compile($('#standards-table-template').html());
       $content.append(template({lessons: standards}));
     
-      $('.standard-header').on('click', function (e) {
-        e.preventDefault();
+      $('span.standard-header').on('hover', function (e) {
         var $this = $(this);
         var standardNumber = $this.data('standard'); 
         var subject = $this.data('subject');
@@ -104,7 +103,7 @@ var routes = {
           title: util.parseSubject(subject) + " Standard " + standardNumber,
           content: '<strong>' + standard.topic + '</strong>: ' + standard.description,
           html: true
-        })
+        });
       });
     });
   },
@@ -114,14 +113,40 @@ var routes = {
       $content.children().remove();
 
       var $lessons = $('<div class="lessons"></div>');
-      var template = Handlebars.compile($('#lesson-template').html());
+      
+      var lessonTemplate = Handlebars.compile($('#lesson-template').html());
+      var alertTemplate = Handlebars.compile($('#alert-template').html());
+      var commentTemplate = Handlebars.compile($('#comment-template').html());
 
       var compiledLessons = _.each(lessons, function (lesson) {
-        $lessons.append(template(lesson.value));
+        $lessons.append(lessonTemplate(lesson.value));
       });
 
       $lessons.width($content.width()).appendTo($content);
+      
+      $('.rating.like, .rating.dislike, .rating.miscategorized').on('click', function (e) {
+        var $this = $(this);
+        util.ifLoggedIn(function (username) {
+          var lesson = $this.data('lesson');
+          var rating = $this.data('rating');
+          var type = $this.attr('class').match(/btn-(\w+)/)[1]
+          var $notifications = $this.parents('.lesson').find('.lesson-notifications');
+        
+          $notifications.append(alertTemplate({
+            title: lesson + ': ',
+            content: util.capitalize(rating) + ' (' + username + ')',
+            type: 'alert-' + type 
+          }))
+        
+          $this.attr('disabled', true); 
+        }, util.notLoggedIn)
+      });
     });
+  },
+  
+  'logout': function () {
+    $.couch.logout({success: displayLoginInformation});
+    window.location.hash = '';
   }
 }
 

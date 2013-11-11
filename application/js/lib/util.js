@@ -74,6 +74,23 @@ var util = (function () {
     },
     capitalize: function (string) {
       return string[0].toUpperCase() + string.slice(1);
+    },
+    ifLoggedIn: function (successCallback, failureCallback, epicFailureCallback) {
+      $.couch.session({
+        success: function (response) {
+          if (response.userCtx.name) {
+            if (typeof successCallback === "function") successCallback(response.userCtx.name);
+          } else {
+            if (typeof failureCallback === "function") failureCallback();
+          }
+        },
+        error: function (response) {
+          if (typeof epicFailureCallback === "function")  epicFailureCallback(response);
+        }
+      })
+    },
+    notLoggedIn: function () {
+      console.log('You are not logged in.')
     }
   }
   

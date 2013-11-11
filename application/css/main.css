@@ -5,3 +5,7 @@
 .lesson .rating-alert {
   display: none;
 }
+
+.standard-header {
+  cursor: help;
+}
