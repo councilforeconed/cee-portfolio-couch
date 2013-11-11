@@ -52,6 +52,21 @@ var api = {
         callback(response.rows);
       });
     }
+  },
+  
+  post: {
+    
+    rating: function (payload, callback) {
+      $.ajax({
+        type: "POST",
+        url: 'api',
+        data: JSON.stringify(payload),
+        success: function (data) { if (typeof callback === "function") callback(data); },
+        dataType: 'json',
+        contentType: "application/json",
+      })
+    }
+    
   }
 
 }

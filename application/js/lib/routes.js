@@ -131,16 +131,58 @@ var routes = {
           var rating = $this.data('rating');
           var type = $this.attr('class').match(/btn-(\w+)/)[1]
           var $notifications = $this.parents('.lesson').find('.lesson-notifications');
-        
-          $notifications.append(alertTemplate({
-            title: lesson + ': ',
-            content: util.capitalize(rating) + ' (' + username + ')',
-            type: 'alert-' + type 
-          }))
-        
-          $this.attr('disabled', true); 
+          
+          var payload = util.applyHashData({
+            lesson: lesson,
+            type: 'rating',
+            rating: rating,
+            user: username
+          });
+          api.post.rating(payload, function () {
+            $notifications.append(alertTemplate({
+              title: lesson + ': ',
+              content: util.capitalize(rating) + ' (' + username + ')',
+              type: 'alert-' + type 
+            }));
+            $this.attr('disabled', true); 
+          });
+
         }, util.notLoggedIn)
       });
+      
+      $('.rating.comment').on('click', function (e) {
+        var $this = $(this);
+        util.ifLoggedIn(function (username) {
+          var lesson = $this.data('lesson');
+          var $notifications = $this.parents('.lesson').find('.lesson-notifications');
+          
+          $notifications
+            .append(commentTemplate({
+              lesson: lesson
+            }))
+            .find('.comment button')
+            .on('click', function () {
+              var $commentSubmitButton = $(this);
+              var comment = $commentSubmitButton.parents('.comment').find('textarea').val()
+              $notifications.append(alertTemplate({
+                title: lesson + ': ',
+                content: 'Comment submitted. (' + username + '): ' + comment,
+                type: 'alert-info'
+              }));
+              var payload = util.applyHashData({
+                lesson: lesson,
+                type: 'rating',
+                comment: comment,
+                user: username,
+              });
+              api.post.rating(payload, function () {
+                $commentSubmitButton.parents('.comment').slideUp();
+              });
+            });
+          
+          $this.attr('disabled', true); 
+        });
+      })
     });
   },
   

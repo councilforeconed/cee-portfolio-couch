@@ -11,7 +11,13 @@ ddoc = {
   ]
 };
 
-ddoc.views = {};
+ddoc.views = {
+  ratings: {
+    map: function (doc) {
+      if (doc.type === 'rating') emit(doc.rating, doc);
+    }
+  }
+};
 
 couchapp.loadAttachments(ddoc, path.join(__dirname, 'application'));
 module.exports = ddoc;

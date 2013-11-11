@@ -1,14 +1,19 @@
+if (window.location.host === "localhost:3000") {
+  $.couch.urlPrefix = 'http://portfol.io:5984';
+}
+
 var $globalNotifications = $('#global-notifications');
 
-function displayLoginInformation() {
-  util.ifLoggedIn(function (username) {
+function displayLoginInformation(callback) {
+  util.ifLoggedIn(
+  function successfulLogin(username) {
     $globalNotifications.children().remove();
     var loginTemplate = Handlebars.compile($('#logged-in-template').html());
     $globalNotifications.append(loginTemplate({
       username: username
     }));
   },
-  function () {
+  function unsuccessfulLogin() {
     $globalNotifications.children().remove();
     var loginTemplate = Handlebars.compile($('#login-template').html());
     $globalNotifications.append(loginTemplate());
@@ -30,7 +35,14 @@ function displayLoginInformation() {
         loginProblem('You must provide a username and password.')
       }
     })
-  })
+  },
+  function loginError() {
+    loginProblem('There was an unknown issue. Try again.')
+  },
+  function customCallback() {
+     if (typeof callback === "function") callback();
+  }
+)
 };
 
 function loginProblem(error) {

@@ -75,7 +75,7 @@ var util = (function () {
     capitalize: function (string) {
       return string[0].toUpperCase() + string.slice(1);
     },
-    ifLoggedIn: function (successCallback, failureCallback, epicFailureCallback) {
+    ifLoggedIn: function (successCallback, failureCallback, epicFailureCallback, customCallback) {
       $.couch.session({
         success: function (response) {
           if (response.userCtx.name) {
@@ -88,11 +88,21 @@ var util = (function () {
           if (typeof epicFailureCallback === "function")  epicFailureCallback(response);
         }
       })
+      if (typeof customCallback === "function") customCallback();
     },
     notLoggedIn: function () {
-      displayLoginInformation();
-      loginProblem('You must be logged in to do that.');
-      $("html, body").animate({ scrollTop: $('#login').offset().top }, "slow");
+      displayLoginInformation(function () {
+        $("html, body").animate({ scrollTop: $('#login').offset().top - 100 }, "slow");
+        loginProblem('You must be logged in to do that.');
+      });
+    },
+    applyHashData: function (payload) {
+      var hashData = window.location.hash.match(/#\/subject\/(\w+)\/standard\/(.+)\/grades\/(.+)\/format\/(.+)/);
+      payload.subject = hashData[1];
+      payload.standard = hashData[2];
+      payload.grades = hashData[3];
+      payload.format = hashData[4];
+      return payload;
     }
   }
   

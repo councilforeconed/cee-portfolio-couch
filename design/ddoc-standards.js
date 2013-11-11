@@ -84,7 +84,7 @@ ddoc.views = {
       if (doc.personalFinanceStandards.length > 0 && doc.format === "online") {
         doc.personalFinanceStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
-            if (doc.portfolio && grade) emit([parseInt(standard), grade], doc)
+            if (doc.portfolio && grade && doc.type === "lesson") emit([parseInt(standard), grade], doc)
           });
         });
       }
