@@ -127,7 +127,7 @@ var routes = {
         $('.rating').on('click', function (e) {
           e.preventDefault();
           var $this = $(this);
-          var lesson = $this.data('lesson'); 
+          var lesson = $this.data('lesson');
           var rating = $this.data('rating');
         
           console.log(lesson, rating);
