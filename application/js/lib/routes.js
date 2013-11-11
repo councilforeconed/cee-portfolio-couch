@@ -51,10 +51,8 @@ var routes = {
   '/publications': function() {
     api.get.publications(function (publications) {
       $content.children().remove();
-      $.get('templates/publications.hbs', function (template) {
-        var template = Handlebars.compile(template);
-        $content.append(template({publications: publications}));
-      })
+      var template = Handlebars.compile($('#publications-list-template').html());
+      $content.append(template({publications: publications}));
     });
   },
 
@@ -90,26 +88,23 @@ var routes = {
         row.subject = subject;
         row.format = format;
       });
+          
+      var template = Handlebars.compile($('#standards-table-template').html());
+      $content.append(template({lessons: standards}));
     
-      $.get('templates/standards-table.hbs', function (template) {
+      $('.standard-header').on('click', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        var standardNumber = $this.data('standard'); 
+        var subject = $this.data('subject');
       
-        var template = Handlebars.compile(template)
-        $content.append(template({lessons: standards}));
-      
-        $('.standard-header').on('click', function (e) {
-          e.preventDefault();
-          var $this = $(this);
-          var standardNumber = $this.data('standard'); 
-          var subject = $this.data('subject');
-        
-          var standard = util.parseStandard(subject, standardNumber);
-      
-          $this.popover({
-            title: util.parseSubject(subject) + " Standard " + standardNumber,
-            content: '<strong>' + standard.topic + '</strong>: ' + standard.description,
-            html: true
-          })
-        });
+        var standard = util.parseStandard(subject, standardNumber);
+    
+        $this.popover({
+          title: util.parseSubject(subject) + " Standard " + standardNumber,
+          content: '<strong>' + standard.topic + '</strong>: ' + standard.description,
+          html: true
+        })
       });
     });
   },
@@ -117,28 +112,26 @@ var routes = {
   '/subject/:subject/standard/:standard/grades/:grades/format/:format': function (subject, standard, grades, format) {
     api.get.lessons(subject, standard, grades, format, function (lessons) {
       $content.children().remove();
-      $.get('templates/lesson.hbs', function (resp) {
       
-        var $lessons = $('<div class="lessons"></div>');
-        var template = Handlebars.compile(resp);
-      
-        var compiledLessons = _.each(lessons, function (lesson) {
-          $lessons.append(template(lesson.value));
-        });
-      
-        $lessons
-          .width($content.width())
-          .appendTo($content);
-      
-          $('.rating').on('click', function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var lesson = $this.data('lesson'); 
-            var rating = $this.data('rating');
-          
-            console.log(lesson, rating);
-          });
+      var $lessons = $('<div class="lessons"></div>');
+      var template = Handlebars.compile($('#lesson-template').html());
+    
+      var compiledLessons = _.each(lessons, function (lesson) {
+        $lessons.append(template(lesson.value));
       });
+    
+      $lessons
+        .width($content.width())
+        .appendTo($content);
+    
+        $('.rating').on('click', function (e) {
+          e.preventDefault();
+          var $this = $(this);
+          var lesson = $this.data('lesson'); 
+          var rating = $this.data('rating');
+        
+          console.log(lesson, rating);
+        });
     });
   }
 }
