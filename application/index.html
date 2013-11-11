@@ -109,7 +109,7 @@
             <div class="btn-group">
               <a href="#/rate/like/{{_id}}" class="btn btn-success like rating" data-rating="like" data-lesson="{{_id}}"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
               <a href="#/rate/dislike/{{_id}}" class="btn btn-danger dislike rating" data-rating="dislike" data-lesson="{{_id}}"><span class="glyphicon glyphicon-thumbs-down"></span> Dislike</a>
-              <a href="#/rate/miscategorized/{{_id}}" class="btn btn-warning miscategorized rating" data-rating="like" data-lesson="{{_id}}"><span class="glyphicon glyphicon-question-sign"></span> Miscategorized</a>
+              <a href="#/rate/miscategorized/{{_id}}" class="btn btn-warning miscategorized rating" data-rating="miscategorized" data-lesson="{{_id}}"><span class="glyphicon glyphicon-question-sign"></span> Miscategorized</a>
               <a href="#/rate/comment/{{_id}}" class="btn btn-info comment rating" data-rating="comment" data-lesson="{{_id}}"><span class="glyphicon glyphicon-comment"></span> Comment</a>
             </div>
           </div>
@@ -181,8 +181,21 @@
       </script>
       
       <script id="alert-template" type="text/x-handlebars-template">
-        <div class="alert alert-info{{#if dismissable}} alert-dismissable{{/if}}">
+        <div class="alert alert-{{type}}{{#if dismissable}} alert-dismissable{{/if}}">
           {{#if title}}<strong>{{title}} </strong>{{/if}}{{content}}
+          <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+        </div>
+      </script>
+      
+      <script id="comment-template" type="text/x-handlebars-template">
+        <div class="panel panel-default comment" data-lesson="{{lesson}}">
+          <div class="panel-body">
+            <h5>Comment</h5>
+            <textarea class="form-control comment-box" data-lesson="{{lesson}}" rows="3"></textarea>
+          </div>
+          <div class="panel-footer">
+            <button class="btn btn-primary">Submit</button>
+          </div>
         </div>
       </script>
       

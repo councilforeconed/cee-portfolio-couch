@@ -129,8 +129,50 @@ var routes = {
           var $this = $(this);
           var lesson = $this.data('lesson');
           var rating = $this.data('rating');
-        
-          console.log(lesson, rating);
+          
+          var alertTemplate = Handlebars.compile($('#alert-template').html());
+          var commentTemplate = Handlebars.compile($('#comment-template').html());
+          
+          if (rating === 'like' || rating === 'dislike' || rating === 'miscategorized') {
+            $this
+              .addClass('disabled')
+              .on('click', function (e) {
+                e.preventDefault();
+              })
+              .parents('.panel.lesson')
+                .find('.lesson-notifications')
+                .append(alertTemplate({
+                  title: util.capitalize(rating) + ':',
+                  content: lesson,
+                  dismissable: true,
+                  type: 'info'
+                }));
+          } else if (rating === 'comment') {
+            $this
+              .addClass('disabled')
+              .on('click', function (e) {
+                e.preventDefault();
+              })
+              .parents('.panel.lesson')
+                .find('.lesson-notifications')
+                .append(commentTemplate({
+                  lesson: lesson
+                }))
+                .find('button')
+                  .on('click', function (e) {
+                    e.preventDefault();
+                    $(this).parent().parent().slideUp();
+                    $(this)
+                      .parents('.lesson-notifications')
+                      .append(alertTemplate({
+                        title: 'Comment:',
+                        content: lesson,
+                        dismissable: true,
+                        type: 'info'
+                      }));
+                  })
+          }
+          
         });
     });
   }

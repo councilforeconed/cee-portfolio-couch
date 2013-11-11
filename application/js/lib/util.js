@@ -71,6 +71,9 @@ var util = (function () {
     },
     color: function(color) {
       return colors[color];
+    },
+    capitalize: function (string) {
+      return string[0].toUpperCase() + string.slice(1);
     }
   }
   
