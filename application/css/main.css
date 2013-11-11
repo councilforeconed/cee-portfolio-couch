@@ -2,6 +2,6 @@
   margin-top: 2em;
 }
 
-.lesson {
-  
+.lesson .rating-alert {
+  display: none;
 }
