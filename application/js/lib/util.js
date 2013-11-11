@@ -90,7 +90,9 @@ var util = (function () {
       })
     },
     notLoggedIn: function () {
-      console.log('You are not logged in.')
+      displayLoginInformation();
+      loginProblem('You must be logged in to do that.');
+      $("html, body").animate({ scrollTop: $('#login').offset().top }, "slow");
     }
   }
   
