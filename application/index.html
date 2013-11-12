@@ -153,6 +153,18 @@
                   </td>
                 </tr>
                 {{/if}}
+                {{#if concepts}}
+                <tr>
+                  <th>Concepts</th>
+                  <td>
+                    <ul class="comma-seperated-list">
+                    {{#each concepts}}
+                      <li>{{this}}</li>
+                    {{/each}}
+                    </ul>
+                  </td>
+                </tr>
+                {{/if}}
               </tbody>
             </table>
             <div class="lesson-notifications"></div>

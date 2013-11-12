@@ -25,7 +25,7 @@ ul.comma-seperated-list li:after {
 }
 
 ul.comma-seperated-list li:last-child:after {
-    content: ""
+    content: "";
 }
 
 .print-color {
