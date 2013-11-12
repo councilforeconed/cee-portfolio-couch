@@ -27,3 +27,23 @@ ul.comma-seperated-list li:after {
 ul.comma-seperated-list li:last-child:after {
     content: ""
 }
+
+.print-color {
+  color: #FFF;
+  text-shadow:
+    rgb(0,113,188) -1px -1px 1px,
+    rgb(0,113,188) 1px 1px 1px,
+    rgb(0,113,188) 1px -1px 1px,
+    rgb(0,113,188) -1px 1px 1px,
+    rgb(0,113,188) 0px 0px 1px;
+}
+
+.online-color {
+  color: #FFF;
+  text-shadow: 
+    rgb(116,190,233) -1px -1px 1px,
+    rgb(116,190,233) 1px 1px 1px,
+    rgb(116,190,233) 1px -1px 1px,
+    rgb(116,190,233) -1px 1px 1px,
+    rgb(116,190,233) 0px 0px 1px;
+}

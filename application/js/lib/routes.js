@@ -32,7 +32,7 @@ var routes = {
   'formats': function() {
     api.get.formats(function (formats) {
       $content.children().remove();
-      $content.prepend('<h3>Distribution of Print versus Online Materials</h3>');
+      $content.prepend('<h3><span class="print-color">Print</span> versus <span class="online-color">Online Materials</span></h3>')
     
       var data = _.map(formats, function (row) { return { value: row.value } });
     
