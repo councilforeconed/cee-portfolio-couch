@@ -94,28 +94,76 @@
       <!-- Handlebars Templates -->
       
       <script id="lesson-template" type="text/x-handlebars-template">
-        <div class="panel panel-default lesson" id="lesson-{{_id}}">
+        <div class="panel panel-default lesson" id="lesson-{{_id}}" data-lesson="{{_id}}">
           <div class="panel-heading">
-            <h3 class="panel-title">{{title}}</h3>
+            <h2 class="panel-title">{{title}}</h2>
           </div>
           <div class="panel-body">
-            <div class="row">
-              <div class="col-md-6">
-                <h4>ID</h4>
-                <p>
-                {{_id}}
-                </p>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <th>Identifier</th>
+                  <td>{{_id}}</td>
+                </tr>
+                <tr>
+                  <th>Source</th>
+                  <td class="source">{{#if url}}<a href="{{url}}">{{source}}</a>{{else}}{{source}}{{/if}}</td>
+                </tr>
+                <tr>
+                  <th>Format</th>
+                  <td>{{format}}</td>
+                </tr>
+                <tr>
+                  <th>Target Audience</th>
+                  <td>{{#if audience}}{{audience}}{{else}}teacher{{/if}}</td>
+                </tr>
+                {{#if economicsStandards}}
+                <tr>
+                  <th>Economics Standards</th>
+                  <td>
+                    <ul class="comma-seperated-list">
+                    {{#each economicsStandards}}
+                      <li>{{this}}</li>
+                    {{/each}}
+                    </ul>
+                  </td>
+                </tr>
+                {{/if}}
+                {{#if personalFinanceStandards}}
+                <tr>
+                  <th>Personal Finance Standards</th>
+                  <td>
+                    <ul class="comma-seperated-list">
+                    {{#each personalFinanceStandards}}
+                      <li>{{this}}</li>
+                    {{/each}}
+                    </ul>
+                  </td>
+                </tr>
+                {{/if}}
+                {{#if commonCoreStandards}}
+                <tr>
+                  <th>Common Core Standards</th>
+                  <td>
+                    <ul class="comma-seperated-list">
+                    {{#each commonCoreStandards}}
+                      <li>{{this}}</li>
+                    {{/each}}
+                    </ul>
+                  </td>
+                </tr>
+                {{/if}}
+              </tbody>
+            </table>
+            <div class="lesson-notifications"></div>
+            <div class="panel panel-default comment-submission hidden" data-lesson="{{_id}}">
+              <div class="panel-body">
+                <h5>Comment</h5>
+                <textarea class="form-control comment-box" rows="3"></textarea>
               </div>
-              <div class="col-md-6">
-                <h4>Source</h4>
-                <p>
-                  {{#if url}}<a href="{{url}}">{{/if}}{{source}}{{#if url}}</a>{{/if}}
-                  {{#if year}}({{year}}){{/if}}
-                  {{#if type}}<span class="badge">{{id}}<span>{{/if}}
-                </p>
+              <div class="panel-footer">
+                <button class="btn btn-primary btn-sm">Submit</button>
               </div>
-            </div>
-            <div class="lesson-notifications">
             </div>
           </div>
           <div class="panel-footer">
@@ -195,18 +243,6 @@
         <div class="alert {{type}}{{#if dismissable}} alert-dismissable{{/if}}">
           {{#if title}}<strong>{{title}} </strong>{{/if}}{{content}}
           <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-        </div>
-      </script>
-      
-      <script id="comment-template" type="text/x-handlebars-template">
-        <div class="panel panel-default comment" data-lesson="{{lesson}}">
-          <div class="panel-body">
-            <h5>Comment</h5>
-            <textarea class="form-control comment-box" data-lesson="{{lesson}}" rows="3"></textarea>
-          </div>
-          <div class="panel-footer">
-            <button class="btn btn-primary">Submit</button>
-          </div>
         </div>
       </script>
       

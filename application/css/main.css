@@ -9,3 +9,21 @@
 .standard-header {
   cursor: help;
 }
+
+ul.comma-seperated-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.comma-seperated-list li {
+  display: inline;
+}
+
+ul.comma-seperated-list li:after {
+  content: ", ";
+}
+
+ul.comma-seperated-list li:last-child:after {
+    content: ""
+}

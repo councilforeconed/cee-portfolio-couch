@@ -1,5 +1,6 @@
 var $content = $('#main-content')
 var canvas = Handlebars.compile('<canvas id="{{id}}" width="' + $content.width() + '" height="' + $content.width()/2 +'"></canvas>')
+var alertTemplate = Handlebars.compile($('#alert-template').html());
 
 var routes = {
   'grades': function() {
@@ -112,36 +113,41 @@ var routes = {
     api.get.lessons(subject, standard, grades, format, function (lessons) {
       $content.children().remove();
 
-      var $lessons = $('<div class="lessons"></div>');
-      
       var lessonTemplate = Handlebars.compile($('#lesson-template').html());
       var alertTemplate = Handlebars.compile($('#alert-template').html());
-      var commentTemplate = Handlebars.compile($('#comment-template').html());
 
-      var compiledLessons = _.each(lessons, function (lesson) {
+      var $lessons = $('<div class="lessons"></div>');
+
+      _.each(lessons, function (lesson) {
         $lessons.append(lessonTemplate(lesson.value));
       });
 
-      $lessons.width($content.width()).appendTo($content);
+      $lessons.appendTo($content);
       
       $('.rating.like, .rating.dislike, .rating.miscategorized').on('click', function (e) {
         var $this = $(this);
         auth.ifLoggedIn(function (username) {
+          
           var lesson = $this.data('lesson');
           var rating = $this.data('rating');
           var type = $this.attr('class').match(/btn-(\w+)/)[1]
-          var $notifications = $this.parents('.lesson').find('.lesson-notifications');
           
           var payload = util.applyHashData({
             lesson: lesson,
             type: 'rating',
             rating: rating,
-            user: username
+            user: username,
           });
+          
+          var alertContent = (function (type) {
+            if (type === "like") return 'You like this lesson.';
+            if (type === "dislike") return 'You dislike this lesson.';
+            if (type === "miscategorized") return 'You believe this lesson has been miscategorized. Please leave a comment with more details.';
+          })(rating);
+          
           api.post.rating(payload, function () {
-            $notifications.append(alertTemplate({
-              title: lesson + ': ',
-              content: util.capitalize(rating) + ' (' + username + ')',
+            $this.parents('.lesson').find('.lesson-notifications').append(alertTemplate({
+              content: alertContent,
               type: 'alert-' + type 
             }));
             $this.attr('disabled', true); 
@@ -151,44 +157,40 @@ var routes = {
       });
       
       $('.rating.comment').on('click', function (e) {
+        $(this).parents('.panel').find('.comment-submission').toggleClass('hidden');
+      });
+      
+      $('.comment-submission button').on('click', function (e) {
         var $this = $(this);
         auth.ifLoggedIn(function (username) {
-          var lesson = $this.data('lesson');
-          var $notifications = $this.parents('.lesson').find('.lesson-notifications');
+          var lesson = $this.parents('.lesson').data('lesson');
+          var comment = $this.parents('.comment-submission').find('textarea').val();
           
-          $notifications
-            .append(commentTemplate({
-              lesson: lesson
-            }))
-            .find('.comment button')
-            .on('click', function () {
-              var $commentSubmitButton = $(this);
-              var comment = $commentSubmitButton.parents('.comment').find('textarea').val()
-              $notifications.append(alertTemplate({
-                title: lesson + ': ',
-                content: 'Comment submitted. (' + username + '): ' + comment,
-                type: 'alert-info'
-              }));
-              var payload = util.applyHashData({
-                lesson: lesson,
-                type: 'rating',
-                comment: comment,
-                user: username,
-              });
-              api.post.rating(payload, function () {
-                $commentSubmitButton.parents('.comment').slideUp();
-              });
-            });
+          var payload = util.applyHashData({
+            lesson: lesson,
+            type: 'rating',
+            comment: comment,
+            rating: 'comment',
+            user: username
+          });
           
-          $this.attr('disabled', true); 
+          api.post.rating(payload, function () {
+            $this.parents('.lesson').find('.lesson-notifications').append(alertTemplate({
+              title: 'You left the following comment on this lesson:',
+              content: payload.comment,
+              type: 'alert-info'
+            }));
+            
+            $this.parents('.comment-submission')
+              .toggleClass('hidden')
+              .parents('.lesson')
+                .find('button.rating.comment')
+                  .attr('disabled', true);
+          });
         });
-      })
+      });
+      
     });
-  },
-  
-  'logout': function () {
-    $.couch.logout({success: displayLoginInformation});
-    window.location.hash = '';
   }
 }
 

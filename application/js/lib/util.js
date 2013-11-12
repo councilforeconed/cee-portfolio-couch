@@ -81,6 +81,7 @@ var util = (function () {
       payload.standard = hashData[2];
       payload.grades = hashData[3];
       payload.format = hashData[4];
+      payload.portfolio = false;
       return payload;
     }
   }
