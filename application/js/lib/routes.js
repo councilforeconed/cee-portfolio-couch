@@ -126,7 +126,7 @@ var routes = {
       
       $('.rating.like, .rating.dislike, .rating.miscategorized').on('click', function (e) {
         var $this = $(this);
-        util.ifLoggedIn(function (username) {
+        auth.ifLoggedIn(function (username) {
           var lesson = $this.data('lesson');
           var rating = $this.data('rating');
           var type = $this.attr('class').match(/btn-(\w+)/)[1]
@@ -147,12 +147,12 @@ var routes = {
             $this.attr('disabled', true); 
           });
 
-        }, util.notLoggedIn)
+        });
       });
       
       $('.rating.comment').on('click', function (e) {
         var $this = $(this);
-        util.ifLoggedIn(function (username) {
+        auth.ifLoggedIn(function (username) {
           var lesson = $this.data('lesson');
           var $notifications = $this.parents('.lesson').find('.lesson-notifications');
           

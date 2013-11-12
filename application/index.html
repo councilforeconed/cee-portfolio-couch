@@ -71,12 +71,15 @@
           </nav>
           
           <!-- Global Notifications -->
-          <section id="global-notifications">
-          </section>
+          <section id="global-notifications"></section>
+          <!-- /Global Notifications -->
+          
+          <!-- Authentication Box -->
+          <section id="authentication"></section>
+          <!-- /Authentication Box -->
           
           <!-- Main Content -->
-          <section id="main-content">
-          </section><!-- /#main-content -->
+          <section id="main-content"> </section>
           <!-- /Main Content -->
             
         </div><!-- /.container -->
@@ -207,8 +210,8 @@
         </div>
       </script>
       
-      <script id="login-template" type="text/x-handlebars-template">
-        <div class="panel panel-default login" id="login">
+      <script id="login-form-template" type="text/x-handlebars-template">
+        <div class="panel panel-default login" id="login-form">
           <div class="panel-body">
             <form role="form">
               <div class="form-group">
@@ -225,10 +228,11 @@
         </div>
       </script>
       
-      <script id="logged-in-template" type="text/x-handlebars-template">
-        <div class="alert alert-success alert-dismissable">
-          You are logged in as <strong>{{username}}</strong>. (<a href="#/logout">Log Out</a>)
-          <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+      <script id="login-status-template" type="text/x-handlebars-template">
+        <div class="row" id="login-status">
+          <div class="col-md-12">
+            <p>You are logged in as <strong class="username">{{username}}</strong>. <button class="btn btn-xs btn-primary pull-right">Log Out</button></p>
+          </div>
         </div>
       </script>
       
@@ -246,6 +250,6 @@
       <script src="js/lib/util.js"></script>
       <script src="js/lib/api.js"></script>
       <script src="js/lib/routes.js"></script>
-      <script src="js/lib/login.js"></script>
+      <script src="js/lib/auth.js"></script>
     </body>
 </html>

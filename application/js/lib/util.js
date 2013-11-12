@@ -75,27 +75,6 @@ var util = (function () {
     capitalize: function (string) {
       return string[0].toUpperCase() + string.slice(1);
     },
-    ifLoggedIn: function (successCallback, failureCallback, epicFailureCallback, customCallback) {
-      $.couch.session({
-        success: function (response) {
-          if (response.userCtx.name) {
-            if (typeof successCallback === "function") successCallback(response.userCtx.name);
-          } else {
-            if (typeof failureCallback === "function") failureCallback();
-          }
-        },
-        error: function (response) {
-          if (typeof epicFailureCallback === "function")  epicFailureCallback(response);
-        }
-      })
-      if (typeof customCallback === "function") customCallback();
-    },
-    notLoggedIn: function () {
-      displayLoginInformation(function () {
-        $("html, body").animate({ scrollTop: $('#login').offset().top - 100 }, "slow");
-        loginProblem('You must be logged in to do that.');
-      });
-    },
     applyHashData: function (payload) {
       var hashData = window.location.hash.match(/#\/subject\/(\w+)\/standard\/(.+)\/grades\/(.+)\/format\/(.+)/);
       payload.subject = hashData[1];
