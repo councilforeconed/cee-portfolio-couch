@@ -5,53 +5,51 @@ var alertTemplate = Handlebars.compile($('#alert-template').html());
 var routes = {
   'grades': function() {
     api.get.grades(function (grades) {
-      if ( $('#grade-distribution').length === 0 ) {
-        $content.children().remove();
-        $content.prepend('<h3>Distribution of Content Across the Grades</h3>')
-      
-        var labels = _.map(grades, function (element) {
-          return element.key;
-        });
-
-        var values = _.map(grades, function (element) {
-          return element.value;
-        });
-
-        var data = {
-      	  labels : labels,
-        	datasets : [ { fillColor : "rgba(202, 219, 42, 0.5)", strokeColor : "rgb(127, 181, 57)", data : values } ]
-        }
-
-        var $canvas = $(canvas({id: 'grade-distribution'}));
+      $content.children().remove();
+      $content.prepend('<h3>Distribution of Content Across the Grades</h3>');
     
-        var ctx = $canvas.get(0).getContext("2d");
-        var chart = new Chart(ctx).Radar(data);
-        $content.append($canvas);
+      var labels = _.map(grades, function (element) {
+        return element.key;
+      });
+
+      var values = _.map(grades, function (element) {
+        return element.value;
+      });
+
+      var data = {
+    	  labels : labels,
+      	datasets : [ { fillColor : "rgba(202, 219, 42, 0.5)", strokeColor : "rgb(127, 181, 57)", data : values } ]
       }
+
+      var $canvas = $(canvas({id: 'grade-distribution'}));
+  
+      var ctx = $canvas.get(0).getContext("2d");
+      var chart = new Chart(ctx).Radar(data);
+      $content.append($canvas);
     });
   },
 
   'formats': function() {
     api.get.formats(function (formats) {
-      if ( $('#format-distribution').length === 0 ) {
-        $content.children().remove();
-      
-        var data = _.map(formats, function (row) { return { value: row.value } });
-      
-        data[0] = { color: util.color('light-blue'), value: data[0].value };
-        data[1] = { color: util.color('blue'), value: data[1].value };
+      $content.children().remove();
+      $content.prepend('<h3>Distribution of Print versus Online Materials</h3>');
+    
+      var data = _.map(formats, function (row) { return { value: row.value } });
+    
+      data[0] = { color: util.color('light-blue'), value: data[0].value };
+      data[1] = { color: util.color('blue'), value: data[1].value };
 
-        var $canvas = $(canvas({id: 'format-distribution'}));
-        var ctx = $canvas.get(0).getContext("2d");
-        var chart = new Chart(ctx).Pie(data);
-        $content.append($canvas);
-      }
+      var $canvas = $(canvas({id: 'format-distribution'}));
+      var ctx = $canvas.get(0).getContext("2d");
+      var chart = new Chart(ctx).Pie(data);
+      $content.append($canvas);
     });
   },
 
   'publications': function() {
     api.get.publications(function (publications) {
       $content.children().remove();
+      $content.prepend('<h3>Publications Included in the Portfolio</h3>');
       var template = Handlebars.compile($('#publications-list-template').html());
       $content.append(template({publications: publications}));
     });
@@ -60,6 +58,8 @@ var routes = {
   'graph/:subject/:format': function(subject, format) {
     api.get.standards(subject, format, function (standards) {
       $content.children().remove();
+      var title = Handlebars.compile('<h3>Distribution of {{format}} Materials Across the {{subject}} Standards</h3>');
+      $content.prepend(title({subject: util.parseSubject(subject), format: util.capitalize(format)}));
     
       var color = ['light-blue', 'light-green'][['personal-finance', 'economics'].indexOf(subject)]
     
@@ -84,6 +84,8 @@ var routes = {
   'table/:subject/:format': function (subject, format) {
     api.get.standardsByGrade(subject, format, function (standards) {
       $content.children().remove();
+      var title = Handlebars.compile('<h3>{{format}} Materials Across the {{subject}} Standards by Grade</h3>');
+      $content.prepend(title({subject: util.parseSubject(subject), format: util.capitalize(format)}));
     
       standards.forEach(function (row) {
         row.subject = subject;
@@ -112,6 +114,13 @@ var routes = {
   'subject/:subject/standard/:standard/grades/:grades/format/:format': function (subject, standard, grades, format) {
     api.get.lessons(subject, standard, grades, format, function (lessons) {
       $content.children().remove();
+      var title = Handlebars.compile('<h3>{{format}} Lessons that Address {{subject}} Standard {{standard}} for Grades {{grades}}</h3>');
+      $content.prepend(title({
+        subject: util.parseSubject(subject),
+        format: util.capitalize(format),
+        grades: grades,
+        standard: standard
+      }));
 
       var lessonTemplate = Handlebars.compile($('#lesson-template').html());
       var alertTemplate = Handlebars.compile($('#alert-template').html());
