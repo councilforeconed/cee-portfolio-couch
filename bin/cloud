@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# TODO: Get this script working.
-
-iriscouch="http://$COUCHDB_USERNAME:$COUCHDB_PASSWORD@stevekinney.iriscouch.com/cee_portfolio"
-
-echo "$.couch.replicate(\"http://$COUCHDB_USERNAME:$COUCHDB_PASSWORD@localhost:5984/cee_portfolio\", \"$iriscouch\")"
