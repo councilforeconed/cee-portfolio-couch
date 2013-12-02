@@ -1,5 +1,5 @@
 node_modules
-application/cee_portfolio.js
+application/cee-portfolio.js
 *.log
 .DS_Store
 .idea
