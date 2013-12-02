@@ -1,0 +1,16 @@
+#!/usr/local/bin/node
+
+var auth = process.env.COUCHDB_USERNAME + ':' + process.env.COUCHDB_PASSWORD
+var local = 'http://' + auth + '@localhost:5984';
+var remote = 'http://' + auth + '@stevekinney.iriscouch.com';
+
+var request = require('request');
+var local = require('nano')(local);
+
+local.auth(process.env.COUCHDB_USERNAME, process.env.COUCHDB_PASSWORD, function (err, body, headers) {
+  if (err) throw(err);
+  local.db.replicate(remote + '/cee_portfolio', '/cee_portfolio', function (err, body) {
+    if (err) console.log(err);
+    console.log(body);
+  });
+});
