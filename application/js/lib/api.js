@@ -52,6 +52,7 @@ var api = {
         callback(response.rows);
       });
     }
+    
   },
   
   post: {

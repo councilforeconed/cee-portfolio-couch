@@ -51,6 +51,11 @@ ddoc.views = {
     map: function(doc) {
       if (doc.audience === 'student' && doc.format === "print" && doc.portfolio) emit({_id: doc._id, _rev: doc._rev}, null);
     }
+  },
+  "lessons-by-publication": {
+    map: function(doc) {
+      if (doc.audience === 'student' && doc.portfolio) emit(doc.publicationID, doc);
+    }
   }
 };
 

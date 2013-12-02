@@ -203,9 +203,7 @@ var routes = {
   }
 }
 
-var Router = Backbone.Router.extend({
-    routes: routes
-});
+var Router = Backbone.Router.extend({ routes: routes });
 
 router = new Router();
 Backbone.history.start();

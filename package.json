@@ -7,9 +7,6 @@
     "couchapp": "~0.10.0",
     "nano": "~4.1.1"
   },
-  "devDependencies": {
-    "mocha": "~1.14.0"
-  },
   "keywords": [
     "couchdb"
   ],
