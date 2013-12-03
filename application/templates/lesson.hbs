@@ -1,2 +1,67 @@
-<h3>{{title}}</h3>
+<h2>{{title}}</h2>
 <p class="lead">{{#link-to 'publication' publicationID}}{{source}}{{/link-to}}</p>
+
+<div class="row">
+  <div class="col-md-2">
+    <h4>Metadata</h4>
+    <dl>
+      <dt>Format</dt>
+      <dd>{{format}}</dd>
+      <dt>Year Published</dt>
+      <dd>{{year}}</dd>
+      <dt>Language</dt>
+      <dd>{{language}}</dd>
+      <dt>Target Audience</dt>
+      <dd>{{audience}}</dd>
+      {{#if isbn}}
+      <dt>ISBN</dt>
+      <dd>{{isbn}}</dd>
+      {{/if}}
+    </dl>
+  </div>
+  <div class="col-md-2">
+    <h4>Concepts</h4>
+    <ul>
+      {{#each concepts}}
+        <li>{{this}}</li>
+      {{/each}}
+    </ul>
+  </div>
+  <div class="col-md-7">
+    <h4>Standards</h4>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>Economics Standards</th>
+          <td>
+            {{#each economicsStandards}}
+            <p>{{this}}</p>
+            {{else}}
+            <p>This lesson does not address any economics standards.</p>
+            {{/each}}
+          </td>
+        </tr>
+        <tr>
+          <th>Personal Finance Standards</th>
+          <td>
+            {{#each personalFinanceStandards}}
+            <p>{{this}}</p>
+            {{else}}
+            <p>This lesson does not address any personal finance standards.</p>
+            {{/each}}
+          </td>
+        </tr>
+        <tr>
+          <th>Economics Standards</th>
+          <td>
+            {{#each commonCoreStandards}}
+            <p>{{this}}</p>
+            {{else}}
+            <p>This lesson does not address any Common Core standards.</p>
+            {{/each}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
