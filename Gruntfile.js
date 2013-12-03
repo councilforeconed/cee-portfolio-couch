@@ -16,6 +16,8 @@ module.exports = function(grunt) {
           'application/js/vendor/lodash.js',
           'application/js/app.js',
           'application/js/lib/*.js',
+          'application/js/lib/**/*.js',
+          'application/js/lib/**/**/*.js',
           'application/js/templates.js'
         ],
         dest: 'application/<%= pkg.name %>.js'
@@ -26,7 +28,13 @@ module.exports = function(grunt) {
         options: {
           namespace: 'Ember.TEMPLATES',
           processName: function(filePath) {
-            return filePath.match(/application\/templates\/(.+)\.hbs/)[1];
+            var file = filePath.match(/application\/templates\/(.+)\.hbs/)[1];
+            if (file.indexOf('-')) {
+              file =  file.replace(/-\w/, function (match) {
+                return match.toUpperCase()[1];
+              });
+            }
+            return file;
           }
         },
         files: {
@@ -51,6 +59,9 @@ module.exports = function(grunt) {
       files: [
         'Gruntfile.js',
         'application/js/lib/*.js',
+        'application/js/lib/**/*.js',
+        'application/js/lib/**/**/*.js',
+        'application/js/app.js',
         'application/templates/**/*.hbs',
         'application/index.html'
       ],

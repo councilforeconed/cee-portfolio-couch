@@ -1,0 +1,16 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Number of Lessons</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each}}
+    <tr>
+      <td>{{#link-to 'publication' 22}}{{key}}{{/link-to}}</td>
+      <td>{{value}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
