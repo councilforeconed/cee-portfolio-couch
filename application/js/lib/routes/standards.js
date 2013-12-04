@@ -2,13 +2,8 @@ App.StandardsEconomicsRoute = Ember.Route.extend({
   model: function (params) {
     return Ember.$.getJSON('api/_design/standards/_list/lessons-by-standard/count-economics?reduce=false&start_key=' + params.standard_id + '&end_key=' + params.standard_id);
   },
-  setupController: function (controller, model) {
-    controller.set('standard', model[0].standard);
-    controller.set('title', 'Lessons Addressing Economics Standard ' + controller.get('standard'));
-    controller.set('model', model);
-  },
   renderTemplate: function(controller, model) {
-    this.render('lessons/index', { into: 'application' });
+    this.render('lessons', { into: 'application' });
   }
 });
 
@@ -22,7 +17,7 @@ App.StandardsPersonalFinanceRoute = Ember.Route.extend({
     controller.set('model', model);
   },
   renderTemplate: function(controller, model) {
-    this.render('lessons/index', { into: 'application' });
+    this.render('lessons', { into: 'application' });
   }
 });
 
@@ -36,6 +31,6 @@ App.StandardsCommonCoreRoute = Ember.Route.extend({
     controller.set('model', model);
   },
   renderTemplate: function(controller, model) {
-    this.render('lessons/index', { into: 'application' });
+    this.render('lessons', { into: 'application' });
   }
 });

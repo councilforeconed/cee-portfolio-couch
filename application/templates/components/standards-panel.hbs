@@ -2,7 +2,7 @@
 {{#if items}}
 <ul class="list-inline">
   {{#each standard in items}}
-    <li>{{standardsLink standard ../type}}</li>
+    <li>{{#link-to route standard}}{{standard}}{{/link-to}}</li>
   {{/each}}
 </ul>
 {{else}}
