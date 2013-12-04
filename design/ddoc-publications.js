@@ -55,7 +55,8 @@ ddoc.views = {
   },
   "lessons": {
     map: function(doc) {
-      if (doc.portfolio) emit(doc.publicationID, doc);
+      var publication = doc.publicationID || 'econedlink';
+      if (doc.portfolio) emit(publication, doc);
     }
   }
 };
@@ -68,11 +69,13 @@ ddoc.lists = {
     
     var row;
     while (row = getRow()) {
-      publications.push({
+      var publication = {
         id: row.key[0],
         title: row.key[1],
         lessons: row.value
-      });
+      }
+      
+      publications.push(publication);
     }
     
     send(JSON.stringify(publications));

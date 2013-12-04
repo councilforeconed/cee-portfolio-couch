@@ -1,0 +1,7 @@
+<h2>All Concepts</h2>
+
+<ul class="list-inline">
+  {{#each}}
+    <li>{{#link-to 'concept' this}}{{this}}{{/link-to}}</li>
+  {{/each}}
+</ul>

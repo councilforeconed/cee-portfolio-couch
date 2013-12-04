@@ -32,6 +32,18 @@ ddoc.lists = {
     
     send(JSON.stringify(concepts));
   },
+  "unique-concepts": function (doc, req) {
+    start({"headers":{"Content-Type" : "application/json; charset=utf-8"}});
+    
+    var concepts = [];
+    
+    var row;
+    while (row = getRow()) {
+      if (concepts.indexOf(row.key) < 0) concepts.push(row.key)
+    }
+    
+    send(JSON.stringify(concepts));
+  },
 };
 
 module.exports = ddoc;

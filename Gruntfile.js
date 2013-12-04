@@ -15,9 +15,10 @@ module.exports = function(grunt) {
           'application/js/vendor/chart.js',
           'application/js/vendor/lodash.js',
           'application/js/app.js',
-          'application/js/lib/*.js',
-          'application/js/lib/**/*.js',
-          'application/js/lib/**/**/*.js',
+          'application/js/lib/routes/*.js',
+          'application/js/lib/controllers/*.js',
+          'application/js/lib/helpers/*.js',
+          'application/js/lib/components/*.js',
           'application/js/templates.js'
         ],
         dest: 'application/<%= pkg.name %>.js'
