@@ -56,3 +56,9 @@ then
   echo 'Uploading lessons.js file...'
   $push ./design/ddoc-lessons.js $couch
 fi
+
+if [[ $* == *concepts* ]]
+then
+  echo 'Uploading lessons.js file...'
+  $push ./design/ddoc-concepts.js $couch
+fi
