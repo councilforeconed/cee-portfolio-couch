@@ -6,12 +6,17 @@ Ember.Router.map(function () {
   });
   
   this.resource('lessons', function () {
-    this.resource('lessonSubject', { path: ':subject' }, function () {
-      this.resource('lessonSubjectFormat', { path: ':format'}, function () {
-        this.resource('lessonSubjectFormatGrades', { path: ':grades' });
-      });
-    });
     this.resource('lesson', { path: ':lesson_id' });
+  });
+  
+  this.resource('concepts', function () {
+    this.resource('concept', { path: ':concept_id' });
+  });
+  
+  this.resource('standards', function () {
+    this.route('economics', { path: 'economics/:standard_id'});
+    this.route('personalFinance', { path: 'personal-finance/:standard_id'});
+    this.route('commonCore', { path: 'common-core/:standard_id' });
   });
   
   this.resource('discussion', function () {
