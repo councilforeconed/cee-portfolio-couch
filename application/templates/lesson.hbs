@@ -2,66 +2,69 @@
 <p class="lead">{{#link-to 'publication' publicationID}}{{source}}{{/link-to}}</p>
 
 <div class="row">
-  <div class="col-md-2">
-    <h4>Metadata</h4>
-    <dl>
-      <dt>Format</dt>
-      <dd>{{format}}</dd>
-      <dt>Year Published</dt>
-      <dd>{{year}}</dd>
-      <dt>Language</dt>
-      <dd>{{language}}</dd>
-      <dt>Target Audience</dt>
-      <dd>{{audience}}</dd>
-      {{#if isbn}}
-      <dt>ISBN</dt>
-      <dd>{{isbn}}</dd>
-      {{/if}}
-    </dl>
+  <div class="col-md-12">
+    <table class="table table-condensed">
+      <tr>
+        <th>Format</th>
+        <th>Year Published</th>
+        <th>Language</th>
+        <th>Target Audience</th>
+      </tr>
+      <tr>
+        <td>{{format}}</td>
+        <td>{{year}}</td>
+        <td>{{language}}</td>
+        <td>{{audience}}</td>
+      </tr>
+    </table>
   </div>
-  <div class="col-md-2">
-    <h4>Concepts</h4>
-    <ul>
-      {{#each concepts}}
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <h3>Economics Standards</h3>
+    {{#if economicsStandards}}
+    <ul class="list-inline">
+      {{#each economicsStandards}}
+        <li>{{#link-to 'standards.economics' this}}{{this}}{{/link-to}}</li>
+      {{/each}}
+    </ul>
+    {{else}}
+      <p>There are no economics standards covered in this publication.</p>
+    {{/if}}
+    <h3>Personal Finance Standards</h3>
+    {{#if personalFinanceStandards}}
+    <ul class="list-inline">
+      {{#each personalFinanceStandards}}
         <li>{{this}}</li>
       {{/each}}
     </ul>
+    {{else}}
+      <p>There are no personal finance standards covered in this publication.</p>
+    {{/if}}
   </div>
-  <div class="col-md-7">
-    <h4>Standards</h4>
-    <table class="table">
-      <tbody>
-        <tr>
-          <th>Economics Standards</th>
-          <td>
-            {{#each economicsStandards}}
-            <p>{{this}}</p>
-            {{else}}
-            <p>This lesson does not address any economics standards.</p>
-            {{/each}}
-          </td>
-        </tr>
-        <tr>
-          <th>Personal Finance Standards</th>
-          <td>
-            {{#each personalFinanceStandards}}
-            <p>{{this}}</p>
-            {{else}}
-            <p>This lesson does not address any personal finance standards.</p>
-            {{/each}}
-          </td>
-        </tr>
-        <tr>
-          <th>Economics Standards</th>
-          <td>
-            {{#each commonCoreStandards}}
-            <p>{{this}}</p>
-            {{else}}
-            <p>This lesson does not address any Common Core standards.</p>
-            {{/each}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="col-md-4">
+    <h3>Common Core Standards</h3>
+    {{#if commonCoreStandards}}
+    <ul class="list-inline">
+      {{#each commonCoreStandards}}
+        <li>{{#link-to 'standards.personalFinance' this}}{{this}}{{/link-to}}</li>
+      {{/each}}
+    </ul>
+    {{else}}
+      <p>There are no Common Core standards covered in this publication.</p>
+    {{/if}}
+  </div>
+  <div class="col-md-4">
+    <h3>Concepts Covered</h3>
+    {{#if concepts}}
+    <ul class="list-inline">
+      {{#each concepts}}
+        <li>{{#link-to 'concept' this}}{{this}}{{/link-to}}</li>
+      {{/each}}
+    </ul>
+    {{else}}
+      <p>There is no information on the concepts convered in this publication.</p>
+    {{/if}}
   </div>
 </div>

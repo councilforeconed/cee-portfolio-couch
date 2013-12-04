@@ -1,1 +1,90 @@
-This is an individual publication.
+<h2>{{title}}</h2>
+
+<div class="row">
+  <div class="col-md-7">
+    <h3>About</h3>
+    <table class="table table-condensed">
+      <tbody>
+        <tr>
+          <th>Year Published</th>
+          <td>{{year}}</td>
+        </tr>
+        <tr>
+          <th>ISBN</th>
+          <td>{{isbn}}</td>
+        </tr>
+        <tr>
+          <th>Audience</th>
+          <td>{{audience}}</td>
+        </tr>
+        <tr>
+          <th>Grades Covered</th>
+          <td>
+            <ul class="list-unstyled">
+            {{#each grades}}
+              <li>{{this}}</li>
+            {{/each}}
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <th>Language</th>
+          <td>{{language}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    <h3>Lessons</h3>
+    <table class="table table-condensed">
+      <tbody>
+      {{#each lessons}}
+        <tr>
+          <td>{{#link-to 'lesson' id}}{{title}}{{/link-to}}</td>
+        </tr>
+      {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-5">
+    <h3>Economics Standards</h3>
+    {{#if standards.economics}}
+    <ul class="list-inline">
+      {{#each standards.economics}}
+        <li>{{#link-to 'standards.economics' this}}{{this}}{{/link-to}}</li>
+      {{/each}}
+    </ul>
+    {{else}}
+      <p>There are no economics standards covered in this publication.</p>
+    {{/if}}
+    <h3>Personal Finance Standards</h3>
+    {{#if standards.personalFinance}}
+    <ul class="list-inline">
+      {{#each standards.personalFinance}}
+        <li>{{#link-to 'standards.personalFinance' this}}{{this}}{{/link-to}}</li>
+      {{/each}}
+    </ul>
+    {{else}}
+      <p>There are no personal finance standards covered in this publication.</p>
+    {{/if}}
+    <h3>Common Core Standards</h3>
+    {{#if standards.commonCore}}
+    <ul class="list-inline">
+      {{#each standards.commonCore}}
+        <li>{{#link-to 'standards.commonCore' this}}{{this}}{{/link-to}}</li>
+      {{/each}}
+    </ul>
+    {{else}}
+      <p>There are no Common Core standards covered in this publication.</p>
+    {{/if}}
+    <h3>Concepts Covered</h3>
+    {{#if concepts}}
+    <ul class="list-inline">
+      {{#each concepts}}
+        <li>{{#link-to 'concept' this}}{{this}}{{/link-to}}</li>
+      {{/each}}
+    </ul>
+    {{else}}
+      <p>There is no information on the concepts convered in this publication.</p>
+    {{/if}}
+  </div>
+</div>
