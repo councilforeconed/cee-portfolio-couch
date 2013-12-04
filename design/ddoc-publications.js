@@ -5,7 +5,8 @@ ddoc = { _id:'_design/publications' };
 ddoc.views = {
   "publications": {
     map: function (doc) {
-      if (doc.portfolio) emit(doc.source, doc);
+      var publication = doc.publicationID || "econedlink";
+      if (doc.portfolio) emit([publication, doc.source], doc);
     },
     reduce: "_count"
   },
@@ -52,13 +53,92 @@ ddoc.views = {
       if (doc.audience === 'student' && doc.format === "print" && doc.portfolio) emit({_id: doc._id, _rev: doc._rev}, null);
     }
   },
-  "lessons-by-publication": {
+  "lessons": {
     map: function(doc) {
-      if (doc.audience === 'student' && doc.portfolio) emit(doc.publicationID, doc);
+      if (doc.portfolio) emit(doc.publicationID, doc);
     }
   }
 };
 
-ddoc.lists = {};
+ddoc.lists = {
+  "publications": function (doc, req) {
+    start({"headers":{"Content-Type" : "application/json; charset=utf-8"}});
+    
+    var publications = [];
+    
+    var row;
+    while (row = getRow()) {
+      publications.push({
+        id: row.key[0],
+        title: row.key[1],
+        lessons: row.value
+      });
+    }
+    
+    send(JSON.stringify(publications));
+  },
+  "lessons": function (doc, req) {
+    start({"headers":{"Content-Type" : "application/json; charset=utf-8"}});
+    
+    var publication = {
+      title: null,
+      audience: null,
+      isbn: null,
+      year: null,
+      language: null,
+      url: null,
+      grades: null,
+      format: null,
+      lessons: [],
+      concepts: [],
+      standards: {
+        economics: [],
+        personalFinance: [],
+        commonCore: []
+      },
+    };
+    
+    var row;
+    while (row = getRow()) {
+      
+      if (!publication.title) {
+        publication.title = row.value.source;
+        publication.audience = row.value.audience;
+        publication.isbn = row.value.isbn;
+        publication.year = row.value.year;
+        publication.language = row.value.language;
+        publication.url = row.value.url;
+        publication.grades = row.value.grades;
+        publication.format = row.value.format;
+      }
+      
+      publication.lessons.push({
+        id: row.value._id,
+        title: row.value.title
+      });
+      
+      row.value.concepts.forEach(function (element) {
+        if (publication.concepts.indexOf(element) === -1) publication.concepts.push(element);
+      });
+      
+      row.value.economicsStandards.forEach(function (element) {
+        if (publication.standards.economics.indexOf(element) === -1) publication.standards.economics.push(element);
+      });
+      
+      row.value.personalFinanceStandards.forEach(function (element) {
+        if (publication.standards.personalFinance.indexOf(element) === -1) publication.standards.personalFinance.push(element);
+      });
+      
+      if (row.value.commonCoreStandards) {
+        row.value.commonCoreStandards.forEach(function (element) {
+          if (publication.standards.commonCore.indexOf(element) === -1) publication.standards.commonCore.push(element);
+        });
+      }
+      
+    }
+    
+    send(JSON.stringify(publication));
+  }
+};
 
 module.exports = ddoc;

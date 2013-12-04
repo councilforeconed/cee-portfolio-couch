@@ -12,7 +12,7 @@ ddoc.views = {
     map: function(doc) {
       if (doc.commonCoreStandards) {
         doc.commonCoreStandards.forEach(function (cc) {
-          emit(cc.match(/^([\w\d\.-]+) -/)[1], 1);
+          emit(cc, doc);
         });
       }
     },
@@ -22,7 +22,7 @@ ddoc.views = {
     map: function(doc) {
       if (doc.commonCoreStandardIdentifiers) {
         doc.commonCoreStandardIdentifiers.forEach(function (cc) {
-          emit(cc, 1);
+          emit(cc, doc);
         });
       }
     },
@@ -60,8 +60,28 @@ ddoc.lists = {
         });
         send(details.join(',') + '\n');
       }
+    } 
+  },
+  'lessons-for-standard': function (doc, req) {
+    start({"headers":{"Content-Type" : "application/json; charset=utf-8"}});
+
+    var lessons = [];
+
+    var row;
+    while (row = getRow()) {
+      lessons.push({
+        id: row.value._id,
+        title: row.value.title,
+        publication: {
+          id: row.value.publicationID,
+          title: row.value.source
+        },
+        year: row.value.year,
+        standard: row.key
+      })
     }
-    
+
+    send(JSON.stringify(lessons));
   }
 };
 

@@ -29,6 +29,40 @@ ddoc.views = {
       if (doc.dead) emit(doc._id, doc);
     }
   },
+  "alive": {
+    map: function (doc) {
+      if (!doc.dead && doc.portfolio) emit(doc._id, doc);
+    }
+  },
+};
+
+ddoc.lists = {
+  "lessons": function (doc, req) {
+    start({"headers":{"Content-Type" : "application/json; charset=utf-8"}});
+    
+    var lessons = [];
+    
+    var row;
+    while (row = getRow()) {
+      lessons.push({
+        id: row.key,
+        title: row.value.title,
+        publication: {
+          id: row.value.publicationID,
+          title: row.value.source,
+        },
+        year: row.value.year,
+        concepts: row.value.concepts,
+        standards: {
+          economics: row.value.economicsStandards,
+          personalFinance: row.value.personalFinanceStandards,
+          commonCore: row.value.commonCoreStandards
+        }
+      });
+    }
+    
+    send(JSON.stringify(lessons));
+  },
 };
 
 module.exports = ddoc;

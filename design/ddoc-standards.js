@@ -337,6 +337,27 @@ ddoc.lists = {
     }
     
     send(JSON.stringify(response));
+  },
+  'lessons-by-standard': function (head, request) {
+    start({"headers":{"Content-Type" : "application/json; charset=utf-8"}});
+    
+    var standard = [];
+    
+    var row;
+    while (row = getRow()) {
+      standard.push({
+        id: row.value._id,
+        title: row.value.title,
+        publication: {
+          id: row.value.publicationID,
+          title: row.value.source
+        },
+        year: row.value.year,
+        standard: row.key
+      })
+    }
+    
+    send(JSON.stringify(standard));
   }
 };
 
