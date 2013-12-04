@@ -11,10 +11,10 @@
         <th>Target Audience</th>
       </tr>
       <tr>
-        <td>{{format}}</td>
+        <td>{{capitalize format}}</td>
         <td>{{year}}</td>
-        <td>{{language}}</td>
-        <td>{{audience}}</td>
+        <td>{{capitalize language}}</td>
+        <td>{{capitalize audience}}</td>
       </tr>
     </table>
   </div>
@@ -22,49 +22,13 @@
 
 <div class="row">
   <div class="col-md-4">
-    <h3>Economics Standards</h3>
-    {{#if economicsStandards}}
-    <ul class="list-inline">
-      {{#each economicsStandards}}
-        <li>{{#link-to 'standards.economics' this}}{{this}}{{/link-to}}</li>
-      {{/each}}
-    </ul>
-    {{else}}
-      <p>There are no economics standards covered in this publication.</p>
-    {{/if}}
-    <h3>Personal Finance Standards</h3>
-    {{#if personalFinanceStandards}}
-    <ul class="list-inline">
-      {{#each personalFinanceStandards}}
-        <li>{{this}}</li>
-      {{/each}}
-    </ul>
-    {{else}}
-      <p>There are no personal finance standards covered in this publication.</p>
-    {{/if}}
+    {{standards-panel type="economics" items=economicsStandards}}
+    {{standards-panel type="personalFinance" items=personalFinanceStandards}}
   </div>
   <div class="col-md-4">
-    <h3>Common Core Standards</h3>
-    {{#if commonCoreStandards}}
-    <ul class="list-inline">
-      {{#each commonCoreStandards}}
-        <li>{{#link-to 'standards.commonCore' this}}{{this}}{{/link-to}}</li>
-      {{/each}}
-    </ul>
-    {{else}}
-      <p>There are no Common Core standards covered in this publication.</p>
-    {{/if}}
+    {{standards-panel type="commonCore" items=commonCoreStandards}}
   </div>
   <div class="col-md-4">
-    <h3>Concepts Covered</h3>
-    {{#if concepts}}
-    <ul class="list-inline">
-      {{#each concepts}}
-        <li>{{#link-to 'concept' this}}{{this}}{{/link-to}}</li>
-      {{/each}}
-    </ul>
-    {{else}}
-      <p>There is no information on the concepts convered in this publication.</p>
-    {{/if}}
+    {{concepts-panel items=concepts}}
   </div>
 </div>

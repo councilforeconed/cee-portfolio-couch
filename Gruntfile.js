@@ -28,13 +28,7 @@ module.exports = function(grunt) {
         options: {
           namespace: 'Ember.TEMPLATES',
           processName: function(filePath) {
-            var file = filePath.match(/application\/templates\/(.+)\.hbs/)[1];
-            if (file.indexOf('-')) {
-              file =  file.replace(/-\w/, function (match) {
-                return match.toUpperCase()[1];
-              });
-            }
-            return file;
+            return filePath.match(/application\/templates\/(.+)\.hbs/)[1];
           }
         },
         files: {

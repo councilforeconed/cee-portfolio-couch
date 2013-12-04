@@ -1,0 +1,10 @@
+<h3>Concepts Covered</h3>
+{{#if items}}
+<ul class="list-inline">
+  {{#each items}}
+    <li>{{#link-to 'concept' this}}{{this}}{{/link-to}}</li>
+  {{/each}}
+</ul>
+{{else}}
+  <p>There are no concepts covered.</p>
+{{/if}}
