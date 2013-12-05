@@ -80,7 +80,7 @@ ddoc.lists = {
     
     send(JSON.stringify(publications));
   },
-  "lessons": function (doc, req) {
+  "publication": function (doc, req) {
     start({"headers":{"Content-Type" : "application/json; charset=utf-8"}});
     
     var publication = {
@@ -139,6 +139,8 @@ ddoc.lists = {
       }
       
     }
+    
+    if (publication.title === "EconEdLink") publication.url = "http://www.econedlink.org";
     
     send(JSON.stringify(publication));
   }

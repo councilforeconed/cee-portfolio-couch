@@ -3,6 +3,24 @@ var couchapp = require('couchapp');
 ddoc = { _id:'_design/standards' };
 
 ddoc.views = {
+  "economics": {
+    map: function (doc) {
+      if (doc.economicsStandards.length > 0 && doc.audience !== "student") {
+        doc.economicsStandards.forEach(function (standard) {
+          if (doc.portfolio) emit(parseInt(standard), doc);
+        });
+      }
+    }
+  },
+  "personal-finance": {
+    map: function (doc) {
+      if (doc.personalFinanceStandards.length > 0 && doc.audience !== "student") {
+        doc.personalFinanceStandards.forEach(function (standard) {
+          if (doc.portfolio) emit(parseInt(standard), doc);
+        });
+      }
+    }
+  },
   "by-standard-economics": {
     map: function (doc) {
       if (doc.economicsStandards.length > 0) {
