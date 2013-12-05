@@ -1,11 +1,73 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    concat: {
+      options: {
+        separator: ';'
+      },
+      dist: {
+        src: [
+          'application/javascripts/vendor/jquery-*.js',
+          'application/javascripts/vendor/handlebars-*.js',
+          'application/javascripts/vendor/ember-*.js',
+          'application/javascripts/vendor/jquery.migrate.js',
+          'application/javascripts/vendor/jquery.couch.js',
+          'application/javascripts/vendor/chart.js',
+          'application/javascripts/vendor/lodash.js',
+          'application/javascripts/app.js',
+          'application/javascripts/router.js',
+          'application/javascripts/components/*.js',
+          'application/javascripts/controllers/*.js',
+          'application/javascripts/helpers/*.js',
+          'application/javascripts/models/*.js',
+          'application/javascripts/routes/*.js',
+          'application/javascripts/templates/*.js',
+          'application/javascripts/views/*.js',
+        ],
+        dest: 'application/<%= pkg.name %>.js'
+      }
+    },
+    ember_handlebars: {
+      compile: {
+        options: {
+          namespace: 'Ember.TEMPLATES',
+          processName: function(filePath) {
+            return filePath.match(/application\/javascripts\/templates\/(.+)\.hbs/)[1];
+          }
+        },
+        files: {
+          'application/javascripts/templates/templates.js': ['application/javascripts/templates/**/*.hbs',]
+        },
+      }
+    },
+    watch: {
+      files: [
+        'Gruntfile.js',
+        'couch.js',
+        'application/index.html',
+        'application/javascripts/templates/**/*.hbs',
+        'application/javascripts/**/*.js',
+        'application/stylesheets/**/*.css'
+      ],
+      tasks: ['default']
+    },
     jshint: {
       couch: {
         src: ['Gruntfile.js', 'couch.js'],
         options: {
-          jshintrc: '.jshintrc-couch'
+          "node": true,
+          "couch": true,
+          "devel": true,
+          "trailing": true,
+          "eqeqeq": true
+        }
+      },
+      ember: {
+        src: ['Gruntfile.js', 'application/javascripts/**/*.js', '!application/javascripts/templates/*.js', '!application/javascripts/vendor/*.js'],
+        options: {
+         "jquery": true,
+         "eqeqeq": true,
+         "trailing": true
         }
       }
     },
@@ -22,9 +84,13 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-ember-handlebars');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-exec');
 
-  grunt.registerTask('default', ['jshint:couch']);
+  grunt.registerTask('default', ['jshint:couch', 'jshint:ember', 'ember_handlebars', 'concat']);
   grunt.registerTask('push', ['jshint:couch', 'exec:push']);
+  grunt.registerTask('serve', ['jshint:couch', 'exec:serve']);
 
 };

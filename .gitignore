@@ -6,3 +6,5 @@ application/cee-portfolio.js
 *.un~
 
 application/js/templates.js
+
+application/javascripts/templates/templates.js

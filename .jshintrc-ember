@@ -1,0 +1,6 @@
+{
+ "jquery": true,
+ "camelcase": true,
+ "eqeqeq": true,
+ "trailing": true
+}
