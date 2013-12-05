@@ -33,7 +33,7 @@ design.views = {
   },
   grade: {
     map: function (doc) {
-      if (doc.portfolio) {
+      if (doc.portfolio && doc.grades) {
         doc.grades.forEach(function (grade) {
           emit(grade, doc);
         });
@@ -50,7 +50,7 @@ design.views = {
     }
   },
   standard: {
-    map: function () {
+    map: function (doc) {
       if (doc.portfolio) {
         doc.economicsStandards.forEach(function (standard) {
           doc.grades.forEach(function (grade) {
