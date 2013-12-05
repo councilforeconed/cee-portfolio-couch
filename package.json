@@ -2,7 +2,7 @@
   "name": "cee-portfolio",
   "version": "0.0.2",
   "description": "CouchDB scripts for CEE portfolio.",
-  "main": "app.js",
+  "main": "couchapp.js",
   "dependencies": {
     "couchapp": "~0.10.0",
     "nano": "~4.1.1"
