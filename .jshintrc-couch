@@ -1,0 +1,7 @@
+{
+  "node": true,
+  "couch": true,
+  "devel": true,
+  "trailing": true,
+  "eqeqeq": true
+}

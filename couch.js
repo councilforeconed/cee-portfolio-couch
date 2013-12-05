@@ -1,29 +1,72 @@
 var couchapp = require('couchapp');
 var path = require('path');
 
-ddoc = {
-  _id:'_design/app',
-  rewrites : [ 
-    {from:"/", to:'index.html'},
-    {from:"/api", to:'../../'},
-    {from:"/api/concepts", to: '../../_design/concepts/_list/unique-concepts/concepts'},
-    {from:"/api/concepts/:id", to: '../../_design/concepts/_list/lesson-by-concept/concepts', query: {'start_key': ':id', 'end_key': ':id'}},
-    {from:"/api/publications", to: '../../_design/publications/_list/publications/publications', query: {'group_level': '2'}},
-    {from:"/api/publications/:id", to: '../../_design/publications/_list/publication/lessons', query: {'start_key': ':id', 'end_key': ':id'}, formats: {'id' : 'int'}},
-    {from:"/api/standards/common-core/:id", to: 'api/_design/common-core/_list/lessons-for-standard/standard-counts', query: {'start_key': ':id', 'end_key': ':id', 'reduce': 'false'}},
-    {from:"/api/standards/:subject/:id", to: '../../_design/standards/_list/lessons-by-standard/:subject', query: {'start_key': ':id', 'end_key': ':id'}, formats: {'id' : 'int'}},
-    {from:"/api/", to:'../../*'},
-    {from:"/*", to:'*'}
-  ]
-};
+var design = { _id:'_design/app' };
 
-ddoc.views = {
-  ratings: {
+design.rewrites = [
+  {from:'/', to:'index.html'},
+  {from:'/api', to:'../../'},
+  {from:'/api/', to:'../../*'},
+  {from:'/*', to:'*'}
+];
+
+design.views = {
+  content: {
     map: function (doc) {
-      if (doc.type === 'rating') emit(doc.rating, doc);
+      if (doc.portfolio) emit(null, doc);
+    }
+  },
+  format: {
+    map: function (doc) {
+      if (doc.portfolio) emit(doc.format, doc);
+    }
+  },
+  type: {
+    map: function (doc) {
+      if (doc.portfolio) emit(doc.type, doc);
+    }
+  },
+  source: {
+    map: function (doc) {
+      if (doc.portfolio) emit(doc.source, doc);
+    }
+  },
+  grade: {
+    map: function (doc) {
+      if (doc.portfolio) {
+        doc.grades.forEach(function (grade) {
+          emit(grade, doc);
+        });
+      }
+    }
+  },
+  standard: {
+    map: function (doc) {
+      if (doc.portfolio) {
+        doc.economicsStandards.forEach(function (standard) {
+          emit(['economics', standard], doc);
+        });
+        doc.personalFinanceStandards.forEach(function (standard) {
+          emit(['personal-finance', standard], doc);
+        });
+        if (doc.commonCoreStandards) {
+          doc.commonCoreStandards.forEach(function (standard) {
+            emit(['common-core', standard], doc);
+          });
+        }
+      }
+    }
+  },
+  concepts: {
+    map: function (doc) {
+      if (doc.portfolio && doc.concepts && doc.concepts.length) {
+        doc.concepts.forEach(function (concept) {
+          emit(concept, doc);
+        });
+      }
     }
   }
 };
 
-couchapp.loadAttachments(ddoc, path.join(__dirname, 'application'));
-module.exports = ddoc;
+couchapp.loadAttachments(design, path.join(__dirname, 'application'));
+module.exports = design;
