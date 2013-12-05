@@ -1,0 +1,1 @@
+Portfolio.LessonController = Ember.ObjectController.extend({});

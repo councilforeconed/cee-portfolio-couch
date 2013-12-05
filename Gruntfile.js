@@ -49,7 +49,7 @@ module.exports = function(grunt) {
         'application/javascripts/**/*.js',
         'application/stylesheets/**/*.css'
       ],
-      tasks: ['default']
+      tasks: ['ember_handlebars', 'concat']
     },
     jshint: {
       couch: {
@@ -89,7 +89,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-exec');
 
-  grunt.registerTask('default', ['jshint:couch', 'jshint:ember', 'ember_handlebars', 'concat']);
+  grunt.registerTask('default', ['jshint:couch', 'jshint:ember']);
   grunt.registerTask('push', ['jshint:couch', 'exec:push']);
   grunt.registerTask('serve', ['jshint:couch', 'exec:serve']);
 
