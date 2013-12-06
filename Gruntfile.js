@@ -90,7 +90,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-exec');
 
   grunt.registerTask('default', ['jshint:couch', 'jshint:ember']);
-  grunt.registerTask('push', ['jshint:couch', 'exec:push']);
-  grunt.registerTask('serve', ['jshint:couch', 'exec:serve']);
+  grunt.registerTask('push', ['exec:push']);
+  grunt.registerTask('serve', ['exec:serve']);
 
 };
