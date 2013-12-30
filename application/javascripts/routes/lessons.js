@@ -1,1 +1,0 @@
-Portfolio.LessonsIndexRoute = Ember.Route.extend({});
