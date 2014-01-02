@@ -7,13 +7,12 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
+          'application/javascripts/vendor/modernizr.js',
           'application/javascripts/vendor/jquery-*.js',
           'application/javascripts/vendor/handlebars-*.js',
           'application/javascripts/vendor/ember-*.js',
           'application/javascripts/vendor/jquery.migrate.js',
           'application/javascripts/vendor/jquery.couch.js',
-          'application/javascripts/vendor/chart.js',
-          'application/javascripts/vendor/lodash.js',
           'application/javascripts/app.js',
           'application/javascripts/router.js',
           'application/javascripts/components/*.js',

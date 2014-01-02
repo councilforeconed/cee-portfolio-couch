@@ -114,6 +114,71 @@ design.lists = {
     
     send(JSON.stringify(lessons));
   },
+  'resources-flat': function (document, req) {
+    start({"headers":{"Content-Type" : "application/json; charset=utf-8"}});
+    
+    function normalize(text) {
+      if (typeof text === "number") return text;
+      return text
+        .toLowerCase()
+        .replace(/[\s\.]/g, '-')
+        .replace(/(-+)([a-zA-Z0-9])/g, function(a,b,c) { return c.toUpperCase(); })
+        .replace(/([0-9]+)([a-zA-Z])/g, function(a,b,c) { return b + c.toUpperCase(); })
+        .replace(/^(\w)/, function (a) { return a.toUpperCase(); });
+    }
+    
+    var lessons = [];
+    
+    var row;
+    while (row = getRow()) {
+      var doc = row.value;
+      
+      doc = {
+        id: doc._id,
+        title: doc.title,
+        year: doc.year,
+        publicationTitle: doc.source,
+        publicationID: doc.publicationID,
+        url: doc.url,
+        format: doc.format,
+        type: doc.type,
+      };
+      
+      if (row.value.grades) {
+        row.value.grades.forEach(function (grade) {
+          doc['grade' + normalize(grade)] = grade;
+        });
+      }
+      
+      if (row.value.concepts) {
+        row.value.concepts.forEach(function (concept) {
+          doc['concept' + normalize(concept)] = concept;
+        });
+      }
+      
+      if (row.value.economicsStandards) {
+        row.value.economicsStandards.forEach(function (standard) {
+          doc['economicsStandard' + normalize(standard)] = standard;
+        });
+      }
+      
+      if (row.value.personalFinanceStandards) {
+        row.value.personalFinanceStandards.forEach(function (standard) {
+          doc['personalFinanceStandard' + normalize(standard)] = standard;
+        });
+      }
+      
+      if (row.value.commonCoreStandards) {
+        row.value.commonCoreStandards.forEach(function (standard) {
+          doc['commonCoreStandard' + normalize(standard)] = standard;
+        });
+      }
+      
+      lessons.push(doc);
+    }
+    
+    send(JSON.stringify(lessons));
+  },
   publications: function (document, req) {
     /// TODO: Reimplement reduce view emitting {[publicationID, source]: _count}
     start({"headers":{"Content-Type" : "application/json; charset=utf-8"}});

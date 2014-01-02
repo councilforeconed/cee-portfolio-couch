@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-3 input-group">
+    <span class="input-group-addon">Show</span>
+    {{input type="number" value=lessonsAtATime class="form-control"}}
+    <span class="input-group-addon">Lessons</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h2>Lessons</h2>
+    There are {{totalLessons}} in the Council for Economic Education portolio. You are currently viewing lessons {{viewableRange}}.
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Lesson</th>
+          <th>Publication</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each viewableLessons}}
+        <tr>
+          <td>{{#link-to 'lesson' id}}{{title}}{{/link-to}}</td>
+          <td>{{publication.title}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
