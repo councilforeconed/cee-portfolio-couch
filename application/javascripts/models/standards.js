@@ -21,7 +21,7 @@ Portfolio.Standards = Ember.Object.create({
     { standard: 19, topic: "Unemployment and Inflation", description: "Unemployment imposes costs on individuals and the overall economy. Inflation, both expected and unexpected, also imposes costs on individuals and the overall economy.  Unemployment increases during recessions and decreases during recoveries." },
     { standard: 20, topic: "Fiscal and Monetary Policy", description: "Federal government budgetary policy and the Federal Reserve System's monetary policy influence the overall levels of employment, output, and prices." }
   ],
-  'personal-finance': [
+  personalFinance: [
     { standard: 1, topic: "Financial Responsibility and Decision Making", description: "Apply reliable information and systematic decision making to personal financial decisions." },
     { standard: 2, topic: "Income and Careers", description: "Use a career plan to develop personal income potential." },
     { standard: 3, topic: "Planning and Money Management", description: "Organize personal finances and use a budget to manage cash flow." },

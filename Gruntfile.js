@@ -9,6 +9,7 @@ module.exports = function(grunt) {
         src: [
           'application/javascripts/vendor/modernizr.js',
           'application/javascripts/vendor/jquery-*.js',
+          'application/javascripts/vendor/bootstrap.min.js',
           'application/javascripts/vendor/handlebars-*.js',
           'application/javascripts/vendor/ember-*.js',
           'application/javascripts/vendor/jquery.migrate.js',

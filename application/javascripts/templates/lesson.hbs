@@ -1,1 +1,32 @@
-<h1>{{title}}</h1>
+<ol class="breadcrumb">
+  <li>{{#link-to 'lessons'}}Portfolio{{/link-to}}</li>
+  <li class="active">{{title}}</li>
+</ol>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{title}}</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Publication</th>
+          <th>Format</th>
+          <th>Year</th>
+          <th>Audience</th>
+          <th>Language</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{source}}</td>
+          <td>{{capitalize format}}</td>
+          <td>{{year}}</td>
+          <td>{{capitalize audience}}</td>
+          <td>{{capitalize language}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
