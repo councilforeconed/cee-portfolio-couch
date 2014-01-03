@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-md-2">
+    <div class="pages btn-group btn-group-xs">
+      <button class="previous btn btn-default" {{action 'previousPage'}}>&larr; Previous</button>
+      <button class="next btn btn-default" {{action 'nextPage'}}>Next &rarr;</button>
+    </div>
+  </div>
+  <div class="col-md-10">
+    <ul class="list-inline text-right">
+      <li><strong>Viewing</strong>: {{viewableRange}} of {{totalLessons}}</li>
+      <li><strong>Lessons Per Page</strong>: {{lessonsAtATime}}</li>
+    </ul>
+  </div>
+</div>

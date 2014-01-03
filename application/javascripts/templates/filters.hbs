@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-md-6">
+    <label>Search Titles</label>
+    {{input type="search" class="form-control" value=titleSearch}}
+  </div>
+  <div class="col-md-6">
+    <label>Search Publications</label>
+    {{input type="search" class="form-control" value=publicationSearch}}
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-2">
+    <h5>Format</h5>
+    <div class="checkbox">
+      <label>
+        {{view Ember.Checkbox checkedBinding="includePrint"}}
+        Print
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        {{view Ember.Checkbox checkedBinding="includeOnline"}}
+        Online
+      </label>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <h5>Grades</h5>
+    {{view Ember.Select content=grades value=gradeSelected class="form-control" prompt="Select Grade"}}
+  </div>
+  <div class="col-md-4">
+    <h5>Economics Standards</h5>
+    {{view Ember.Select 
+      content=Portfolio.Standards.economics
+      optionValuePath="content.standard"
+      optionLabelPath="content.topic"
+      value=economicsStandardSelected 
+      class="form-control" 
+      prompt="Select Standard"
+    }}
+  </div>
+  <div class="col-md-4">
+    <h5>Personal Finance Standards</h5>
+    {{view Ember.Select 
+      content=Portfolio.Standards.personalFinance
+      optionValuePath="content.standard"
+      optionLabelPath="content.topic"
+      value=personalFinanceStandardSelected
+      class="form-control"
+      prompt="Select Standrd"
+    }}
+  </div>
+</div>
