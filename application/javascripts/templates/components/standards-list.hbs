@@ -1,7 +1,9 @@
-<h3>{{subject}} Standards</h3>
+<h4>{{title}}</h4>
 
+{{#if standards}} <ul class="list-inline">{{/if}}
 {{#each standards}}
-  <span>{{standardName ../subject this}}</span>
+   <li>{{standardName ../subject this}}</li>
 {{else}}
   <p>There are no standards for this lesson or publication.</p>
 {{/each}}
+{{#if standards}}</ul>{{/if}}
