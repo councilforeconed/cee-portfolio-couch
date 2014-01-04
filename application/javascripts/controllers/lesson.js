@@ -1,25 +1,54 @@
 Portfolio.LessonController = Ember.ObjectController.extend({
+  id: function () {
+    return parseInt(this.get('model._id'), 10);
+  }.property('_id'),
   comment: null,
   commentEmpty: function () {
     return !this.get('comment');
   },
   message: null,
+  storeUsername: function () {
+    localStorage.setItem('username', Portfolio.Username);
+  }.observes('Portfolio.Username'),
   actions: {
-    commentSubmission: function (data) {
-      this.set('comment', null);
-      this.set('message', '<strong>Great!</strong> Your comment has been recorded!');
+    commentSubmission: function () {
+      var self = this;
+      
+      var comment = Portfolio.Comment.create({
+        lesson: this.get('id'),
+        username: Portfolio.Username,
+        type: comment,
+        comment: self.get('comment'),
+      });
+      
+      comment.save(function () {
+        self.set('comment', null);
+        self.set('message', '<strong>Great!</strong> Your comment has been recorded!');
+      });
+      
     },
     rate: function (rating, lesson) {
-      if (rating === 'like' || rating === 'dislike') {
-        this.set('message', '<strong>Alright.</strong> A note has been left that you ' + rating + ' this lesson.');
-      }
+      var self = this;
       
-      if (rating === 'miscategorized') {
-        this.set('message', '<strong>Alright.</strong> A note has been left that you believe this lesson is miscategorized. Please leave a comment with more information.');
-        this.set('comment', 'I believe this lesson has been miscategorized because...');
-      }
+      var comment = Portfolio.Comment.create({
+        username: Portfolio.Username,
+        type: 'rating',
+        rating: rating,
+        lesson: this.get('id'),
+      });
       
-      Em.$('.rating-' + rating).addClass('disabled');
+      comment.save(function () {
+        if (rating === 'like' || rating === 'dislike') {
+          self.set('message', '<strong>Alright.</strong> A note has been left that you ' + rating + ' this lesson.');
+        }
+        
+        if (rating === 'miscategorized') {
+          self.set('message', '<strong>Alright.</strong> A note has been left that you believe this lesson is miscategorized. Please leave a comment with more information.');
+          self.set('comment', 'I believe this lesson has been miscategorized because...');
+        }
+      
+        Em.$('.rating-' + rating).addClass('disabled');
+      });
     }
   }
 })

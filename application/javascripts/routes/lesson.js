@@ -3,5 +3,10 @@ Portfolio.LessonRoute = Ember.Route.extend({
     return Ember.$.getJSON('/api/' + params.id).then(function (lesson) {
       return Portfolio.Lesson.create(lesson);
     });
+  },
+  actions: {
+    willTransition: function () {
+      this.controller.set('message', null);
+    },
   }
 })

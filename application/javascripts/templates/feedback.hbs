@@ -4,18 +4,23 @@
     {{#if message}}
       <div class="alert alert-info">{{{message}}}</div>
     {{/if}}
-    <div class="btn-group btn-group-justified">
-      <a {{action 'rate' 'like' _id}} class="btn btn-success rating-like">Like</a>
-      <a {{action 'rate' 'dislike' _id}} class="btn btn-danger rating-dislike">Dislike</a>
-      <a {{action 'rate' 'miscategorized' _id}} class="btn btn-info rating-miscategorized">Miscategorized</a>
-    </div>
-    <br>
     <form role="form" {{action "commentSubmission" on="submit"}}>
       <div class="form-group">
+        <label for="username">Your Name</label>
+        {{input class="form-control" value=Portfolio.Username placeholder="Enter your name."}}
+        <p class="help-block">You must enter your name in order to rate a lesson or leave feedback.</p>
+      </div>
+      <div {{bind-attr class=":btn-group :btn-group-justified Portfolio.Username::hidden"}}>
+        <a {{action 'rate' 'like' _id}} class="btn btn-success rating-like">Like</a>
+        <a {{action 'rate' 'dislike' _id}} class="btn btn-danger rating-dislike">Dislike</a>
+        <a {{action 'rate' 'miscategorized' _id}} class="btn btn-info rating-miscategorized">Miscategorized</a>
+      </div>
+      <br>
+      <div {{bind-attr class=":form-group Portfolio.Username::hidden"}}>
         <label for="comment">Comment</label>
         {{view Ember.TextArea valueBinding="comment" rows="5" class="form-control"}}
       </div>
-      <button type="submit" {{bind-attr class=":btn :btn-primary comment::disabled"}}>Submit Feedback</button>
+      <button type="submit" {{bind-attr class=":btn :btn-primary comment::disabled Portfolio.Username::hidden"}}>Submit Feedback</button>
     </form>
   </div>
 </div>
