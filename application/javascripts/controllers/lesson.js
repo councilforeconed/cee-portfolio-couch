@@ -2,9 +2,19 @@ Portfolio.LessonController = Ember.ObjectController.extend({
   id: function () {
     return parseInt(this.get('model._id'), 10);
   }.property('_id'),
+  comments: null,
   comment: null,
   commentEmpty: function () {
     return !this.get('comment');
+  },
+  updateComments: function () {
+    var self = this;
+    Em.$.getJSON('/api/_design/app/_view/feedback?key=' + this.get('id'), function (response) {
+      var comments = response.rows.map(function (row) {
+        return row.value;
+      });
+      self.set('comments', comments);
+    });
   },
   message: null,
   storeUsername: function () {
@@ -26,6 +36,7 @@ Portfolio.LessonController = Ember.ObjectController.extend({
         .done(function () {
           self.set('comment', null);
           self.set('message', '<strong>Great!</strong> Your comment has been recorded!');
+          self.updateComments();
         })
         .fail(function () {
           self.set('message', '<strong>Oh no!</strong> Something went terribly wrong.');
@@ -55,6 +66,7 @@ Portfolio.LessonController = Ember.ObjectController.extend({
           }
       
           Em.$('.rating-' + rating).addClass('disabled');
+          self.updateComments();
         })
         .fail(function () {
           self.set('message', '<strong>Oh no!</strong> Something went terribly wrong.');

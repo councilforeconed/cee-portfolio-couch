@@ -1,0 +1,20 @@
+<h3>Comments</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Commenter</th>
+      <th>Type</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each comments}}
+    <tr>
+      <td>{{username}}</td>
+      <td>{{capitalize type}}</td>
+      <td>{{comment}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
