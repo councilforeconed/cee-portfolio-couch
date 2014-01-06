@@ -76,7 +76,14 @@ design.views = {
         }
       }
     }
-  }
+  },
+  feedback: {
+    map: function (doc) {
+      if (doc.comment) {
+        emit(doc.lesson, doc)
+      }
+    }
+  },
 };
 
 design.lists = {
@@ -260,6 +267,17 @@ design.lists = {
     send(JSON.stringify(publication));
   }
 };
+
+ddoc.validate_doc_update = function (newDoc, oldDoc, userCtx) {
+  if (newDoc.type == "comment") {
+    require("lesson", "Comments must be associated with a lesson.");
+    require("comment", "Comments cannot be blank");
+  }
+  
+  if (newDoc._deleted === true && userCtx.roles.indexOf('_admin') === -1) {
+    throw "Only admin can delete documents on this database.";
+  } 
+}
 
 couchapp.loadAttachments(design, path.join(__dirname, 'application'));
 module.exports = design;

@@ -1,6 +1,20 @@
 Portfolio.Comment = Ember.Object.extend({
-  save: function (success, failure) {
-    console.log(this);
-    success();
+  toJSON: function () {
+    var comment = {
+      lesson: this.get('lesson'),
+      type: this.get('type'),
+      username: this.get('username'),
+      comment: this.get('comment')
+    };
+    return JSON.stringify(comment);
+  }.property('lesson', 'type', 'username', 'comment'),
+  save: function () {
+    return $.ajax({
+      type: "POST",
+      url: '/api',
+      data: this.get('toJSON'),
+      dataType: 'json',
+      contentType: "application/json"
+    });
   }
 });
