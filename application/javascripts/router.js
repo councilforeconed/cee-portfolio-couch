@@ -1,5 +1,6 @@
 Portfolio.Router.map(function () {
   this.resource('lessons', { path: '/'}, function () {
-    this.resource('lesson', {path: ':id'});
+    this.route('new', { path: '/new' });
+    this.route('edit', { path: '/:id' });
   });
 });

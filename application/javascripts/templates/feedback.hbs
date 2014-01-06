@@ -7,8 +7,8 @@
     <form role="form" {{action "commentSubmission" on="submit"}}>
       <div class="form-group">
         <label for="username">Your Name</label>
-        {{input class="form-control" value=Portfolio.Username placeholder="Enter your name."}}
         <p class="help-block">You must enter your name in order to rate a lesson or leave feedback.</p>
+        {{input type="text" class="form-control" value=Portfolio.Username placeholder="Enter your name."}}
       </div>
       <div {{bind-attr class=":btn-group :btn-group-justified Portfolio.Username::hidden"}}>
         <a {{action 'rate' 'like' _id}} class="btn btn-success rating-like">Like</a>
