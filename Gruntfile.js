@@ -85,11 +85,11 @@ module.exports = function(grunt) {
         stdout: true
       },
       loginLocal: {
-        command: "curl -vX POST http://localhost:5984/_session -H 'Content-Type: application/x-www-form-urlencoded' -d 'name=$COUCHDB_USERNAME&password=$COUCHDB_PASSWORD'",
+        command: "curl -vX POST http://localhost:5984/_session -H 'Content-Type: application/x-www-form-urlencoded' -d \"name=$COUCHDB_USERNAME&password=$COUCHDB_PASSWORD\"",
         stdout: true
       },
       loginRemote: {
-        command: "curl -vX POST http://stevekinney.iriscouch.com:5984/_session -H 'Content-Type: application/x-www-form-urlencoded' -d 'name=$COUCHDB_USERNAME&password=$COUCHDB_PASSWORD'",
+        command: "curl -vX POST http://stevekinney.iriscouch.com:5984/_session -H 'Content-Type: application/x-www-form-urlencoded' -d \"name=$COUCHDB_USERNAME&password=$COUCHDB_PASSWORD\"",
         stdout: true
       },
       replicate: {
