@@ -268,7 +268,7 @@ design.lists = {
   }
 };
 
-ddoc.validate_doc_update = function (newDoc, oldDoc, userCtx) {
+design.validate_doc_update = function (newDoc, oldDoc, userCtx) {
   if (newDoc.type == "comment") {
     require("lesson", "Comments must be associated with a lesson.");
     require("comment", "Comments cannot be blank");
