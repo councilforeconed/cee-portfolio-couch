@@ -79,6 +79,14 @@ module.exports = function(grunt) {
       serve: {
         command: './node_modules/couchapp/bin.js serve <%= pkg.main %> http://$COUCHDB_USERNAME:$COUCHDB_PASSWORD@localhost:5984/portfolio -d application',
         stdout: true
+      },
+      login: {
+        command: "curl -vX POST http://localhost:5984/_session -H 'Content-Type: application/x-www-form-urlencoded' -d 'name=$COUCHDB_USERNAME&password=$COUCHDB_PASSWORD'; curl -vX POST http://stevekinney.iriscouch.com:5984/_session -H 'Content-Type: application/x-www-form-urlencoded' -d 'name=$COUCHDB_USERNAME&password=$COUCHDB_PASSWORD'",
+        stdout: true
+      },
+      replicate: {
+        command: 'curl -X POST http://localhost:5984/_replicate  -d \'{"source":"http://localhost:5984/portfolio", "target":"http://stevekinney.iriscouch.com/cee_portfolio"}\' -H "Content-Type: application/json"',
+        stdout: true
       }
     }
   });
@@ -92,5 +100,6 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jshint:couch', 'jshint:ember']);
   grunt.registerTask('push', ['exec:push']);
   grunt.registerTask('serve', ['exec:serve']);
+  grunt.registerTask('cloud', ['exec:login', 'exec:replicate']);
 
 };
