@@ -92,8 +92,12 @@ module.exports = function(grunt) {
         command: "curl -vX POST http://stevekinney.iriscouch.com:5984/_session -H 'Content-Type: application/x-www-form-urlencoded' -d \"name=$COUCHDB_USERNAME&password=$COUCHDB_PASSWORD\"",
         stdout: true
       },
-      replicate: {
+      replicateToRemote: {
         command: 'curl -X POST http://localhost:5984/_replicate  -d \'{"source":"http://localhost:5984/portfolio", "target":"http://stevekinney.iriscouch.com/portfolio"}\' -H "Content-Type: application/json"',
+        stdout: true
+      },
+      replicateToLocal: {
+        command: 'curl -X POST http://localhost:5984/_replicate  -d \'{"source":"http://stevekinney.iriscouch.com/portfolio", "target":"http://localhost:5984/portfolio"}\' -H "Content-Type: application/json"',
         stdout: true
       }
     }
@@ -108,7 +112,8 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['jshint:ember', 'jshint:concat']);
   grunt.registerTask('push', ['exec:push']);
   grunt.registerTask('serve', ['exec:serve']);
-  grunt.registerTask('cloud', ['exec:loginLocal', 'exec:loginRemote', 'exec:replicate']);
+  grunt.registerTask('cloud', ['exec:loginLocal', 'exec:loginRemote', 'exec:replicateToRemote']);
+  grunt.registerTask('ground', ['exec:loginLocal', 'exec:loginRemote', 'exec:replicateToLocal']);
   grunt.registerTask('cpush', ['exec:loginLocal', 'exec:loginRemote', 'exec:remotePush']);
 
 };

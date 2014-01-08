@@ -11,7 +11,6 @@
 
 <div class="row">
   <div class="col-md-2">
-    <h5>Format</h5>
     <div class="checkbox">
       <label>
         {{view Ember.Checkbox checkedBinding="includePrint"}}
@@ -22,6 +21,18 @@
       <label>
         {{view Ember.Checkbox checkedBinding="includeOnline"}}
         Online
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        {{view Ember.Checkbox checkedBinding="includeLessons"}}
+        Lessons
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        {{view Ember.Checkbox checkedBinding="includeInteractives"}}
+        Interactives
       </label>
     </div>
   </div>

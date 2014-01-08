@@ -5,6 +5,12 @@ Portfolio.Lesson = Ember.Object.extend({
   isOnline: function () {
     return this.get('format') === 'online';
   }.property('format'),
+  isLesson: function () {
+    return this.get('type') !== "interactive";
+  }.property('type'),
+  isInteractive: function () {
+    return this.get('type') === "interactive";
+  }.property('type'),
   isEconomics: function () {
     return this.get('standards.economics').length;
   }.property('economicsStandards'),

@@ -41,6 +41,8 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
   // Default Filter Properties
   includeOnline: true,
   includePrint: true,
+  includeLessons: true,
+  includeInteractives: true,
   gradeSelected: null,
   economicsStandardSelected: null,
   personalFinanceStandardSelected: null,
@@ -57,6 +59,18 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
     if (!this.get('includePrint')) {
       lessons = lessons.reject(function (lesson) {
         return lesson.get('isPrint');
+      });
+    }
+    
+    if (!this.get('includeLessons')) {
+      lessons = lessons.reject(function (lesson) {
+        return lesson.get('isLesson');
+      });
+    }
+    
+    if (!this.get('includeInteractives')) {
+      lessons = lessons.reject(function (lesson) {
+        return lesson.get('isInteractive');
       });
     }
     
@@ -97,7 +111,19 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
     }
     
     return lessons;
-  }.property('includeOnline', 'includePrint', 'titleSearch', 'publicationSearch', 'gradeSelected', 'economicsStandardSelected', 'personalFinanceStandardSelected'),
+  }.property('includeOnline', 'includePrint', 'includeLessons', 'includeInteractives', 'titleSearch', 'publicationSearch', 'gradeSelected', 'economicsStandardSelected', 'personalFinanceStandardSelected'),
+  
+  turnOffPrintIfUserTurnsOffLessons: function () {
+    if (!this.get('includeLessons')) {
+      this.set('includePrint', false);
+    }
+  }.observes('includeLessons'),
+  
+  turnOffPrintIfUserTurnsOffLessons: function () {
+    if (!this.get('includeOnline')) {
+      this.set('includeInteractives', false);
+    }
+  }.observes('includeOnline'),
   
   actions: {
     nextPage: function(){
