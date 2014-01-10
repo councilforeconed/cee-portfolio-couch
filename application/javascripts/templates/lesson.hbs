@@ -20,7 +20,7 @@
       </thead>
       <tbody>
         <tr>
-          <td>{{source}}</td>
+          <td>{{source}} {{#if econedlink}}(<a {{bind-attr href=url}} target="_blank">View Online</a>){{/if}}</td>
           <td>{{capitalize format}}</td>
           <td>{{year}}</td>
           <td>{{capitalize audience}}</td>

@@ -1,6 +1,11 @@
 Portfolio.LessonController = Ember.ObjectController.extend({
   id: function () {
-    return parseInt(this.get('model._id'), 10);
+    var id = this.get('model._id');
+    if (id.match(/^\d/)) {
+      return parseInt(id, 10);
+    } else {
+      return id;
+    }
   }.property('_id'),
   comments: null,
   comment: null,
@@ -9,13 +14,24 @@ Portfolio.LessonController = Ember.ObjectController.extend({
   },
   updateComments: function () {
     var self = this;
-    Em.$.getJSON('/api/_design/app/_view/feedback?key=' + this.get('id'), function (response) {
+    var view;
+    
+    if (this.get('econedlink')) {
+      view = '/api/_design/app/_view/feedback?key="' + this.get('id') + '"';
+    } else {
+      view = '/api/_design/app/_view/feedback?key=' + this.get('id');
+    }
+    
+    Em.$.getJSON(view, function (response) {
       var comments = response.rows.map(function (row) {
         return row.value;
       });
       self.set('comments', comments);
     });
   },
+  econedlink: function () {
+    if (this.get('source') === "EconEdLink") return true;
+  }.property('source'),
   message: null,
   storeUsername: function () {
     localStorage.setItem('username', Portfolio.Username);
@@ -68,7 +84,8 @@ Portfolio.LessonController = Ember.ObjectController.extend({
           Em.$('.rating-' + rating).addClass('disabled');
           self.updateComments();
         })
-        .fail(function () {
+        .fail(function (resp) {
+          console.log(resp);
           self.set('message', '<strong>Oh no!</strong> Something went terribly wrong.');
         });
     }

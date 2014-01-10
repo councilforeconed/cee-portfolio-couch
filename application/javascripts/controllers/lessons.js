@@ -33,7 +33,7 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
   
   viewableLessons: function () {
     var lessons = this.get('filteredLessons');
-    return lessons.slice(this.get('startingPosition'), this.get('endingPosition'));
+    return lessons.slice(this.get('startingPosition'), this.get('endingPosition') + 1);
   }.property('startingPosition', 'endingPosition', 'filteredLessons'),
   
   grades: ['K-2', '3-5', '6-8', '9-12'],
@@ -150,6 +150,17 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
     },
     lookupPublication: function (title) {
       this.set('publicationSearch', title);
+    },
+    clearFilters: function () {
+      this.set('includeOnline', true);
+      this.set('includePrint', true);
+      this.set('includeLessons', true);
+      this.set('includeInteractives', true);
+      this.set('gradeSelected', null);
+      this.set('economicsStandardSelected', null);
+      this.set('personalFinanceStandardSelected', null);
+      this.set('publicationSearch', null);
+      this.set('titleSearch', null);
     }
   }
   

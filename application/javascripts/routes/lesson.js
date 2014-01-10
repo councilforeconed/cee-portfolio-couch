@@ -6,7 +6,15 @@ Portfolio.LessonRoute = Ember.Route.extend({
   },
   setupController: function (controller, model) {
     controller.set('model', model);
-    Em.$.getJSON('/api/_design/app/_view/feedback?key=' + controller.get('id'), function (response) {
+    var view;
+    
+    if (model._id.match(/^\w/)) {
+      view = '/api/_design/app/_view/feedback?key="' + this.get('id') + '"';
+    } else {
+      view = '/api/_design/app/_view/feedback?key=' + this.get('id');
+    }
+    
+    Em.$.getJSON(view, function (response) {
       var comments = response.rows.map(function (row) {
         return row.value;
       });

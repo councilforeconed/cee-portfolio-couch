@@ -1,11 +1,15 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-5">
     <label>Search Titles</label>
     {{input type="search" class="form-control" value=titleSearch}}
   </div>
-  <div class="col-md-6">
+  <div class="col-md-5">
     <label>Search Publications</label>
     {{input type="search" class="form-control" value=publicationSearch}}
+  </div>
+  <div class="col-md-2">
+    <label>Clear Filters</label>
+    <button {{action 'clearFilters'}} class="btn btn-default">&times; Clear All Filters</button>
   </div>
 </div>
 
