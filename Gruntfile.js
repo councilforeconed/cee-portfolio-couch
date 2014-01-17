@@ -92,8 +92,16 @@ module.exports = function(grunt) {
         command: "curl -vX POST http://stevekinney.iriscouch.com:5984/_session -H 'Content-Type: application/x-www-form-urlencoded' -d \"name=$COUCHDB_USERNAME&password=$COUCHDB_PASSWORD\"",
         stdout: true
       },
+      loginCloudant: {
+        command: "curl -vX POST https://councilforeconed.cloudant.com/_session -H 'Content-Type: application/x-www-form-urlencoded' -d \"name=$CLOUDANT_USERNAME&password=$CLOUDANT_PASSWORD\"",
+        stdout: true
+      },
       replicateToRemote: {
         command: 'curl -X POST http://localhost:5984/_replicate  -d \'{"source":"http://localhost:5984/portfolio", "target":"http://stevekinney.iriscouch.com/portfolio"}\' -H "Content-Type: application/json"',
+        stdout: true
+      },
+      replicateToCloudant: {
+        command: "curl -X POST http://localhost:5984/_replicate  -d '{\"source\":\"http://localhost:5984/portfolio\", \"target\":\"http://$CLOUDANT_USERNAME&password=$CLOUDANT_PASSWORD$councilforeconed.cloudant.com/portfolio\"}' -H \"Content-Type: application/json\"",
         stdout: true
       },
       replicateToLocal: {
@@ -115,5 +123,6 @@ module.exports = function(grunt) {
   grunt.registerTask('cloud', ['exec:loginLocal', 'exec:loginRemote', 'exec:replicateToRemote']);
   grunt.registerTask('ground', ['exec:loginLocal', 'exec:loginRemote', 'exec:replicateToLocal']);
   grunt.registerTask('cpush', ['exec:loginLocal', 'exec:loginRemote', 'exec:remotePush']);
+  grunt.registerTask('cloudant-push', ['exec:push', 'exec:replicateToCloudant']);
 
 };
