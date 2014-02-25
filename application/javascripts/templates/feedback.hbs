@@ -1,26 +1,39 @@
-<div class="row">
-  <div class="col-md-12">
-    <h3>Feedback</h3>
-    {{#if message}}
-      <div class="alert alert-info">{{{message}}}</div>
-    {{/if}}
-    <form role="form" {{action "commentSubmission" on="submit"}}>
-      <div class="form-group">
-        <label for="username">Your Name</label>
-        <p {{bind-attr class=":help-block Portfolio.Username:hidden"}}>You must enter your name in order to rate a lesson or leave feedback.</p>
-        {{input type="text" class="form-control" value=Portfolio.Username placeholder="Enter your name."}}
-      </div>
-      <div {{bind-attr class=":btn-group :btn-group-justified Portfolio.Username::hidden"}}>
-        <a {{action 'rate' 'like' _id}} class="btn btn-success rating-like">Like</a>
-        <a {{action 'rate' 'dislike' _id}} class="btn btn-danger rating-dislike">Dislike</a>
-        <a {{action 'rate' 'miscategorized' _id}} class="btn btn-info rating-miscategorized">Miscategorized</a>
-      </div>
-      <br>
-      <div {{bind-attr class=":form-group Portfolio.Username::hidden"}}>
-        <label for="comment">Comment</label>
-        {{view Ember.TextArea valueBinding="comment" rows="5" class="form-control"}}
-      </div>
-      <button type="submit" {{bind-attr class=":btn :btn-primary comment::disabled Portfolio.Username::hidden"}}>Submit Feedback</button>
-    </form>
-  </div>
+<h2>Feedback</h2>
+
+<div class="row liked-lesson-count">
+    <div class="col-md-4">
+        <h4>Elementary School Lessons Liked</h4>
+        <p>{{elementarySchoolCount}}</p>
+    </div>
+    <div class="col-md-4">
+        <h4>Middle School Lessons Liked</h4>
+        <p>{{middleSchoolCount}}</p>
+    </div>
+    <div class="col-md-4">
+        <h4>High School Lessons Liked</h4>
+        <p>{{highSchoolCount}}</p>
+    </div>
 </div>
+
+<table class="table">
+    <thead>
+        <th>Commenter</th>
+        <th>Comment</th>
+        <th>Lesson</th>
+        <th>Grade Levels</th>
+        <th>Economics Standards</th>
+        <th>Personal Finance Standards</th>
+    </thead>
+    <tbody>
+        {{#each}}
+        <tr>
+            <td>{{username}}</td>
+            <td>{{comment}}</td>
+            <td>{{lesson.title}}, <em>{{lesson.publication.title}}</em></td>
+            <td>{{lesson.gradeList}}</td>
+            <td>{{lesson.economicsStandardsList}}</td>
+            <td>{{lesson.personalFinanceStandardsList}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+<table>

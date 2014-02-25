@@ -1,3 +1,3 @@
 Portfolio.LessonFeedback = Ember.View.extend({
-  templateName: 'feedback'
+  templateName: 'lesson-feedback-form'
 });
