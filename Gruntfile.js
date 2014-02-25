@@ -80,6 +80,9 @@ module.exports = function(grunt) {
         command: './node_modules/couchapp/bin.js push <%= pkg.main %> "http://$COUCHDB_USERNAME:$COUCHDB_PASSWORD@stevekinney.iriscouch.com:5984/portfolio"',
         stdout: true
       },
+      cloudantPush: {
+        command: './node_modules/couchapp/bin.js push <%= pkg.main %>  "http://$CLOUDANT_USERNAME:$CLOUDANT_PASSWORD@councilforeconed.cloudant.com/portfolio"'
+      },
       serve: {
         command: './node_modules/couchapp/bin.js serve <%= pkg.main %> http://$COUCHDB_USERNAME:$COUCHDB_PASSWORD@localhost:5984/portfolio -d application',
         stdout: true
@@ -101,7 +104,7 @@ module.exports = function(grunt) {
         stdout: true
       },
       replicateToCloudant: {
-        command: "curl -X POST http://localhost:5984/_replicate  -d '{\"source\":\"http://localhost:5984/portfolio\", \"target\":\"http://$CLOUDANT_USERNAME&password=$CLOUDANT_PASSWORD$councilforeconed.cloudant.com/portfolio\"}' -H \"Content-Type: application/json\"",
+        command: "curl -X POST http://localhost:5984/_replicate  -d '{\"source\":\"http://localhost:5984/portfolio\", \"target\":\"http://$CLOUDANT_USERNAME&password=$CLOUDANT_PASSWORD@councilforeconed.cloudant.com/portfolio\"}' -H \"Content-Type: application/json\"",
         stdout: true
       },
       replicateToLocal: {
@@ -123,6 +126,6 @@ module.exports = function(grunt) {
   grunt.registerTask('cloud', ['exec:loginLocal', 'exec:loginRemote', 'exec:replicateToRemote']);
   grunt.registerTask('ground', ['exec:loginLocal', 'exec:loginRemote', 'exec:replicateToLocal']);
   grunt.registerTask('cpush', ['exec:loginLocal', 'exec:loginRemote', 'exec:remotePush']);
-  grunt.registerTask('cloudant-push', ['exec:push', 'exec:replicateToCloudant']);
+  grunt.registerTask('cloudant-push', ['exec:push', 'exec:cloudantPush']);
 
 };
