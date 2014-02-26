@@ -29,5 +29,35 @@ Portfolio.FeedbackController = Ember.ArrayController.extend({
   }.property('middleSchool'),
   highSchoolCount: function () {
     return this.get('highSchool').length;
-  }.property('highSchool')
+  }.property('highSchool'),
+  economicsStandardsCounts: function() {
+    var standards =  _(this.get('lessons')).map(function(lesson) {
+      return lesson.get('standards.economics')
+    }).flatten().reduce(function (counts, current, index, array) {
+      if (counts[current]) {
+        counts[current]++;
+      } else {
+        counts[current] = 1;
+      }
+      return counts;
+    }, {});
+    return _(standards).pairs().map(function(array) {
+      return { standard: array[0], count: array[1] };
+    }).value();
+  }.property('lessons'),
+  personalFinanceStandardsCounts: function() {
+    var standards = _(this.get('lessons')).map(function(lesson) {
+      return lesson.get('standards.personalFinance')
+    }).flatten().reduce(function (counts, current, index, array) {
+      if (counts[current]) {
+        counts[current]++;
+      } else {
+        counts[current] = 1;
+      }
+      return counts;
+    }, {});
+    return _(standards).pairs().map(function(array) {
+      return { standard: array[0], count: array[1] };
+    }).value();
+  }.property('lessons')
 });
