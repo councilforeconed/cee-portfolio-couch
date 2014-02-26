@@ -9,5 +9,10 @@ Portfolio.FeedbackRoute = Ember.Route.extend({
         });
       });
     });
+  },
+  actions: {
+    willTransition: function () {
+      $('.feedback').hide();
+    },
   }
 });

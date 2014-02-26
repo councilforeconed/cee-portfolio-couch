@@ -1,64 +1,66 @@
-<h2>Feedback</h2>
-
-<div class="row liked-lesson-count">
-    <div class="col-md-4">
-        <h4>Elementary School Lessons Liked</h4>
-        <p>{{elementarySchoolCount}}</p>
+<div class="feedback">
+    <h2>Feedback</h2>
+    
+    <div class="row liked-lesson-count">
+        <div class="col-md-4">
+            <h4>Elementary School Lessons Liked</h4>
+            <p>{{elementarySchoolCount}}</p>
+        </div>
+        <div class="col-md-4">
+            <h4>Middle School Lessons Liked</h4>
+            <p>{{middleSchoolCount}}</p>
+        </div>
+        <div class="col-md-4">
+            <h4>High School Lessons Liked</h4>
+            <p>{{highSchoolCount}}</p>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h4>Middle School Lessons Liked</h4>
-        <p>{{middleSchoolCount}}</p>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Economics Standards</h4>
+            <table class="table">
+            {{#each economicsStandardsCounts}}
+                <tr>
+                    <th>Standard {{standard}}</th>
+                    <td>{{count}}</td>
+                </tr>
+            {{/each}}
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h4>Personal Finance Standards</h4>
+            <table class="table">
+            {{#each personalFinanceStandardsCounts}}
+                <tr>
+                    <th>Standard {{standard}}</th>
+                    <td>{{count}}</td>
+                </tr>
+            {{/each}}
+            </table>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h4>High School Lessons Liked</h4>
-        <p>{{highSchoolCount}}</p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6">
-        <h4>Economics Standards</h4>
-        <table class="table">
-        {{#each economicsStandardsCounts}}
+    
+    <table class="table">
+        <thead>
+            <th>Commenter</th>
+            <th>Comment</th>
+            <th>Lesson</th>
+            <th>Grade Levels</th>
+            <th>Economics Standards</th>
+            <th>Personal Finance Standards</th>
+        </thead>
+        <tbody>
+            {{#each}}
             <tr>
-                <th>Standard {{standard}}</th>
-                <td>{{count}}</td>
+                <td>{{username}}</td>
+                <td>{{{format-rating comment}}}</td>
+                <td>{{lesson.title}}, <em>{{lesson.publication.title}}</em></td>
+                <td>{{lesson.gradeList}}</td>
+                <td>{{lesson.economicsStandardsList}}</td>
+                <td>{{lesson.personalFinanceStandardsList}}</td>
             </tr>
-        {{/each}}
-        </table>
-    </div>
-    <div class="col-md-6">
-        <h4>Personal Finance Standards</h4>
-        <table class="table">
-        {{#each personalFinanceStandardsCounts}}
-            <tr>
-                <th>Standard {{standard}}</th>
-                <td>{{count}}</td>
-            </tr>
-        {{/each}}
-        </table>
-    </div>
-</div>
-
-<table class="table">
-    <thead>
-        <th>Commenter</th>
-        <th>Comment</th>
-        <th>Lesson</th>
-        <th>Grade Levels</th>
-        <th>Economics Standards</th>
-        <th>Personal Finance Standards</th>
-    </thead>
-    <tbody>
-        {{#each}}
-        <tr>
-            <td>{{username}}</td>
-            <td>{{{format-rating comment}}}</td>
-            <td>{{lesson.title}}, <em>{{lesson.publication.title}}</em></td>
-            <td>{{lesson.gradeList}}</td>
-            <td>{{lesson.economicsStandardsList}}</td>
-            <td>{{lesson.personalFinanceStandardsList}}</td>
-        </tr>
-        {{/each}}
-    </tbody>
-<table>
+            {{/each}}
+        </tbody>
+    <table>
+</table>
