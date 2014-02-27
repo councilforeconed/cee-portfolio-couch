@@ -18,6 +18,7 @@ Portfolio.Lesson = Ember.Object.extend({
     return this.get('standards.personalFinance').length;
   }.property('personalFinanceStandards'),
   gradeList: function () {
+    if (!this.get('grades')) return '';
     return this.get('grades').join(', ');
   }.property('grades'),
   economicsStandardsList: function () {
