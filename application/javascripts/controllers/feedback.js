@@ -13,7 +13,7 @@ Portfolio.FeedbackController = Ember.ArrayController.extend({
   }.property('lessons'),
   middleSchool: function () {
     return this.get('lessons').filter(function (lesson) {
-      return lesson.get('ismiddleSchool');
+      return lesson.get('isMiddleSchool');
     })
   }.property('lessons'),
   highSchool: function () {
