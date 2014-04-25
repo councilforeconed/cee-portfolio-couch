@@ -6,18 +6,21 @@ Portfolio.LessonRoute = Ember.Route.extend({
   },
   setupController: function (controller, model) {
     controller.set('model', model);
-    var view;
     
-    if (model._id.match(/^\w/)) {
-      view = '/api/_design/app/_view/feedback?key="' + this.get('id') + '"';
-    } else {
-      view = '/api/_design/app/_view/feedback?key=' + this.get('id');
-    }
+    var lessonId = controller.get('model._id');
     
-    Em.$.getJSON(view, function (response) {
+    if (lessonId.match(/^\w/)) lessonId = '"' + lessonId + '"';
+    
+    var lessonFeedback = '/api/_design/app/_view/feedback?key=' + lessonId;
+    
+    Em.$.getJSON(lessonFeedback).then(function (response) {
+      
+      console.log(response);
+      
       var comments = response.rows.map(function (row) {
         return row.value;
       });
+      
       controller.set('comments', comments);
     });
   },

@@ -22,9 +22,7 @@ Portfolio.LessonCollection = Ember.Object.extend({
                 lesson.set('rating', 0);
               }
             })
-            return _.sortBy(collection, function (lesson) {
-              return lesson.get('rating') * -1;
-            });
+            return collection;
           });
         }));
       }
