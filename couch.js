@@ -128,7 +128,21 @@ design.lists = {
           personalFinance: doc.personalFinanceStandards,
           commonCore: doc.commonCoreStandards
         },
-        concepts: doc.concepts
+        concepts: doc.concepts,
+      }
+      
+      if (doc.format === "online") {
+        doc.teacherPageviews = parseInt(row.value.teacherPageviews, 10);
+        doc.teacherUniques = parseInt(row.value.teacherUniques, 10);
+        doc.teacherEntrances = parseInt(row.value.teacherEntrances, 10);
+        doc.studentPageviews = parseInt(row.value.studentPageviews, 10);
+        doc.studentUniques = parseInt(row.value.studentUniques, 10);
+        doc.studentEntrances = parseInt(row.value.studentEntrances, 10);
+        doc.datePublished = row.value.datePublished;
+      }
+      
+      if (row.value.subjects) {
+        doc.subjects = row.value.subjects;
       }
       
       lessons.push(doc);

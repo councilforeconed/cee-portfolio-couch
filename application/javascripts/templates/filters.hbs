@@ -15,6 +15,7 @@
 
 <div class="row">
   <div class="col-md-2">
+     <h5>Format</h5>
     <div class="checkbox">
       <label>
         {{view Ember.Checkbox checkedBinding="includePrint"}}
@@ -27,6 +28,7 @@
         EconEdLink
       </label>
     </div>
+    <h5>Type</h5>
     <div class="checkbox">
       <label>
         {{view Ember.Checkbox checkedBinding="includeLessons"}}
@@ -40,30 +42,53 @@
       </label>
     </div>
   </div>
-  <div class="col-md-2">
-    <h5>Grades</h5>
-    {{view Ember.Select content=grades value=gradeSelected class="form-control" prompt="Select Grade"}}
-  </div>
-  <div class="col-md-4">
-    <h5>Economics Standards</h5>
-    {{view Ember.Select 
-      content=Portfolio.Standards.economics
-      optionValuePath="content.standard"
-      optionLabelPath="content.topic"
-      value=economicsStandardSelected 
-      class="form-control" 
-      prompt="Select Standard"
-    }}
-  </div>
-  <div class="col-md-4">
-    <h5>Personal Finance Standards</h5>
-    {{view Ember.Select 
-      content=Portfolio.Standards.personalFinance
-      optionValuePath="content.standard"
-      optionLabelPath="content.topic"
-      value=personalFinanceStandardSelected
-      class="form-control"
-      prompt="Select Standard"
-    }}
+  <div class="col-md-10">
+    <div class="row">
+      <div class="col-md-2">
+        <h5>Grades</h5>
+        {{view Ember.Select content=grades value=gradeSelected class="form-control" prompt="Select Grade"}}
+      </div>
+      <div class="col-md-5">
+        <h5>Economics Standards</h5>
+        {{view Ember.Select 
+          content=Portfolio.Standards.economics
+          optionValuePath="content.standard"
+          optionLabelPath="content.topic"
+          value=economicsStandardSelected 
+          class="form-control" 
+          prompt="Select Standard"
+        }}
+      </div>
+      <div class="col-md-5">
+        <h5>Personal Finance Standards</h5>
+        {{view Ember.Select 
+          content=Portfolio.Standards.personalFinance
+          optionValuePath="content.standard"
+          optionLabelPath="content.topic"
+          value=personalFinanceStandardSelected
+          class="form-control"
+          prompt="Select Standard"
+        }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <h5>Sorting</h5>
+        <button class="btn btn-default" {{action 'sortByRating'}}>Sort by Rating</button>
+        <button class="btn btn-default" {{action 'sortByTeacherPageviews'}}>Sort by Teacher Views</button>
+        <button class="btn btn-default" {{action 'sortByStudentPageviews'}}>Sort by Student Views</button>
+      </div>
+      <div class="col-md-4">
+        <h5>Related Subjects</h5>
+        {{view Ember.Select 
+          content=Portfolio.RelatedSubjects
+          optionValuePath="content"
+          optionLabelPath="content"
+          value=relatedSubjectSelected 
+          class="form-control" 
+          prompt="Select Related Subject"
+        }}
+      </div>
+    </div>
   </div>
 </div>

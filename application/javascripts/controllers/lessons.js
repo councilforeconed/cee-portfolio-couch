@@ -106,12 +106,21 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
     if (this.get('personalFinanceStandardSelected')) {
       var standard = this.get('personalFinanceStandardSelected');
       lessons = lessons.filter(function (lesson) {
-        return lesson.get('standards.personalFinance').indexOf(standard) >= 0; 
+        return lesson.get('standards.personalFinance').indexOf(standard) >= 0;
+      })
+    }
+    
+    if (this.get('relatedSubjectSelected')) {
+      var subject = this.get('relatedSubjectSelected');
+      lessons = lessons.filter(function (lesson) {
+        var subjects = lesson.get('subjects');
+        if (!subjects) return;
+        return subjects.indexOf(subject) >= 0;
       })
     }
     
     return lessons;
-  }.property('includeOnline', 'includePrint', 'includeLessons', 'includeInteractives', 'titleSearch', 'publicationSearch', 'gradeSelected', 'economicsStandardSelected', 'personalFinanceStandardSelected'),
+  }.property('model', 'content', 'includeOnline', 'includePrint', 'includeLessons', 'includeInteractives', 'titleSearch', 'publicationSearch', 'gradeSelected', 'economicsStandardSelected', 'personalFinanceStandardSelected', 'relatedSubjectSelected'),
   
   turnOffPrintIfUserTurnsOffLessons: function () {
     if (!this.get('includeLessons')) {
@@ -124,6 +133,10 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
       this.set('includeInteractives', false);
     }
   }.observes('includeOnline'),
+  
+  lololol: function () {
+    console.log(this.get('relatedSubjectSelected'));
+  }.observes('relatedSubjectSelected'),
   
   actions: {
     nextPage: function(){
@@ -161,7 +174,20 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
       this.set('personalFinanceStandardSelected', null);
       this.set('publicationSearch', null);
       this.set('titleSearch', null);
-    }
+    },
+    sortByRating: function () {
+      var model = this.get('model');
+      this.set('model', model.sortBy('rating').reverse());
+    },
+    sortByTeacherPageviews: function () {
+      var model = this.get('model');
+      this.set('model', model.sortBy('teacherPageviews').reverse());
+    },
+    sortByStudentPageviews: function () {
+      var model = this.get('model');
+      this.set('model', model.sortBy('studentPageviews').reverse());
+    },
+    
   }
   
 });
