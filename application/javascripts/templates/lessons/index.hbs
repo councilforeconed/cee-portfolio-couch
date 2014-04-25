@@ -11,6 +11,8 @@
           <th>Publication</th>
           <th>Format</th>
           <th>Rating</th>
+          <th>Teacher Pageviews</th>
+          <th>Student Pageviews</th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +22,8 @@
           <td><a {{action 'lookupPublication' publication.title}}>{{publication.title}}</a></td>
           <td>{{capitalize format}}</td>
           <td>{{rating}}</td>
+          <td>{{teacherPageviews}}</td>
+          <td>{{studentPageviews}}</td>
         </tr>
         {{/each}}
       </tbody>

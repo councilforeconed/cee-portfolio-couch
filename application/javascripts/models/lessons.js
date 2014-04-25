@@ -13,7 +13,6 @@ Portfolio.LessonCollection = Ember.Object.extend({
           response.forEach(function (lesson) {
             collection.pushObject(Portfolio.Lesson.create(lesson));
           });
-          lessons.setProperties({lessons: collection, loadedLessons: true});
           return $.getJSON('/api/_design/app/_list/feedback/feedback-aggregate?group_level=1').then(function(ratings){
             collection.forEach(function (lesson) {
               if (ratings[lesson.get('id')]) {
@@ -21,7 +20,8 @@ Portfolio.LessonCollection = Ember.Object.extend({
               } else {
                 lesson.set('rating', 0);
               }
-            })
+            });
+            lessons.setProperties({lessons: collection, loadedLessons: true});
             return collection;
           });
         }));

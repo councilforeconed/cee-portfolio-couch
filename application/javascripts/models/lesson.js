@@ -12,20 +12,20 @@ Portfolio.Lesson = Ember.Object.extend({
     return this.get('type') === "interactive";
   }.property('type'),
   isEconomics: function () {
-    return this.get('economicsStandards').length;
+    return this.get('economicsStandards') && this.get('economicsStandards').length;
   }.property('economicsStandards'),
   isPersonalFinance: function () {
-    return this.get('personalFinanceStandards').length;
+    return this.get('personalFinanceStandards') && this.get('personalFinanceStandards').length;
   }.property('personalFinanceStandards'),
   gradeList: function () {
     if (!this.get('grades')) return '';
     return this.get('grades').join(', ');
   }.property('grades'),
   economicsStandardsList: function () {
-    return this.get('economicsStandards').join(', ');
+    return this.get('economicsStandards') && this.get('economicsStandards').join(', ');
   }.property('economicsStandards'),
   personalFinanceStandardsList: function () {
-    return this.get('personalFinanceStandards').join(', ');
+    return this.get('personalFinanceStandards') && this.get('personalFinanceStandards').join(', ');
   }.property('economicsStandards'),
   hasGrades: function () {
     return !!this.get('grades');
