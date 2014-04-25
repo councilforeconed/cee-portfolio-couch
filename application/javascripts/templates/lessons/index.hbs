@@ -10,6 +10,7 @@
           <th>Lesson</th>
           <th>Publication</th>
           <th>Format</th>
+          <th>Rating</th>
         </tr>
       </thead>
       <tbody>
@@ -18,6 +19,7 @@
           <td>{{#link-to 'lesson' id}}{{title}}{{/link-to}}</td>
           <td><a {{action 'lookupPublication' publication.title}}>{{publication.title}}</a></td>
           <td>{{capitalize format}}</td>
+          <td>{{rating}}</td>
         </tr>
         {{/each}}
       </tbody>

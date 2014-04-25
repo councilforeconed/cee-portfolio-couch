@@ -85,6 +85,20 @@ design.views = {
       }
     }
   },
+  "feedback-aggregate": {
+    map: function (doc) {
+      if (doc.comment && doc.type === "rating") {
+        var rating = 0;
+        if (doc.comment === "like") {
+          rating = 1;
+        } else if (doc.comment === "dislike") {
+          rating = -1;
+        }
+        emit(doc.lesson, rating);
+      }
+    },
+    reduce: "_sum"
+  }
 };
 
 design.lists = {
@@ -266,6 +280,18 @@ design.lists = {
     }
 
     send(JSON.stringify(publication));
+  },
+  feedback: function (doc, req) {
+    start({"headers":{"Content-Type" : "application/json; charset=utf-8"}});
+    
+    var ratings = {};
+    
+    var row;
+    while (row = getRow()) {
+      ratings[row.key] = row.value;
+    }
+
+    send(JSON.stringify(ratings));
   }
 };
 

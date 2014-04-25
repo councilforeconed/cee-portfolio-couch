@@ -14,7 +14,18 @@ Portfolio.LessonCollection = Ember.Object.extend({
             collection.pushObject(Portfolio.Lesson.create(lesson));
           });
           lessons.setProperties({lessons: collection, loadedLessons: true});
-          return collection;
+          return $.getJSON('/api/_design/app/_list/feedback/feedback-aggregate?group_level=1').then(function(ratings){
+            collection.forEach(function (lesson) {
+              if (ratings[lesson.get('id')]) {
+                lesson.set('rating', ratings[lesson.get('id')]);
+              } else {
+                lesson.set('rating', 0);
+              }
+            })
+            return _.sortBy(collection, function (lesson) {
+              return lesson.get('rating') * -1;
+            });
+          });
         }));
       }
     });
