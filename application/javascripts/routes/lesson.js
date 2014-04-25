@@ -9,9 +9,12 @@ Portfolio.LessonRoute = Ember.Route.extend({
     
     var lessonId = controller.get('model._id');
     
-    if (lessonId.match(/^\w/)) lessonId = '"' + lessonId + '"';
+    // If the first character is not a number, then wrap it in quotes.
+    if (!lessonId.match(/^\d/)) lessonId = '"' + lessonId + '"';
     
     var lessonFeedback = '/api/_design/app/_view/feedback?key=' + lessonId;
+    
+    console.log(lessonFeedback);
     
     Em.$.getJSON(lessonFeedback).then(function (response) {
       

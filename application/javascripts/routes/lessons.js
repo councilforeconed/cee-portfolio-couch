@@ -9,4 +9,4 @@ Portfolio.LessonsIndexRoute = Ember.Route.extend({
       return lesson.get('rating') * -1;
     }));
   }
-})
+});
