@@ -4,4 +4,9 @@ Portfolio.LessonsIndexRoute = Ember.Route.extend({
       return lessons;
     });
   },
+  setupController: function (controller, model) {
+    controller.set('model', _.sortBy(model, function (lesson) {
+      return lesson.get('rating') * -1;
+    }));
+  }
 })
