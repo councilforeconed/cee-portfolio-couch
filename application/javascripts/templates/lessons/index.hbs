@@ -2,11 +2,14 @@
 
 {{view Portfolio.PaginationControls}}
 
+{{lesson-overview lessons=selectedLessons}}
+
 <div class="row">
   <div class="col-md-12">
     <table class="table">
       <thead>
         <tr>
+          <th>Selected</th>
           <th>Lesson</th>
           <th>Publication</th>
           <th>Format</th>
@@ -18,6 +21,7 @@
       <tbody>
         {{#each viewableLessons}}
         <tr>
+          <td>{{view Ember.Checkbox checked=isSelected}}</td>
           <td>{{#link-to 'lesson' id}}{{title}}{{/link-to}}</td>
           <td><a {{action 'lookupPublication' publication.title}}>{{publication.title}}</a></td>
           <td>{{capitalize format}}</td>

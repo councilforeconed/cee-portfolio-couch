@@ -5,10 +5,10 @@
       <button class="next btn btn-default" {{action 'nextPage'}}>Next &rarr;</button>
     </div>
   </div>
-  <div class="col-md-10">
-    <ul class="list-inline text-right">
-      <li><strong>Viewing</strong>: {{viewableRange}} of {{totalLessons}}</li>
-      <li><strong>Lessons Per Page</strong>: {{lessonsAtATime}}</li>
-    </ul>
+  <div class="col-md-3 col-md-offset-7">
+    <div class="input-group">
+      <span class="input-group-addon">Lessons Per Page</span>
+      {{input type="number" value=lessonsAtATime class="form-control input-sm"}}
+    </div>
   </div>
 </div>

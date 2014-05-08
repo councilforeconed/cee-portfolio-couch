@@ -1,44 +1,8 @@
 Portfolio.LessonsIndexController = Ember.ArrayController.extend({
   
-  totalLessons: function () {
-    return this.get('filteredLessons').length;
-  }.property('filteredLessons'),
-  
+  startingPosition: 0,
   lessonsAtATime: 20,
   
-  startingPosition: 0,
-  
-  endingPosition: function () {
-    var ending = this.get('startingPosition') + this.get('lessonsAtATime');
-    if (ending < this.get('totalLessons')) {
-      return ending ;
-    } else {
-      return this.get('totalLessons') - 1;
-    }
-  }.property('startingPosition', 'lessonsAtATime', 'totalLessons'),
-  
-  pagesOfLessons: function () {
-    return Math.ceil(this.get('totalLessons') / this.get('lessonsAtATime')) - 1;
-  }.property('lessonsAtATime', 'totalLessons'),
-  
-  currentPage: function () {
-    return Math.floor(this.get('startingPosition') / this.get('totalLessons') * this.get('pagesOfLessons')) + 1;
-  }.property('startingPosition', 'pagesOfLessons', 'totalLessons'),
-  
-  viewableRange: function () {
-    var starting = parseInt(this.get('startingPosition'), 10) + 1;
-    var ending = parseInt(this.get('endingPosition'), 10) + 1;
-    return starting + ' through ' + ending;
-  }.property('startingPosition', 'endingPosition'),
-  
-  viewableLessons: function () {
-    var lessons = this.get('filteredLessons');
-    return lessons.slice(this.get('startingPosition'), this.get('endingPosition') + 1);
-  }.property('startingPosition', 'endingPosition', 'filteredLessons'),
-  
-  grades: ['K-2', '3-5', '6-8', '9-12'],
-  
-  // Default Filter Properties
   includeOnline: true,
   includePrint: true,
   includeLessons: true,
@@ -46,81 +10,78 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
   gradeSelected: null,
   economicsStandardSelected: null,
   personalFinanceStandardSelected: null,
+  publicationSearch: null,
+  titleSearch: null,
+  relatedSubjectSelected: null,
+  sortProperty: 'rating',
+  
+  grades: ['K-2', '3-5', '6-8', '9-12'],
+  
+  viewableLessons: function () {
+    var start = this.get('startingPosition');
+    var end = start + this.get('lessonsAtATime');
+    return this.get('filteredLessons')
+               .sortBy(this.get('sortProperty'))
+               .reverse()
+               .slice(start, end);
+  }.property('filteredLessons', 'startingPosition', 'lessonsAtATime', 'sortProperty'),
+  
+  numberOfLessons: function () {
+    return this.get('content').length;
+  }.property('content.@each'),
+  
+  selectedLessons: function () {
+    console.log(this.get('content').filterBy('isSelected', true));
+    return this.get('content').filterBy('isSelected', true);
+  }.property('content.@each.isSelected'),
   
   filteredLessons: function () {
-    var lessons = this.get('model');
+    var self = this;
+    return this.get('content').filter(function (lesson) {
+      
+      if (!self.get('includePrint') && lesson.get('isPrint')) return false;
+      if (!self.get('includeOnline') && lesson.get('isOnline')) return false;
+      if (!self.get('includeLessons') && lesson.get('isLesson')) return false;
+      if (!self.get('includeInteractives') && lesson.get('isInteractive')) return false;
+      
+      if (self.get('titleSearch')) {
+        var query = self.get('titleSearch').toLowerCase();
+        if (lesson.get('title').toLowerCase().indexOf(query) === -1) return false;
+      }
+      
+      if (self.get('publicationSearch')) {
+        var query = self.get('publicationSearch').toLowerCase();
+        if (lesson.get('publication.title').toLowerCase().indexOf(query) === -1) return false;
+      }
+      
+      if (self.get('gradeSelected')) {
+        var grade = self.get('gradeSelected');
+        if (!lesson.get('grades') || lesson.get('grades').indexOf(grade) === -1) return false;
+      }
+      
+      if (self.get('economicsStandardSelected')) {
+        var standard = self.get('economicsStandardSelected');
+        if (lesson.get('standards.economics').indexOf(standard) === -1) return false;
+      }
     
-    if (!this.get('includeOnline')) {
-      lessons = lessons.reject(function (lesson) {
-        return lesson.get('isOnline');
-      });
-    }
+      if (self.get('personalFinanceStandardSelected')) {
+        var standard = self.get('personalFinanceStandardSelected');
+        if (lesson.get('standards.personalFinance').indexOf(standard) === -1) return false;
+      }
     
-    if (!this.get('includePrint')) {
-      lessons = lessons.reject(function (lesson) {
-        return lesson.get('isPrint');
-      });
-    }
-    
-    if (!this.get('includeLessons')) {
-      lessons = lessons.reject(function (lesson) {
-        return lesson.get('isLesson');
-      });
-    }
-    
-    if (!this.get('includeInteractives')) {
-      lessons = lessons.reject(function (lesson) {
-        return lesson.get('isInteractive');
-      });
-    }
-    
-    if (this.get('titleSearch')) {
-      var query = this.get('titleSearch').toLowerCase();
-      lessons = lessons.filter(function (lesson) {
-        return lesson.get('title').toLowerCase().indexOf(query) > -1;
-      });
-    }
-    
-    if (this.get('publicationSearch')) {
-      var query = this.get('publicationSearch').toLowerCase();
-      lessons = lessons.filter(function (lesson) {
-        return lesson.get('publication.title').toLowerCase().indexOf(query) > -1;
-      })
-    }
-    
-    if (this.get('gradeSelected')) {
-      var grade = this.get('gradeSelected');
-      lessons = lessons.filter(function (lesson) {
-        if (!lesson.get('grades')) return false;
-        return lesson.get('grades').indexOf(grade) >= 0; 
-      })
-    }
-    
-    if (this.get('economicsStandardSelected')) {
-      var standard = this.get('economicsStandardSelected');
-      lessons = lessons.filter(function (lesson) {
-        return lesson.get('standards.economics').indexOf(standard) >= 0; 
-      })
-    }
-    
-    if (this.get('personalFinanceStandardSelected')) {
-      var standard = this.get('personalFinanceStandardSelected');
-      lessons = lessons.filter(function (lesson) {
-        return lesson.get('standards.personalFinance').indexOf(standard) >= 0;
-      })
-    }
-    
-    if (this.get('relatedSubjectSelected')) {
-      var subject = this.get('relatedSubjectSelected');
-      lessons = lessons.filter(function (lesson) {
+      if (self.get('relatedSubjectSelected')) {
+        var subject = self.get('relatedSubjectSelected');
         var subjects = lesson.get('subjects');
-        if (!subjects) return;
-        return subjects.indexOf(subject) >= 0;
-      })
-    }
-    
-    return lessons;
-  }.property('model', 'content', 'includeOnline', 'includePrint', 'includeLessons', 'includeInteractives', 'titleSearch', 'publicationSearch', 'gradeSelected', 'economicsStandardSelected', 'personalFinanceStandardSelected', 'relatedSubjectSelected'),
+        if (!subjects) return false;
+        if (subjects.indexOf(subject) === -1) return false;
+      }
+      
+      return true;
+      
+    });
+  }.property('content', 'includeOnline', 'includePrint', 'includeLessons', 'includeInteractives', 'titleSearch', 'publicationSearch', 'gradeSelected', 'economicsStandardSelected', 'personalFinanceStandardSelected', 'relatedSubjectSelected'),
+  
+  // OBSERVERS: These will toggle based on user selections
   
   turnOffPrintIfUserTurnsOffLessons: function () {
     if (!this.get('includeLessons')) {
@@ -134,11 +95,10 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
     }
   }.observes('includeOnline'),
   
-  lololol: function () {
-    console.log(this.get('relatedSubjectSelected'));
-  }.observes('relatedSubjectSelected'),
+  // ACTIONS
   
   actions: {
+    
     nextPage: function(){
       var lastPossibleStartingPosition = this.get('totalLessons') - this.get('lessonsAtATime');
       var newStartingPosition = this.get('startingPosition') + this.get('lessonsAtATime');
@@ -149,6 +109,7 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
       Em.$('.pages .previous').removeClass('disabled');
       this.set('startingPosition', newStartingPosition);
     },
+    
     previousPage: function(){
       var newStartingPosition = this.get('startingPosition') - this.get('lessonsAtATime');
       if (newStartingPosition <= 0) {
@@ -158,12 +119,15 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
       Em.$('.pages .next').removeClass('disabled');
       this.set('startingPosition', newStartingPosition);
     },
+    
     changeLessonsAtATime: function (amount) {
       this.set('lessonsAtATime', amount);
     },
+    
     lookupPublication: function (title) {
       this.set('publicationSearch', title);
     },
+    
     clearFilters: function () {
       this.set('includeOnline', true);
       this.set('includePrint', true);
@@ -174,18 +138,17 @@ Portfolio.LessonsIndexController = Ember.ArrayController.extend({
       this.set('personalFinanceStandardSelected', null);
       this.set('publicationSearch', null);
       this.set('titleSearch', null);
+      this.set('relatedSubjectSelected', null);
     },
+    
     sortByRating: function () {
-      var model = this.get('model');
-      this.set('model', model.sortBy('rating').reverse());
+      this.set('sortProperty', 'rating');
     },
     sortByTeacherPageviews: function () {
-      var model = this.get('model');
-      this.set('model', model.sortBy('teacherPageviews').reverse());
+      this.set('sortProperty', 'teacherPageviews');
     },
     sortByStudentPageviews: function () {
-      var model = this.get('model');
-      this.set('model', model.sortBy('studentPageviews').reverse());
+      this.set('sortProperty', 'studentPageviews');
     },
     
   }
