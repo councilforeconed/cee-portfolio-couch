@@ -1,0 +1,23 @@
+Portfolio.RelatedSubjects = Em.A([
+  "General",
+  "AP/IB Economics",
+  "At Risk",
+  "Business",
+  "Civics/Government",
+  "Computers",
+  "Economics",
+  "Family/Consumer Science",
+  "Geography",
+  "Gifted",
+  "History",
+  "Mathematics",
+  "Personal Finance",
+  "Reading",
+  "Social Studies",
+  "Special Education",
+  "Technology Education",
+  "English",
+  "Entrepreneurship",
+  "Science",
+  "Foreign Language"
+]);
